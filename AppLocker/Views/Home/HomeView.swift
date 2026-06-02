@@ -5,177 +5,257 @@ struct HomeView: View {
     @Environment(AppLockerModel.self) var model
     @State private var isPickerPresented = false
     @State private var showUnlockConfirm = false
-    
+    @State private var hasLocked = false
+
     var body: some View {
         NavigationStack {
             ZStack {
-                // 背景
-                Color(.systemGroupedBackground)
-                    .ignoresSafeArea()
-                
+                Color(.systemGroupedBackground).ignoresSafeArea()
+
                 ScrollView {
-                    VStack(spacing: 20) {
-                        // 顶部状态卡片
-                        statusCard
-                        
-                        // 操作按钮区
-                        if model.selection.applicationTokens.isEmpty {
-                            emptyStateView
+                    VStack(spacing: 28) {
+                        // 顶部大图标
+                        topSection
+
+                        // 状态文字
+                        statusSection
+
+                        // 主操作区
+                        if hasLocked {
+                            lockedSection
                         } else {
-                            lockedAppsView
+                            unlockedSection
                         }
-                        
-                        Spacer(minLength: 100)
+
+                        Spacer(minLength: 80)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
                 }
             }
             .navigationTitle("应用锁")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $isPickerPresented) {
-                FamilyActivityPicker(selection: Binding(
-                    get: { model.selection },
-                    set: { model.selection = $0 }
-                ))
+                NavigationStack {
+                    FamilyActivityPicker(selection: Binding(
+                        get: { model.selection },
+                        set: { model.selection = $0 }
+                    ))
+                    .navigationTitle("选择应用")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("完成") { isPickerPresented = false }
+                        }
+                    }
+                }
                 .presentationDetents([.large])
             }
-            .alert("解锁所有应用", isPresented: $showUnlockConfirm) {
+            .alert("解锁确认", isPresented: $showUnlockConfirm) {
                 Button("取消", role: .cancel) { }
                 Button("解锁", role: .destructive) {
                     model.unblockAllApps()
+                    hasLocked = false
                 }
             } message: {
-                Text("解锁后，这些应用将可以正常打开。确定要解锁 \(model.selection.applicationTokens.count) 个应用吗？")
+                Text("解锁后，这些应用将可以正常打开。确定要继续吗？")
             }
-        }
-    }
-    
-    // MARK: - 状态卡片
-    private var statusCard: some View {
-        GlassCard {
-            VStack(spacing: 16) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(model.selection.applicationTokens.isEmpty ? "未锁定任何应用" : "已保护 \(model.selection.applicationTokens.count) 个应用")
-                            .font(.system(size: 22, weight: .bold))
-                            .foregroundStyle(.primary)
-                        
-                        Text(model.selection.applicationTokens.isEmpty ? "选择应用开始保护" : "点击下方按钮管理")
-                            .font(.system(size: 15))
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    Spacer()
-                    
-                    ZStack {
-                        Circle()
-                            .fill(model.selection.applicationTokens.isEmpty ? Color(.systemGray5) : Color.lockerGreen.opacity(0.15))
-                            .frame(width: 56, height: 56)
-                        
-                        Image(systemName: model.selection.applicationTokens.isEmpty ? "lock.shield" : "lock.shield.fill")
-                            .font(.system(size: 24))
-                            .foregroundStyle(model.selection.applicationTokens.isEmpty ? .secondary : Color.lockerGreen)
-                    }
+            .onAppear {
+                // 启动时检查是否已有锁定
+                if !model.selection.applicationTokens.isEmpty {
+                    hasLocked = true
                 }
             }
         }
     }
-    
-    // MARK: - 空状态
-    private var emptyStateView: some View {
-        VStack(spacing: 24) {
-            // 主操作按钮
-            Button {
-                isPickerPresented = true
-            } label: {
-                VStack(spacing: 12) {
+
+    // MARK: - 顶部图标区
+    private var topSection: some View {
+        ZStack {
+            // 背景光晕
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            (hasLocked ? Color.lockerGreen : Color.lockerBlue).opacity(0.18),
+                            .clear
+                        ],
+                        center: .center,
+                        startRadius: 30,
+                        endRadius: 110
+                    )
+                )
+                .frame(width: 220, height: 220)
+                .blur(radius: 18)
+
+            // 主图标
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: hasLocked
+                                ? [Color.lockerGreen, Color.lockerGreen.opacity(0.75)]
+                                : [Color.lockerBlue, Color.lockerBlue.opacity(0.75)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 88, height: 88)
+                    .shadow(
+                        color: (hasLocked ? Color.lockerGreen : Color.lockerBlue).opacity(0.35),
+                        radius: 14, x: 0, y: 7
+                    )
+
+                Image(systemName: hasLocked ? "lock.fill" : "lock")
+                    .font(.system(size: 38, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+        }
+        .frame(height: 180)
+    }
+
+    // MARK: - 状态文字
+    private var statusSection: some View {
+        VStack(spacing: 6) {
+            Text(hasLocked ? "应用已锁定" : "保护您的隐私")
+                .font(.system(size: 26, weight: .bold))
+                .foregroundStyle(.primary)
+
+            Text(hasLocked
+                  ? "\(model.selection.applicationTokens.count) 个应用已受保护"
+                  : "选择应用，一键锁定")
+                .font(.system(size: 15))
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    // MARK: - 未锁定状态操作区
+    private var unlockedSection: some View {
+        VStack(spacing: 14) {
+            // 选择应用按钮（始终显示）
+            Button { isPickerPresented = true } label: {
+                HStack(spacing: 12) {
                     ZStack {
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color.lockerBlue, Color.lockerBlue.opacity(0.7)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 72, height: 72)
-                        
-                        Image(systemName: "plus")
-                            .font(.system(size: 32, weight: .medium))
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.lockerBlue)
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "app.badge.checkmark")
+                            .font(.system(size: 15, weight: .bold))
                             .foregroundStyle(.white)
                     }
-                    
-                    VStack(spacing: 4) {
-                        Text("选择要锁定的应用")
-                            .font(.system(size: 17, weight: .semibold))
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("选择应用")
+                            .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(.primary)
-                        
-                        Text("从系统列表中选择您想要保护的应用")
-                            .font(.system(size: 14))
+                        Text("从系统列表中选择要锁定的应用")
+                            .font(.system(size: 12))
                             .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
                     }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 32)
-            }
-            .buttonStyle(ScaleButtonStyle())
-        }
-    }
-    
-    // MARK: - 已锁定应用视图
-    private var lockedAppsView: some View {
-        VStack(spacing: 12) {
-            // 重新选择按钮
-            Button {
-                isPickerPresented = true
-            } label: {
-                HStack {
-                    Label("更换应用", systemImage: "arrow.triangle.2.circlepath")
-                        .font(.system(size: 15, weight: .medium))
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 13))
+                        .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(.secondary)
                 }
-                .foregroundStyle(.primary)
                 .padding(14)
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .background(Color(.secondarySystemGroupedBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
             .buttonStyle(ScaleButtonStyle())
-            
-            // 锁定/解锁按钮
-            Button {
-                if model.selection.applicationTokens.isEmpty {
+            .sensoryFeedback(.selection, trigger: isPickerPresented)
+
+            // 已选择应用 → 显示锁定按钮
+            if !model.selection.applicationTokens.isEmpty {
+                Button {
                     model.blockApps()
-                } else {
-                    showUnlockConfirm = true
+                    hasLocked = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 15, weight: .semibold))
+                        Text("锁定 \(model.selection.applicationTokens.count) 个应用")
+                            .font(.system(size: 16, weight: .semibold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 15)
+                    .background(
+                        LinearGradient(
+                            colors: [Color.lockerBlue, Color.lockerBlue.opacity(0.85)],
+                            startPoint: .leading, endPoint: .trailing
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .shadow(color: Color.lockerBlue.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
-            } label: {
-                HStack {
-                    Spacer()
-                    
-                    Label(model.selection.applicationTokens.isEmpty ? "锁定选中应用" : "解锁所有应用",
-                          systemImage: model.selection.applicationTokens.isEmpty ? "lock.fill" : "lock.open")
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(.white)
-                    
-                    Spacer()
+                .buttonStyle(ScaleButtonStyle())
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .sensoryFeedback(.success, trigger: hasLocked)
+            }
+        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: model.selection.applicationTokens.count)
+    }
+
+    // MARK: - 已锁定状态操作区
+    private var lockedSection: some View {
+        VStack(spacing: 14) {
+            // 已锁定卡片
+            GlassCard {
+                VStack(spacing: 14) {
+                    HStack {
+                        Text("已锁定")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(model.selection.applicationTokens.count) 个应用")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(Color.lockerGreen)
+                    }
+
+                    Divider()
+
+                    Button { isPickerPresented = true } label: {
+                        HStack {
+                            Label("更换应用", systemImage: "arrow.triangle.2.circlepath")
+                                .font(.system(size: 14, weight: .medium))
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                        }
+                        .foregroundStyle(.primary)
+                    }
                 }
-                .padding(.vertical, 16)
-                .background(model.selection.applicationTokens.isEmpty ? Color.lockerBlue : Color.lockerOrange)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+            }
+
+            // 解锁按钮
+            Button { showUnlockConfirm = true } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "lock.open")
+                        .font(.system(size: 15, weight: .semibold))
+                    Text("解锁所有应用")
+                        .font(.system(size: 16, weight: .semibold))
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 15)
+                .background(
+                    LinearGradient(
+                        colors: [Color.lockerOrange, Color.lockerOrange.opacity(0.85)],
+                        startPoint: .leading, endPoint: .trailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .shadow(color: Color.lockerOrange.opacity(0.3), radius: 8, x: 0, y: 4)
             }
             .buttonStyle(ScaleButtonStyle())
+            .sensoryFeedback(.warning, trigger: showUnlockConfirm)
         }
     }
 }
 
-// MARK: - 按钮缩放效果
 struct ScaleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
