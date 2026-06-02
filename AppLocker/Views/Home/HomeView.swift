@@ -3,28 +3,27 @@ import FamilyControls
 
 struct HomeView: View {
     @State private var isPresentingPicker = false
-    @State private var selection = FamilyActivitySelection()
-    @State private var showBlockAlert = false
-    @State private var isBlocked = false
     
     var body: some View {
+        let model = AppBlockerModel.shared
+        
         NavigationStack {
             VStack(spacing: 20) {
-                Image(systemName: isBlocked ? "lock.shield.fill" : "lock.shield")
+                Image(systemName: model.selection.applicationTokens.isEmpty ? "lock.shield" : "lock.shield.fill")
                     .font(.system(size: 80))
-                    .foregroundColor(isBlocked ? .green : .blue)
+                    .foregroundColor(model.selection.applicationTokens.isEmpty ? .blue : .green)
                 
-                Text(isBlocked ? "应用已锁定" : "选择要锁定的应用")
+                Text(model.selection.applicationTokens.isEmpty ? "选择要锁定的应用" : "应用已锁定")
                     .font(.title2)
                     .fontWeight(.semibold)
                 
-                Text(isBlocked ? "选中的应用已被密码保护" : "点击下方按钮选择您想要保护的应用")
+                Text(model.selection.applicationTokens.isEmpty ? "点击下方按钮选择您想要保护的应用" : "选中的应用已被保护")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
-                if !isBlocked {
+                if model.selection.applicationTokens.isEmpty {
                     Button(action: {
                         isPresentingPicker = true
                     }) {
@@ -39,11 +38,24 @@ struct HomeView: View {
                     .padding(.horizontal)
                 }
                 
-                if !selection.applicationTokens.isEmpty && !isBlocked {
+                if !model.selection.applicationTokens.isEmpty {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("已锁定的应用:")
+                            .font(.headline)
+                        
+                        Text("\(model.selection.applicationTokens.count) 个应用")
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(12)
+                    .padding(.horizontal)
+                    
                     Button(action: {
-                        showBlockAlert = true
+                        // 调用model.blockSelectedApps()来锁定应用
+                        model.blockSelectedApps()
                     }) {
-                        Label("锁定选中的应用", systemImage: "lock.fill")
+                        Label("锁定应用", systemImage: "lock.fill")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -52,19 +64,10 @@ struct HomeView: View {
                             .cornerRadius(12)
                     }
                     .padding(.horizontal)
-                    .alert("锁定应用", isPresented: $showBlockAlert) {
-                        Button("取消", role: .cancel) { }
-                        Button("锁定") {
-                            blockApps()
-                        }
-                    } message: {
-                        Text("锁定后，这些应用需要密码才能打开。确定要锁定 \(selection.applicationTokens.count) 个应用吗？")
-                    }
-                }
-                
-                if isBlocked {
+                    
                     Button(action: {
-                        unblockApps()
+                        // 解锁所有应用
+                        model.unblockAllApps()
                     }) {
                         Label("解锁所有应用", systemImage: "lock.open")
                             .font(.headline)
@@ -88,23 +91,15 @@ struct HomeView: View {
                 Image(systemName: "gearshape")
             })
             .sheet(isPresented: $isPresentingPicker) {
-                FamilyActivityPicker(selection: $selection)
+                FamilyActivityPicker(selection: Binding(
+                    get: { model.selection },
+                    set: { model.selection = $0 }
+                ))
+            }
+            .onAppear {
+                model.loadSelection()
             }
         }
-    }
-    
-    func blockApps() {
-        // 这里应该调用AppBlockerModel来锁定应用
-        // 暂时只是模拟
-        isBlocked = true
-        print("Blocking \(selection.applicationTokens.count) apps")
-    }
-    
-    func unblockApps() {
-        // 这里应该调用AppBlockerModel来解锁应用
-        isBlocked = false
-        selection = FamilyActivitySelection()
-        print("Unblocking all apps")
     }
 }
 
