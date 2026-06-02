@@ -89,14 +89,14 @@
 			path = AppLocker;
 			sourceTree = "<group>";
 		};
-		"TEMP_6187FB17-0E98-461F-9DE6-17123ABE26B9" /* Views */ = {
+		"TEMP_AA8C8B39-408B-4A46-B1D8-34FBC0528A66" /* Views */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		"TEMP_77C81EB7-DD84-4C5F-ABD3-F947C659ADBE" /* Localization */ = {
+		"TEMP_F7A724D5-0575-49EA-8B54-E9B79DC1C23C" /* Localization */ = {
 			isa = PBXGroup;
 			children = (
 			);
