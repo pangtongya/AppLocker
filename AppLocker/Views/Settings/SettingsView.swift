@@ -15,7 +15,7 @@ struct SettingsView: View {
                     Toggle(isOn: $isFaceIDEnabled) {
                         Label("Face ID", systemImage: "faceid")
                     }
-                    .onChange(of: isFaceIDEnabled) { newValue in
+                    .onChange(of: isFaceIDEnabled) { _, newValue in
                         Task {
                             if newValue {
                                 let success = await security.enableFaceID()
