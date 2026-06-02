@@ -11,6 +11,8 @@
 		6F3FF6BA7A36E7B4F94D601E /* AppLockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682C253BCEB4B84679B4310 /* AppLockerTests.swift */; };
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
+		DD7CBE1183B0FEA4C8106AFF /* AppBlockerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */; };
+		FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9407F31A4EAF5F3DC064EB /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,14 +29,24 @@
 		2553F69456D89C08A1536122 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
+		600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockerModel.swift; sourceTree = "<group>"; };
 		6C66F2C2D536D29202AB3B23 /* AppLocker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AppLocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLocker.entitlements; sourceTree = "<group>"; };
 		C376E0F0C047147E51FA5AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D682C253BCEB4B84679B4310 /* AppLockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerTests.swift; sourceTree = "<group>"; };
+		DE9407F31A4EAF5F3DC064EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FC2C70B6985A5CD8DBADEAD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		130001F0518C552B0DE9D521 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DE9407F31A4EAF5F3DC064EB /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		4AC503E20D4C821005116143 /* AppLockerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +72,14 @@
 			);
 			sourceTree = "<group>";
 		};
+		AD7475D64AF286F17FB08738 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				130001F0518C552B0DE9D521 /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		CBEA73997D78AB8F6D3E9A93 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +87,14 @@
 				4C6381354673F2554D470563 /* AppLockerTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CD8BFDCAFEB57A9F7B611A5C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DF4108D2F74AF7980D2AC567 /* App */ = {
@@ -84,19 +112,14 @@
 				90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */,
 				C376E0F0C047147E51FA5AF7 /* Info.plist */,
 				DF4108D2F74AF7980D2AC567 /* App */,
+				CD8BFDCAFEB57A9F7B611A5C /* Models */,
 				8C3A5AB94E522078C0270E61 /* Resources */,
+				AD7475D64AF286F17FB08738 /* Views */,
 			);
 			path = AppLocker;
 			sourceTree = "<group>";
 		};
-		"TEMP_AA8C8B39-408B-4A46-B1D8-34FBC0528A66" /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		"TEMP_F7A724D5-0575-49EA-8B54-E9B79DC1C23C" /* Localization */ = {
+		"TEMP_496A7400-D50B-4420-A981-82894276D479" /* Localization */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -198,8 +221,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD7CBE1183B0FEA4C8106AFF /* AppBlockerModel.swift in Sources */,
 				B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,
+				FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
