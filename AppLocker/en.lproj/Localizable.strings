@@ -1,62 +1,33 @@
-/*
-  Localizable.strings - English
-  AppLocker - App Lock (Simple Version)
-*/
-
-// Home View
-"app_title" = "App Locker";
-"home_select_apps_title" = "Select Apps to Lock";
-"home_apps_locked_title" = "Apps Locked";
-"home_select_apps_subtitle" = "Tap the button below to select the apps you want to protect";
-"home_apps_locked_subtitle" = "Selected apps are now protected";
-"home_select_apps_button" = "Select Apps";
-"home_locked_apps_header" = "Locked Apps";
-"home_lock_apps_button" = "Lock Apps";
-"home_unlock_apps_button" = "Unlock All Apps";
-
-// Settings View
-"settings_title" = "Settings";
-"settings_security_section" = "Security Settings";
-"settings_face_id" = "Face ID";
-"settings_set_password" = "Set Password";
-"settings_change_password" = "Change Password";
-"settings_remove_password" = "Remove Password";
-"settings_about_section" = "About";
-"settings_version" = "Version";
-"settings_privacy_policy" = "Privacy Policy";
-
-// Guide View
-"guide_welcome_title" = "Welcome to App Locker";
-"guide_welcome_desc" = "Add password or Face ID protection to your private apps, preventing unauthorized access.";
-"guide_authorize_title" = "Authorize Screen Time";
-"guide_authorize_desc" = "The app needs your authorization to manage app access permissions. Please allow authorization in the system prompt.";
-"guide_security_title" = "Set Security Verification";
-"guide_security_desc" = "Go to Settings to set a password or enable Face ID, ensuring only you can unlock apps.";
-"guide_select_title" = "Select Apps to Lock";
-"guide_select_desc" = "Tap the \"Select Apps\" button on the home page, and select the apps you want to protect from the list.";
+// Guide
+"guide_welcome_title" = "Welcome to AppLocker";
+"guide_welcome_subtitle" = "Protect your private apps with password or Face ID";
+"guide_auth_title" = "Request Permission";
+"guide_auth_subtitle" = "We need Screen Time permission to lock apps. This is a system requirement.";
+"guide_select_title" = "Select Apps";
+"guide_select_subtitle" = "Choose which apps you want to protect from the system app list.";
 "guide_lock_title" = "Lock Apps";
-"guide_lock_desc" = "After selecting apps, tap the \"Lock Apps\" button. Now these apps require verification to open!";
-"guide_next_button" = "Next";
-"guide_get_started_button" = "Get Started";
+"guide_lock_subtitle" = "Once locked, these apps require password or Face ID to open.";
+"guide_ready_title" = "You're All Set";
+"guide_ready_subtitle" = "Your apps are now protected. Enjoy your privacy!";
+"guide_next" = "Next";
+"guide_skip" = "Skip";
+"guide_start" = "Get Started";
 
-// Alerts
-"alert_security_title" = "Security Setup Required";
-"alert_security_message" = "Before locking apps, please set a password or enable Face ID first.";
-"alert_security_cancel" = "Cancel";
-"alert_security_settings" = "Go to Settings";
-"alert_remove_password_title" = "Remove Password";
-"alert_remove_password_message" = "After removing the password, locked apps will no longer require password verification. Are you sure you want to remove the password?";
-"alert_remove_password_cancel" = "Cancel";
-"alert_remove_password_remove" = "Remove";
+// Tabs
+"tab_home" = "Home";
+"tab_settings" = "Settings";
 
-// Password Setup
-"password_setup_title" = "Set Password";
-"password_setup_section" = "Set Password";
-"password_setup_enter" = "Enter Password";
-"password_setup_confirm" = "Confirm Password";
-"password_setup_error" = "Passwords do not match, please try again";
-"password_setup_save" = "Save";
-"password_setup_cancel" = "Cancel";
+// Home
+"home_title" = "AppLocker";
+"home_locked_count" = "%d apps locked";
+"home_unlock" = "Unlock All";
+"home_select_apps" = "Select Apps";
+"home_lock" = "Lock Apps";
 
-// Count formatting
-"home_locked_apps_count" = "%d apps";
+// Settings
+"settings_title" = "Settings";
+"settings_security" = "Security";
+"settings_password" = "Password";
+"settings_faceid" = "Face ID";
+"settings_reset" = "Reset All";
+"settings_version" = "Version";

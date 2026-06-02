@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0092C5D77A35D0388C88BD1E /* AppLockerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFB8BD93F96C4937046399D /* AppLockerModel.swift */; };
+		08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1527088059B14CDA6FB1CE /* GlassCard.swift */; };
+		1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0146624A729ABE90D8AED2C8 /* Localizable.strings */; };
 		210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB4F9606B42BF427801951 /* SettingsView.swift */; };
-		49D495D2E32893D690E7EF5A /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6B8767017564ADDC8697C /* SecurityManager.swift */; };
+		2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB11CA49DA848A00666B5F /* ColorExtensions.swift */; };
+		37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */; };
 		5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2C70B6985A5CD8DBADEAD4 /* Assets.xcassets */; };
 		6F3FF6BA7A36E7B4F94D601E /* AppLockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682C253BCEB4B84679B4310 /* AppLockerTests.swift */; };
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
-		A55D55038831C469F14BD38E /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7D1B969BB4EF078656DEB /* GuideView.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
-		DD7CBE1183B0FEA4C8106AFF /* AppBlockerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */; };
+		F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606CE173DFA60FE9CA319119 /* Localization.swift */; };
 		FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9407F31A4EAF5F3DC064EB /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,15 +32,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DEF15C0BE2D9133BAAB1F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2553F69456D89C08A1536122 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2DFB8BD93F96C4937046399D /* AppLockerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerModel.swift; sourceTree = "<group>"; };
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
-		600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockerModel.swift; sourceTree = "<group>"; };
+		606CE173DFA60FE9CA319119 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		63CB11CA49DA848A00666B5F /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		6C66F2C2D536D29202AB3B23 /* AppLocker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AppLocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1527088059B14CDA6FB1CE /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
 		90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLocker.entitlements; sourceTree = "<group>"; };
-		9DE7D1B969BB4EF078656DEB /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
-		ABF6B8767017564ADDC8697C /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
 		C376E0F0C047147E51FA5AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C810F83A3666EA1512CC0026 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D682C253BCEB4B84679B4310 /* AppLockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerTests.swift; sourceTree = "<group>"; };
 		D9CB4F9606B42BF427801951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DE9407F31A4EAF5F3DC064EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -48,7 +55,6 @@
 		130001F0518C552B0DE9D521 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9DE7D1B969BB4EF078656DEB /* GuideView.swift */,
 				DE9407F31A4EAF5F3DC064EB /* HomeView.swift */,
 			);
 			path = Home;
@@ -60,6 +66,30 @@
 				D682C253BCEB4B84679B4310 /* AppLockerTests.swift */,
 			);
 			path = AppLockerTests;
+			sourceTree = "<group>";
+		};
+		50DB17CB622920E3377A36A2 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		76668E2B56E823FABA6F7CE4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8B1527088059B14CDA6FB1CE /* GlassCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		8B6DF3FDA9B1050AA3BD851A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				63CB11CA49DA848A00666B5F /* ColorExtensions.swift */,
+				606CE173DFA60FE9CA319119 /* Localization.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		8C3A5AB94E522078C0270E61 /* Resources */ = {
@@ -79,13 +109,30 @@
 			);
 			sourceTree = "<group>";
 		};
+		9B2315F2F34C9B0DE544A3D2 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
 		AD7475D64AF286F17FB08738 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				76668E2B56E823FABA6F7CE4 /* Components */,
+				BBCEE3F68F2DD50118890B3F /* Guide */,
 				130001F0518C552B0DE9D521 /* Home */,
 				D90C3DC27F57CA3E16DB9E1F /* Settings */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BBCEE3F68F2DD50118890B3F /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */,
+			);
+			path = Guide;
 			sourceTree = "<group>";
 		};
 		CBEA73997D78AB8F6D3E9A93 /* Products */ = {
@@ -100,8 +147,7 @@
 		CD8BFDCAFEB57A9F7B611A5C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */,
-				ABF6B8767017564ADDC8697C /* SecurityManager.swift */,
+				2DFB8BD93F96C4937046399D /* AppLockerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,21 +172,18 @@
 		E4F4F09F47F4A723EB4121D8 /* AppLocker */ = {
 			isa = PBXGroup;
 			children = (
-				90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */,
-				C376E0F0C047147E51FA5AF7 /* Info.plist */,
 				DF4108D2F74AF7980D2AC567 /* App */,
+				0146624A729ABE90D8AED2C8 /* Localizable.strings */,
+				50DB17CB622920E3377A36A2 /* Localization */,
 				CD8BFDCAFEB57A9F7B611A5C /* Models */,
 				8C3A5AB94E522078C0270E61 /* Resources */,
+				9B2315F2F34C9B0DE544A3D2 /* Stores */,
+				8B6DF3FDA9B1050AA3BD851A /* Utilities */,
 				AD7475D64AF286F17FB08738 /* Views */,
+				90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */,
+				C376E0F0C047147E51FA5AF7 /* Info.plist */,
 			);
 			path = AppLocker;
-			sourceTree = "<group>";
-		};
-		"TEMP_7BD9B04E-E7FA-4527-984B-FA96FC4315CE" /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +237,6 @@
 					62F41D85C25AB7ABDFBBFB19 = {
 						DevelopmentTeam = 2ZNZRXNPWQ;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 838A50B8352CDA35BE9467DB;
 					};
 					838A50B8352CDA35BE9467DB = {
 						DevelopmentTeam = 2ZNZRXNPWQ;
@@ -208,6 +250,7 @@
 			knownRegions = (
 				Base,
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 8E0F6311E271BB1A63CD3BF9;
 			minimizedProjectReferenceProxies = 1;
@@ -228,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */,
+				1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,12 +282,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD7CBE1183B0FEA4C8106AFF /* AppBlockerModel.swift in Sources */,
 				B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */,
+				0092C5D77A35D0388C88BD1E /* AppLockerModel.swift in Sources */,
+				2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,
-				A55D55038831C469F14BD38E /* GuideView.swift in Sources */,
+				08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */,
+				37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */,
 				FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */,
-				49D495D2E32893D690E7EF5A /* SecurityManager.swift in Sources */,
+				F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */,
 				210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,11 +312,25 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		0146624A729ABE90D8AED2C8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DEF15C0BE2D9133BAAB1F81 /* en */,
+				C810F83A3666EA1512CC0026 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		371C0AB1BB9C558E6F093BE9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				GENERATE_INFO_PLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -278,9 +338,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.tests;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLocker.app/AppLocker";
-				TEST_TARGET_NAME = AppLocker;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLocker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppLocker";
 			};
 			name = Release;
 		};
@@ -288,14 +348,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AppLocker/AppLocker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AppLocker/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker;
 				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -304,6 +369,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				GENERATE_INFO_PLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,9 +378,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.tests;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLocker.app/AppLocker";
-				TEST_TARGET_NAME = AppLocker;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLocker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppLocker";
 			};
 			name = Debug;
 		};
@@ -321,14 +388,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AppLocker/AppLocker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = AppLocker/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker;
 				SDKROOT = iphoneos;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -337,6 +409,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -371,6 +444,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 2ZNZRXNPWQ;
+				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -389,8 +463,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "应用锁";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -398,6 +472,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -406,6 +481,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -441,6 +517,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2ZNZRXNPWQ;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -452,14 +529,15 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "应用锁";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;

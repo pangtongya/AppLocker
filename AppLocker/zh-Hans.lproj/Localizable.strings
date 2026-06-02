@@ -1,62 +1,33 @@
-/*
-  Localizable.strings - 中文（简体）
-  AppLocker - 应用锁（极简版）
-*/
-
-// 主页
-"app_title" = "应用锁";
-"home_select_apps_title" = "选择要锁定的应用";
-"home_apps_locked_title" = "应用已锁定";
-"home_select_apps_subtitle" = "点击下方按钮选择您想要保护的应用";
-"home_apps_locked_subtitle" = "选中的应用已被保护";
-"home_select_apps_button" = "选择应用";
-"home_locked_apps_header" = "已锁定的应用";
-"home_lock_apps_button" = "锁定应用";
-"home_unlock_apps_button" = "解锁所有应用";
-
-// 设置页
-"settings_title" = "设置";
-"settings_security_section" = "安全设置";
-"settings_face_id" = "Face ID";
-"settings_set_password" = "设置密码";
-"settings_change_password" = "更改密码";
-"settings_remove_password" = "移除密码";
-"settings_about_section" = "关于";
-"settings_version" = "版本";
-"settings_privacy_policy" = "隐私政策";
-
 // 引导页
 "guide_welcome_title" = "欢迎使用应用锁";
-"guide_welcome_desc" = "为您的隐私应用添加密码或Face ID保护，防止他人未经授权访问。";
-"guide_authorize_title" = "授权屏幕使用时间";
-"guide_authorize_desc" = "应用需要您的授权才能管理应用访问权限。请在系统提示中允许授权。";
-"guide_security_title" = "设置安全验证";
-"guide_security_desc" = "前往设置页面，设置密码或启用Face ID，确保只有您可以解锁应用。";
-"guide_select_title" = "选择要锁定的应用";
-"guide_select_desc" = "点击主页面的「选择应用」按钮，从列表中选择您想要保护的应用。";
+"guide_welcome_subtitle" = "用密码或 Face ID 保护您的隐私应用";
+"guide_auth_title" = "请求权限";
+"guide_auth_subtitle" = "我们需要屏幕使用时间权限来锁定应用，这是系统要求";
+"guide_select_title" = "选择应用";
+"guide_select_subtitle" = "从系统应用列表中选择您想要保护的应用";
 "guide_lock_title" = "锁定应用";
-"guide_lock_desc" = "选择完应用后，点击「锁定应用」按钮。现在这些应用需要验证才能打开！";
-"guide_next_button" = "下一步";
-"guide_get_started_button" = "开始使用";
+"guide_lock_subtitle" = "锁定后，打开这些应用需要密码或 Face ID";
+"guide_ready_title" = "准备就绪";
+"guide_ready_subtitle" = "您的应用现已受到保护，享受隐私吧！";
+"guide_next" = "下一步";
+"guide_skip" = "跳过";
+"guide_start" = "开始使用";
 
-// 弹窗
-"alert_security_title" = "需要设置安全验证";
-"alert_security_message" = "锁定应用前，请先设置密码或启用Face ID。";
-"alert_security_cancel" = "取消";
-"alert_security_settings" = "去设置";
-"alert_remove_password_title" = "移除密码";
-"alert_remove_password_message" = "移除密码后，锁定应用将不再需要密码验证。确定要移除密码吗？";
-"alert_remove_password_cancel" = "取消";
-"alert_remove_password_remove" = "移除";
+// 标签页
+"tab_home" = "主页";
+"tab_settings" = "设置";
 
-// 密码设置
-"password_setup_title" = "设置密码";
-"password_setup_section" = "设置密码";
-"password_setup_enter" = "输入密码";
-"password_setup_confirm" = "确认密码";
-"password_setup_error" = "密码不一致，请重试";
-"password_setup_save" = "保存";
-"password_setup_cancel" = "取消";
+// 主页
+"home_title" = "应用锁";
+"home_locked_count" = "已锁定 %d 个应用";
+"home_unlock" = "解锁全部";
+"home_select_apps" = "选择应用";
+"home_lock" = "锁定应用";
 
-// 数量格式化
-"home_locked_apps_count" = "%d 个应用";
+// 设置
+"settings_title" = "设置";
+"settings_security" = "安全设置";
+"settings_password" = "密码";
+"settings_faceid" = "Face ID";
+"settings_reset" = "重置所有设置";
+"settings_version" = "版本";
