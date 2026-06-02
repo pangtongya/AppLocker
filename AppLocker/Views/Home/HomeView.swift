@@ -16,11 +16,11 @@ struct HomeView: View {
                     .font(.system(size: 80))
                     .foregroundColor(model.selection.applicationTokens.isEmpty ? .blue : .green)
                 
-                Text(model.selection.applicationTokens.isEmpty ? "选择要锁定的应用" : "应用已锁定")
+                Text(model.selection.applicationTokens.isEmpty ? "home_select_apps_title" : "home_apps_locked_title")
                     .font(.title2)
                     .fontWeight(.semibold)
                 
-                Text(model.selection.applicationTokens.isEmpty ? "点击下方按钮选择您想要保护的应用" : "选中的应用已被保护")
+                Text(model.selection.applicationTokens.isEmpty ? "home_select_apps_subtitle" : "home_apps_locked_subtitle")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -30,7 +30,7 @@ struct HomeView: View {
                     Button(action: {
                         isPresentingPicker = true
                     }) {
-                        Label("选择应用", systemImage: "app.badge.checkmark")
+                        Label("home_select_apps_button", systemImage: "app.badge.checkmark")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -43,10 +43,10 @@ struct HomeView: View {
                 
                 if !model.selection.applicationTokens.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("已锁定的应用:")
+                        Text("home_locked_apps_header")
                             .font(.headline)
                         
-                        Text("\(model.selection.applicationTokens.count) 个应用")
+                        Text(String(format: NSLocalizedString("home_locked_apps_count", comment: ""), model.selection.applicationTokens.count))
                             .foregroundColor(.secondary)
                     }
                     .padding()
@@ -62,7 +62,7 @@ struct HomeView: View {
                             showSecurityAlert = true
                         }
                     }) {
-                        Label("锁定应用", systemImage: "lock.fill")
+                        Label("home_lock_apps_button", systemImage: "lock.fill")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -71,20 +71,20 @@ struct HomeView: View {
                             .cornerRadius(12)
                     }
                     .padding(.horizontal)
-                    .alert("需要设置安全验证", isPresented: $showSecurityAlert) {
-                        Button("取消", role: .cancel) { }
-                        Button("去设置") {
+                    .alert("alert_security_title", isPresented: $showSecurityAlert) {
+                        Button("alert_security_cancel", role: .cancel) { }
+                        Button("alert_security_settings") {
                             showSettings = true
                         }
                     } message: {
-                        Text("锁定应用前，请先设置密码或启用Face ID。")
+                        Text("alert_security_message")
                     }
                     
                     Button(action: {
                         // 解锁所有应用
                         model.unblockAllApps()
                     }) {
-                        Label("解锁所有应用", systemImage: "lock.open")
+                        Label("home_unlock_apps_button", systemImage: "lock.open")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -98,7 +98,7 @@ struct HomeView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("应用锁")
+            .navigationTitle("app_title")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: {
                 showSettings = true
