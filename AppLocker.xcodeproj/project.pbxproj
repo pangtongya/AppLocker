@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB4F9606B42BF427801951 /* SettingsView.swift */; };
+		49D495D2E32893D690E7EF5A /* SecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6B8767017564ADDC8697C /* SecurityManager.swift */; };
 		5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2C70B6985A5CD8DBADEAD4 /* Assets.xcassets */; };
 		6F3FF6BA7A36E7B4F94D601E /* AppLockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682C253BCEB4B84679B4310 /* AppLockerTests.swift */; };
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
@@ -32,8 +34,10 @@
 		600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockerModel.swift; sourceTree = "<group>"; };
 		6C66F2C2D536D29202AB3B23 /* AppLocker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AppLocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLocker.entitlements; sourceTree = "<group>"; };
+		ABF6B8767017564ADDC8697C /* SecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityManager.swift; sourceTree = "<group>"; };
 		C376E0F0C047147E51FA5AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D682C253BCEB4B84679B4310 /* AppLockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerTests.swift; sourceTree = "<group>"; };
+		D9CB4F9606B42BF427801951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DE9407F31A4EAF5F3DC064EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FC2C70B6985A5CD8DBADEAD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				130001F0518C552B0DE9D521 /* Home */,
+				D90C3DC27F57CA3E16DB9E1F /* Settings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,8 +98,17 @@
 			isa = PBXGroup;
 			children = (
 				600C7A369C03FF4EA5D0E159 /* AppBlockerModel.swift */,
+				ABF6B8767017564ADDC8697C /* SecurityManager.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D90C3DC27F57CA3E16DB9E1F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D9CB4F9606B42BF427801951 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		DF4108D2F74AF7980D2AC567 /* App */ = {
@@ -119,7 +133,7 @@
 			path = AppLocker;
 			sourceTree = "<group>";
 		};
-		"TEMP_496A7400-D50B-4420-A981-82894276D479" /* Localization */ = {
+		"TEMP_F1A3DF54-3826-422A-8523-CD0200CC75FE" /* Localization */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -225,6 +239,8 @@
 				B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,
 				FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */,
+				49D495D2E32893D690E7EF5A /* SecurityManager.swift in Sources */,
+				210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

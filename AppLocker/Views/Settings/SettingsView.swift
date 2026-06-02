@@ -2,13 +2,13 @@ import SwiftUI
 import LocalAuthentication
 
 struct SettingsView: View {
-    @State private var isPasswordEnabled = false
-    @State private var isFaceIDEnabled = false
-    @State private var password = ""
-    @State private var confirmPassword = ""
     @State private var showPasswordSetup = false
+    @State private var showRemovePasswordAlert = false
+    @State private var isFaceIDEnabled = false
     
     var body: some View {
+        let security = SecurityManager.shared
+        
         NavigationStack {
             List {
                 Section(header: Text("安全设置")) {
@@ -16,19 +16,52 @@ struct SettingsView: View {
                         Label("Face ID", systemImage: "faceid")
                     }
                     .onChange(of: isFaceIDEnabled) { newValue in
-                        if newValue {
-                            authenticateWithFaceID()
+                        Task {
+                            if newValue {
+                                let success = await security.enableFaceID()
+                                if !success {
+                                    isFaceIDEnabled = false
+                                }
+                            } else {
+                                security.disableFaceID()
+                            }
                         }
                     }
                     
                     if !isFaceIDEnabled {
-                        Button(action: {
-                            showPasswordSetup = true
-                        }) {
-                            Label("设置密码", systemImage: "lock")
-                        }
-                        .sheet(isPresented: $showPasswordSetup) {
-                            PasswordSetupView()
+                        if security.isPasswordSet {
+                            Button(action: {
+                                showPasswordSetup = true
+                            }) {
+                                Label("更改密码", systemImage: "lock.rotation")
+                            }
+                            .sheet(isPresented: $showPasswordSetup) {
+                                PasswordSetupView()
+                            }
+                            
+                            Button(action: {
+                                showRemovePasswordAlert = true
+                            }) {
+                                Label("移除密码", systemImage: "lock.open")
+                                    .foregroundColor(.red)
+                            }
+                            .alert("移除密码", isPresented: $showRemovePasswordAlert) {
+                                Button("取消", role: .cancel) { }
+                                Button("移除", role: .destructive) {
+                                    UserDefaults.standard.removeObject(forKey: "AppLockerPassword")
+                                }
+                            } message: {
+                                Text("移除密码后，锁定应用将不再需要密码验证。确定要移除密码吗？")
+                            }
+                        } else {
+                            Button(action: {
+                                showPasswordSetup = true
+                            }) {
+                                Label("设置密码", systemImage: "lock")
+                            }
+                            .sheet(isPresented: $showPasswordSetup) {
+                                PasswordSetupView()
+                            }
                         }
                     }
                 }
@@ -48,24 +81,9 @@ struct SettingsView: View {
             }
             .navigationTitle("设置")
             .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-    
-    func authenticateWithFaceID() {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, 
-                               localizedReason: "使用Face ID保护应用锁") { success, error in
-                DispatchQueue.main.async {
-                    if !success {
-                        isFaceIDEnabled = false
-                    }
-                }
+            .onAppear {
+                isFaceIDEnabled = security.isFaceIDEnabled
             }
-        } else {
-            isFaceIDEnabled = false
         }
     }
 }
@@ -93,8 +111,7 @@ struct PasswordSetupView: View {
                 Section {
                     Button("保存") {
                         if password == confirmPassword && !password.isEmpty {
-                            // 保存密码
-                            UserDefaults.standard.set(password, forKey: "AppLockerPassword")
+                            SecurityManager.shared.setPassword(password)
                             dismiss()
                         } else {
                             showError = true

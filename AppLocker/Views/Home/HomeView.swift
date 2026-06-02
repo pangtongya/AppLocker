@@ -3,9 +3,12 @@ import FamilyControls
 
 struct HomeView: View {
     @State private var isPresentingPicker = false
+    @State private var showSettings = false
+    @State private var showSecurityAlert = false
     
     var body: some View {
         let model = AppBlockerModel.shared
+        let security = SecurityManager.shared
         
         NavigationStack {
             VStack(spacing: 20) {
@@ -53,7 +56,11 @@ struct HomeView: View {
                     
                     Button(action: {
                         // 调用model.blockSelectedApps()来锁定应用
-                        model.blockSelectedApps()
+                        if security.isSecuritySetUp() {
+                            model.blockSelectedApps()
+                        } else {
+                            showSecurityAlert = true
+                        }
                     }) {
                         Label("锁定应用", systemImage: "lock.fill")
                             .font(.headline)
@@ -64,6 +71,14 @@ struct HomeView: View {
                             .cornerRadius(12)
                     }
                     .padding(.horizontal)
+                    .alert("需要设置安全验证", isPresented: $showSecurityAlert) {
+                        Button("取消", role: .cancel) { }
+                        Button("去设置") {
+                            showSettings = true
+                        }
+                    } message: {
+                        Text("锁定应用前，请先设置密码或启用Face ID。")
+                    }
                     
                     Button(action: {
                         // 解锁所有应用
@@ -86,7 +101,7 @@ struct HomeView: View {
             .navigationTitle("应用锁")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button(action: {
-                // 打开设置页面
+                showSettings = true
             }) {
                 Image(systemName: "gearshape")
             })
@@ -95,6 +110,9 @@ struct HomeView: View {
                     get: { model.selection },
                     set: { model.selection = $0 }
                 ))
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
             .onAppear {
                 model.loadSelection()
