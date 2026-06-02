@@ -7,28 +7,28 @@ struct GuideView: View {
     let pages: [GuidePage] = [
         GuidePage(
             icon: "lock.shield.fill",
-            title: "欢迎使用应用锁",
-            description: "为您的隐私应用添加密码或Face ID保护，防止他人未经授权访问。"
+            title: "guide_welcome_title",
+            description: "guide_welcome_desc"
         ),
         GuidePage(
             icon: "checkmark.shield.fill",
-            title: "授权屏幕使用时间",
-            description: "应用需要您的授权才能管理应用访问权限。请在系统提示中允许授权。"
+            title: "guide_authorize_title",
+            description: "guide_authorize_desc"
         ),
         GuidePage(
             icon: "key.fill",
-            title: "设置安全验证",
-            description: "前往设置页面，设置密码或启用Face ID，确保只有您可以解锁应用。"
+            title: "guide_security_title",
+            description: "guide_security_desc"
         ),
         GuidePage(
             icon: "app.badge.checkmark",
-            title: "选择要锁定的应用",
-            description: "点击主页面的「选择应用」按钮，从列表中选择您想要保护的应用。"
+            title: "guide_select_title",
+            description: "guide_select_desc"
         ),
         GuidePage(
             icon: "lock.fill",
-            title: "锁定应用",
-            description: "选择完应用后，点击「锁定应用」按钮。现在这些应用需要验证才能打开！"
+            title: "guide_lock_title",
+            description: "guide_lock_desc"
         )
     ]
     
@@ -54,7 +54,7 @@ struct GuideView: View {
                     dismiss()
                 }
             }) {
-                Text(currentPage < pages.count - 1 ? "下一步" : "开始使用")
+                Text(currentPage < pages.count - 1 ? "guide_next_button" : "guide_get_started_button")
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -71,8 +71,8 @@ struct GuideView: View {
 
 struct GuidePage {
     let icon: String
-    let title: String
-    let description: String
+    let title: LocalizedStringKey
+    let description: LocalizedStringKey
 }
 
 struct GuidePageView: View {

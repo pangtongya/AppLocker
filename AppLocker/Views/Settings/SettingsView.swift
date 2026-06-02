@@ -11,9 +11,9 @@ struct SettingsView: View {
         
         NavigationStack {
             List {
-                Section(header: Text("安全设置")) {
+                Section(header: Text("settings_security_section")) {
                     Toggle(isOn: $isFaceIDEnabled) {
-                        Label("Face ID", systemImage: "faceid")
+                        Label("settings_face_id", systemImage: "faceid")
                     }
                     .onChange(of: isFaceIDEnabled) { _, newValue in
                         Task {
@@ -33,7 +33,7 @@ struct SettingsView: View {
                             Button(action: {
                                 showPasswordSetup = true
                             }) {
-                                Label("更改密码", systemImage: "lock.rotation")
+                                Label("settings_change_password", systemImage: "lock.rotation")
                             }
                             .sheet(isPresented: $showPasswordSetup) {
                                 PasswordSetupView()
@@ -42,22 +42,22 @@ struct SettingsView: View {
                             Button(action: {
                                 showRemovePasswordAlert = true
                             }) {
-                                Label("移除密码", systemImage: "lock.open")
+                                Label("settings_remove_password", systemImage: "lock.open")
                                     .foregroundColor(.red)
                             }
-                            .alert("移除密码", isPresented: $showRemovePasswordAlert) {
-                                Button("取消", role: .cancel) { }
-                                Button("移除", role: .destructive) {
+                            .alert("alert_remove_password_title", isPresented: $showRemovePasswordAlert) {
+                                Button("alert_remove_password_cancel", role: .cancel) { }
+                                Button("alert_remove_password_remove", role: .destructive) {
                                     UserDefaults.standard.removeObject(forKey: "AppLockerPassword")
                                 }
                             } message: {
-                                Text("移除密码后，锁定应用将不再需要密码验证。确定要移除密码吗？")
+                                Text("alert_remove_password_message")
                             }
                         } else {
                             Button(action: {
                                 showPasswordSetup = true
                             }) {
-                                Label("设置密码", systemImage: "lock")
+                                Label("settings_set_password", systemImage: "lock")
                             }
                             .sheet(isPresented: $showPasswordSetup) {
                                 PasswordSetupView()
@@ -66,20 +66,20 @@ struct SettingsView: View {
                     }
                 }
                 
-                Section(header: Text("关于")) {
+                Section(header: Text("settings_about_section")) {
                     HStack {
-                        Label("版本", systemImage: "info.circle")
+                        Label("settings_version", systemImage: "info.circle")
                         Spacer()
                         Text("1.0.0")
                             .foregroundColor(.secondary)
                     }
                     
                     Link(destination: URL(string: "https://pangtongya.github.io/AppLocker/")!) {
-                        Label("隐私政策", systemImage: "doc.text")
+                        Label("settings_privacy_policy", systemImage: "doc.text")
                     }
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("settings_title")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 isFaceIDEnabled = security.isFaceIDEnabled
@@ -97,19 +97,19 @@ struct PasswordSetupView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("设置密码")) {
-                    SecureField("输入密码", text: $password)
-                    SecureField("确认密码", text: $confirmPassword)
+                Section(header: Text("password_setup_section")) {
+                    SecureField("password_setup_enter", text: $password)
+                    SecureField("password_setup_confirm", text: $confirmPassword)
                 }
                 
                 if showError {
-                    Text("密码不一致，请重试")
+                    Text("password_setup_error")
                         .foregroundColor(.red)
                         .font(.caption)
                 }
                 
                 Section {
-                    Button("保存") {
+                    Button("password_setup_save") {
                         if password == confirmPassword && !password.isEmpty {
                             SecurityManager.shared.setPassword(password)
                             dismiss()
@@ -119,11 +119,11 @@ struct PasswordSetupView: View {
                     }
                 }
             }
-            .navigationTitle("设置密码")
+            .navigationTitle("password_setup_title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("取消") {
+                    Button("password_setup_cancel") {
                         dismiss()
                     }
                 }
