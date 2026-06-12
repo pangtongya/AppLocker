@@ -13,11 +13,11 @@ struct ContentView: View {
         case stats = "stats"
         case settings = "settings"
 
-        var title: String {
+            var title: String {
             switch self {
-            case .home: return "主页"
-            case .stats: return "统计"
-            case .settings: return "设置"
+            case .home: return NSLocalizedString("tab_home", comment: "")
+            case .stats: return NSLocalizedString("tab_stats", comment: "")
+            case .settings: return NSLocalizedString("tab_settings", comment: "")
             }
         }
 

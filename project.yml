@@ -5,14 +5,13 @@ options:
     iOS: "17.0"
   xcodeVersion: "16.0"
   generateEmptyDirectories: true
-  groupSortPosition: top
 
 settings:
   base:
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "6.0"
-    SWIFT_STRICT_CONCURRENCY: minimal
+    SWIFT_STRICT_CONCURRENCY: complete
     DEVELOPMENT_TEAM: "2ZNZRXNPWQ"
     CODE_SIGN_STYLE: Automatic
     INFOPLIST_KEY_CFBundleDisplayName: "应用锁"
@@ -30,7 +29,7 @@ targets:
           - "**/.DS_Store"
     settings:
       base:
-        INFOPLIST_FILE: AppLocker/Info.plist
+        GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.pangtong.applocker
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
@@ -52,7 +51,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.pangtong.applocker.tests
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/AppLocker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppLocker"
         BUNDLE_LOADER: "$(TEST_HOST)"
-        GENERATE_INFO_PLIST_FILE: YES
+        GENERATE_INFOPLIST_FILE: YES
         SWIFT_EMIT_LOC_STRINGS: YES
         CODE_SIGN_ENTITLEMENTS: ""
     dependencies:

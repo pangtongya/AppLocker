@@ -1,25 +1,35 @@
-// Guide
-"guide_welcome_title" = "Welcome to AppLocker";
-"guide_welcome_subtitle" = "Protect your private apps with password or Face ID";
+// Guide (Focus Mode Positioning)
+"guide_welcome_title" = "Welcome to Focus Mode";
+"guide_welcome_subtitle" = "Pick distractions, set focus time, make every minute count.";
 "guide_auth_title" = "Request Permission";
-"guide_auth_subtitle" = "We need Screen Time permission to lock apps. This is a system requirement.";
-"guide_select_title" = "Select Apps";
-"guide_select_subtitle" = "Choose which apps you want to protect from the system app list.";
-"guide_lock_title" = "Lock Apps";
-"guide_lock_subtitle" = "Once locked, these apps require password or Face ID to open.";
+"guide_auth_subtitle" = "We need Screen Time permission to block apps. This is a system requirement.";
+"guide_select_title" = "Select Distracting Apps";
+"guide_select_subtitle" = "Choose apps that distract you. They'll be blocked during focus sessions.";
+"guide_lock_title" = "Start Focusing";
+"guide_lock_subtitle" = "Once started, selected apps will be blocked until your timer ends.";
 "guide_ready_title" = "You're All Set";
-"guide_ready_subtitle" = "Your apps are now protected. Enjoy your privacy!";
+"guide_ready_subtitle" = "Your focus assistant is ready. Let's get productive!";
 "guide_next" = "Next";
 "guide_skip" = "Skip";
 "guide_start" = "Get Started";
+
+// Guide - Authorization (supplement)
+"guide_auth_alert_title" = "Authorization Required";
+"guide_auth_go_settings" = "Go to Settings";
+"guide_auth_approved" = "Authorized, Continue";
+"guide_auth_denied" = "Authorize in Settings";
+"guide_auth_request" = "Request Screen Time Access";
+"guide_start_use" = "Start Using";
+"guide_auth_denied_msg" = "Please go to iPhone Settings > Screen Time and allow AppLocker to use Screen Time permission, or skip and set up later.";
+"guide_auth_failed_msg" = "Authorization failed. Please make sure Screen Time is enabled in Settings > Screen Time, and allow AppLocker access.";
 
 // Tabs
 "tab_home" = "Home";
 "tab_settings" = "Settings";
 
-// Home
-"home_title" = "AppLocker";
-"home_locked_count" = "%d apps locked";
+// Home (Focus Mode Positioning)
+"home_title" = "Focus Mode";
+"home_locked_count" = "%d apps blocked";
 "home_unlock" = "Unlock All";
 "home_select_apps" = "Select Apps";
 "home_lock" = "Lock Apps";
@@ -57,3 +67,138 @@
 "stats_period_week" = "This Week";
 "stats_period_month" = "This Month";
 "stats_period_all" = "All";
+
+// Home - Hero Section (Focus Mode Positioning)
+"home_hero_title" = "Focus Mode";
+"home_hero_subtitle" = "Set time, block distractions, get things done.";
+
+// Home - Duration Picker
+"home_duration_label" = "Focus Duration";
+"home_minutes_format" = "%d min";
+"home_custom" = "Custom";
+"home_selected_custom" = "%d min";
+"home_custom_title" = "Custom Duration";
+"home_custom_value" = "%d min";
+"home_custom_zero" = "0 min";
+"home_custom_stepper" = "+/- 5 minutes each step";
+"home_custom_input_placeholder" = "Enter minutes";
+"home_confirm" = "Confirm";
+"home_cancel" = "Cancel";
+"home_select_apps" = "Select Apps";
+"home_done" = "Done";
+
+// Home - App Selection
+"home_apps_selected" = "%d apps selected";
+"home_select_apps_prompt" = "Select apps to block during focus";
+"home_tap_to_change" = "Tap to change";
+"home_from_system_list" = "Choose from system list";
+
+// Home - Lock Button
+"home_lock_button" = "Start Focus (%d min)";
+
+// Home - Lock Status (Focus Mode)
+"home_status_locking" = "Focusing";
+"home_remaining" = "%d min remaining";
+"home_apps_locked_count" = "%d apps blocked";
+"home_early_unlock" = "End Focus";
+
+// Home - Unlock Alert
+"home_unlock_alert_title" = "End Focus Session";
+"home_use_faceid" = "Use Face ID";
+"home_enter_password" = "Enter Password";
+"home_confirm_btn" = "Confirm";
+"home_password_wrong" = "Wrong password, try again";
+"home_unlock_message" = "Focus time remaining. Verify to end early";
+
+// Home - Stats Cards
+"home_today_overview" = "Today's Focus";
+"home_unit_minutes" = "min";
+"home_unit_sessions" = "sessions";
+"home_week_achievement" = "Weekly Achievement";
+"home_full_stats" = "Full Stats";
+"home_unit_days_streak" = "day streak";
+"home_unit_total_mins" = "min";
+"home_unit_session_count" = "sessions";
+
+// Tab titles (supplement)
+"tab_stats" = "Stats";
+
+// Date labels
+"date_today" = "Today";
+"date_yesterday" = "Yesterday";
+"date_weekday_format" = "%@";
+
+// Stats units
+"stats_unit_minutes" = "%d min";
+"stats_unit_sessions" = "%d sessions";
+"stats_unit_days" = "%d days";
+"stats_unit_percent" = "%d%%";
+"stats_unit_min_per_day" = "%d min/day";
+
+// Goal display
+"stats_goal_format" = "Goal: %.1f min/day";
+
+// Settings - Section headers
+"settings_section_security" = "Security";
+"settings_section_feature" = "Features";
+"settings_section_data" = "Data";
+"settings_section_about" = "About";
+
+// Settings - Security
+"settings_password_title" = "Password Protection";
+"settings_password_set" = "Set";
+"settings_password_not_set" = "Not Set";
+"settings_faceid_enabled" = "Enabled";
+"settings_faceid_disabled" = "Disabled";
+
+// Settings - Features
+"settings_weekly_goal" = "Weekly Goal";
+"settings_weekly_goal_value" = "%d min/wk";
+"settings_weekly_goal_editor_title" = "Weekly Goal Duration";
+"settings_weekly_goal_desc" = "Set a weekly locking goal. Stats page will show progress.";
+"settings_custom_label" = "Custom:";
+"settings_custom_unit" = "min/wk";
+
+// Settings - Data
+"settings_export_data" = "Export Data";
+"settings_export_subtitle" = "CSV format, open with Excel";
+"settings_reset_all" = "Reset All";
+"settings_reset_subtitle" = "Unlock all apps and clear data";
+
+// Settings - About
+"settings_version_label" = "Version";
+"settings_version_value" = "1.0";
+
+// Password Setup Sheet
+"password_set_title" = "Password Set";
+"password_set_desc" = "Enter new password to change, or tap delete to remove protection.";
+"password_new_placeholder" = "New Password";
+"password_confirm_placeholder" = "Confirm New";
+"password_delete_btn" = "Delete Password";
+"password_close" = "Close";
+"password_save_changes" = "Save Changes";
+"password_setup_title" = "Set Password";
+"password_setup_desc" = "Password will be required for unlocking.";
+"password_input_placeholder" = "Enter password";
+"password_confirm_placeholder2" = "Confirm password";
+"password_mismatch" = "Passwords don't match, try again";
+"password_save" = "Save";
+"password_sheet_title" = "Password Settings";
+"password_delete_confirm_title" = "Delete Password?";
+"password_delete_confirm_msg" = "After deletion, unlocking will no longer require password. Continue?";
+"password_delete_btn_alert" = "Delete";
+"password_cancel" = "Cancel";
+
+// Reset confirmation Alert
+"reset_confirm_title" = "Reset Confirmation";
+"reset_confirm_message" = "This will clear all settings and unlock all apps. Are you sure?";
+"reset_action" = "Reset";
+
+// Goal editor
+"goal_editor_target" = "Target Duration";
+
+// Notifications
+"notif_lock_expired_title" = "Lock Ended";
+"notif_lock_expired_body" = "Your %d-minute lock session has ended. Apps are now unlocked.";
+"notif_unlock_title" = "Apps Unlocked";
+"notif_unlock_body" = "Lock time is up. All apps are now available.";

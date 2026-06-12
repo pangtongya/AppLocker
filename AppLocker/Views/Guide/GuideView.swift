@@ -42,13 +42,13 @@ struct GuideView: View {
                 bottomSection
             }
         }
-        .alert("需要授权", isPresented: $showAuthAlert) {
-            Button("去设置") {
+        .alert(LocalizedStringKey("guide_auth_alert_title"), isPresented: $showAuthAlert) {
+            Button(LocalizedStringKey("guide_auth_go_settings")) {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button(LocalizedStringKey("guide_cancel"), role: .cancel) { }
         } message: {
             Text(authErrorMsg)
         }
@@ -143,14 +143,14 @@ struct GuideView: View {
         if currentPage == 1 {
             switch shieldManager.authorizationStatus {
             case .approved:
-                return "已授权，继续"
+                return NSLocalizedString("guide_auth_approved", comment: "")
             case .denied:
-                return "去设置中授权"
+                return NSLocalizedString("guide_auth_denied", comment: "")
             case .notDetermined:
-                return "授权屏幕使用时间"
+                return NSLocalizedString("guide_auth_request", comment: "")
             }
         }
-        return currentPage == pages.count - 2 ? "开始使用" : "下一步"
+        return currentPage == pages.count - 2 ? NSLocalizedString("guide_start_use", comment: "") : NSLocalizedString("guide_next", comment: "")
     }
 
     private func handleNext() {
@@ -160,7 +160,7 @@ struct GuideView: View {
                 advancePage()
             case .denied:
                 // 已被拒绝，引导用户去设置
-                authErrorMsg = "请在 iPhone「设置」>「屏幕使用时间」中允许「应用锁」使用屏幕使用时间权限，或先跳过稍后再设置。"
+                authErrorMsg = NSLocalizedString("guide_auth_denied_msg", comment: "")
                 showAuthAlert = true
             case .notDetermined:
                 requestAuth()
@@ -178,7 +178,7 @@ struct GuideView: View {
             if authorized {
                 advancePage()
             } else {
-                authErrorMsg = "授权失败。请确保在「设置」>「屏幕使用时间」中开启屏幕使用时间，并允许「应用锁」访问。"
+                authErrorMsg = NSLocalizedString("guide_auth_failed_msg", comment: "")
                 showAuthAlert = true
             }
         }

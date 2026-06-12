@@ -165,8 +165,8 @@ class LockStore: ObservableObject {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { _, _ in }
         let content = UNMutableNotificationContent()
-        content.title = "锁定结束"
-        content.body = "设定的 \(minutes) 分钟已到，应用已解锁"
+        content.title = NSLocalizedString("notif_lock_expired_title", comment: "")
+        content.body = String(format: NSLocalizedString("notif_lock_expired_body", comment: ""), minutes)
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(minutes * 60), repeats: false)
@@ -183,8 +183,8 @@ class LockStore: ObservableObject {
     private func sendUnlockNotification() {
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
-        content.title = "应用已解锁"
-        content.body = "锁定时间已到，所有应用已恢复正常使用"
+        content.title = NSLocalizedString("notif_unlock_title", comment: "")
+        content.body = NSLocalizedString("notif_unlock_body", comment: "")
         content.sound = .default
 
         let request = UNNotificationRequest(identifier: "lock-unlock", content: content, trigger: nil)

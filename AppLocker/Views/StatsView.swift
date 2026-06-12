@@ -144,7 +144,7 @@ struct StatsView: View {
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
                 Spacer()
-                Text("目标: \(Double(appState.weeklyGoalMinutes) / 7.0, specifier: "%.1f")分钟/天")
+                                Text(String(format: NSLocalizedString("stats_goal_format", comment: ""), Double(appState.weeklyGoalMinutes) / 7.0))
                     .font(.system(size: 11, weight: .regular, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -288,27 +288,27 @@ struct StatsView: View {
 
     private var averageMinutesText: String {
         let sessions = filteredSessions
-        guard !sessions.isEmpty else { return "0 分钟" }
+        guard !sessions.isEmpty else { return String(format: NSLocalizedString("stats_unit_minutes", comment: ""), 0) }
         let avg = sessions.reduce(0) { $0 + $1.actualMinutes } / sessions.count
-        return "\(avg) 分钟"
+        return String(format: NSLocalizedString("stats_unit_minutes", comment: ""), avg)
     }
 
     private var longestSessionText: String {
         let sessions = filteredSessions
         guard let longest = sessions.max(by: { $0.actualMinutes < $1.actualMinutes }) else {
-            return "0 分钟"
+            return String(format: NSLocalizedString("stats_unit_minutes", comment: ""), 0)
         }
-        return "\(longest.actualMinutes) 分钟"
+        return String(format: NSLocalizedString("stats_unit_minutes", comment: ""), longest.actualMinutes)
     }
 
     private var averageDailyMinutesText: String {
         let sessions = filteredSessions
-        guard !sessions.isEmpty else { return "0 分钟" }
+        guard !sessions.isEmpty else { return String(format: NSLocalizedString("stats_unit_min_per_day", comment: ""), 0) }
         let calendar = Calendar.current
         let uniqueDays = Set(sessions.map { calendar.startOfDay(for: $0.startedAt) }).count
-        guard uniqueDays > 0 else { return "0 分钟" }
+        guard uniqueDays > 0 else { return String(format: NSLocalizedString("stats_unit_min_per_day", comment: ""), 0) }
         let totalMinutes = sessions.reduce(0) { $0 + $1.actualMinutes }
-        return "\(totalMinutes / uniqueDays) 分钟/天"
+                return String(format: NSLocalizedString("stats_unit_min_per_day", comment: ""), totalMinutes / uniqueDays)
     }
 
     private var completionRateText: String {
@@ -339,12 +339,12 @@ struct StatsView: View {
         let now = Date()
         let daysAgo = calendar.dateComponents([.day], from: date, to: now).day ?? 0
 
-        if daysAgo == 0 { return "今天" }
-        if daysAgo == 1 { return "昨天" }
+        if daysAgo == 0 { return NSLocalizedString("date_today", comment: "") }
+        if daysAgo == 1 { return NSLocalizedString("date_yesterday", comment: "") }
 
         let weekday = calendar.component(.weekday, from: date)
         let weekdays = ["日", "一", "二", "三", "四", "五", "六"]
-        return "周\(weekdays[weekday - 1])"
+        return String(format: NSLocalizedString("date_weekday_format", comment: ""), weekdays[weekday - 1])
     }
 
     // MARK: - CSV 导出

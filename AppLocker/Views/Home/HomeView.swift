@@ -41,7 +41,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("应用锁")
+                    Text(LocalizedStringKey("home_title"))
                         .font(.system(size: 18, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                 }
@@ -56,25 +56,25 @@ struct HomeView: View {
                     get: { shieldManager.selection },
                     set: { shieldManager.selection = $0 }
                 ))
-                .navigationTitle("选择应用")
+                .navigationTitle(LocalizedStringKey("home_select_apps"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("完成") { isPickerPresented = false }
+                        Button(LocalizedStringKey("home_done")) { isPickerPresented = false }
                     }
                 }
             }
             .presentationDetents([.large])
         }
-        .alert("提前解锁", isPresented: $showUnlockAuth) {
+        .alert(LocalizedStringKey("home_unlock_alert_title"), isPresented: $showUnlockAuth) {
             if authManager.isFaceIDEnabled {
-                Button("使用 Face ID") {
+                Button(LocalizedStringKey("home_use_faceid")) {
                     Task { await performBiometricUnlock() }
                 }
             }
             if authManager.isPasswordSet {
-                SecureField("输入密码", text: $unlockPassword)
-                Button("确认") {
+                SecureField(LocalizedStringKey("home_enter_password"), text: $unlockPassword)
+                Button(LocalizedStringKey("home_confirm_btn")) {
                     if authManager.verifyPassword(unlockPassword) {
                         lockStore.unlockManually()
                         unlockPassword = ""
@@ -84,11 +84,11 @@ struct HomeView: View {
                     }
                 }
             }
-            Button("取消", role: .cancel) {
+            Button(LocalizedStringKey("home_cancel"), role: .cancel) {
                 unlockPassword = ""
             }
         } message: {
-            Text(showPasswordFail ? "密码错误，请重试" : "锁定时间未到，验证身份后可以提前解锁")
+            Text(showPasswordFail ? LocalizedStringKey("home_password_wrong") : LocalizedStringKey("home_unlock_message"))
         }
     }
 
@@ -109,11 +109,11 @@ struct HomeView: View {
                         .foregroundColor(.lockerBlue)
                 }
 
-                Text("锁定干扰 App")
+                Text(LocalizedStringKey("home_hero_title"))
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
 
-                Text("设定时间，一键锁定，专注眼前事")
+                Text(LocalizedStringKey("home_hero_subtitle"))
                     .font(.system(size: 14, weight: .regular, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -134,7 +134,7 @@ struct HomeView: View {
     private var durationPicker: some View {
         VStack(spacing: 10) {
             HStack {
-                Text("锁定时间")
+                Text(LocalizedStringKey("home_duration_label"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
                 Spacer()
@@ -156,7 +156,7 @@ struct HomeView: View {
                     VStack(spacing: 4) {
                         Image(systemName: selectedMinutes > 90 ? "checkmark.circle.fill" : "plus.circle.fill")
                             .font(.system(size: 20))
-                        Text(selectedMinutes > 90 ? "\(selectedMinutes)分钟" : "自定义")
+                                                Text(selectedMinutes > 90 ? String(format: NSLocalizedString("home_selected_custom", comment: ""), selectedMinutes) : NSLocalizedString("home_custom", comment: ""))
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                     }
                     .foregroundColor(selectedMinutes > 90 ? .white : Color.lockerOrange)
@@ -186,7 +186,7 @@ struct HomeView: View {
             VStack(spacing: 4) {
                 Text(icons[minutes] ?? "⏱")
                     .font(.system(size: 20))
-                Text("\(minutes)分钟")
+                Text(String(format: NSLocalizedString("home_minutes_format", comment: ""), minutes))
                     .font(.system(size: 14, weight: .medium, design: .rounded))
             }
             .foregroundColor(isSelected ? .white : .primary)
@@ -213,10 +213,10 @@ struct HomeView: View {
                 Spacer()
 
                 VStack(spacing: 16) {
-                    Text("自定义锁定时间")
+                    Text(LocalizedStringKey("home_custom_title"))
                         .font(.system(size: 22, weight: .bold, design: .rounded))
 
-                    Text("\(customMinutes.isEmpty ? "0" : customMinutes) 分钟")
+                    Text(String(format: NSLocalizedString("home_custom_value", comment: ""), Int(customMinutes) ?? 0))
                         .font(.system(size: 48, weight: .thin, design: .monospaced))
                         .foregroundColor(.primary)
                         .animation(.spring(), value: customMinutes)
@@ -225,7 +225,7 @@ struct HomeView: View {
                         HStack(spacing: 8) {
                             ForEach(presetDurations, id: \.self) { duration in
                                 Button(action: { customMinutes = "\(duration)" }) {
-                                    Text("\(duration)分钟")
+                                        Text(String(format: NSLocalizedString("home_minutes_format", comment: ""), duration))
                                         .font(.system(size: 13, weight: .medium, design: .rounded))
                                         .foregroundColor(Int(customMinutes) == duration ? .white : .primary)
                                         .padding(.horizontal, 12)
@@ -246,13 +246,13 @@ struct HomeView: View {
                         get: { Int(customMinutes) ?? 0 },
                         set: { customMinutes = "\($0)" }
                     ), in: 1...480, step: 5) {
-                        Text("每次增减 5 分钟")
+                            Text(LocalizedStringKey("home_custom_stepper"))
                             .font(.system(size: 14, weight: .regular, design: .rounded))
                             .foregroundColor(.secondary)
                     }
                     .padding(.horizontal, 20)
 
-                    TextField("输入分钟数", text: $customMinutes)
+                                        TextField(LocalizedStringKey("home_custom_input_placeholder"), text: $customMinutes)
                         .font(.system(size: 17, weight: .regular, design: .rounded))
                         .multilineTextAlignment(.center)
                         .keyboardType(.numberPad)
@@ -270,7 +270,7 @@ struct HomeView: View {
                         showCustomDuration = false
                     }
                 }) {
-                    Text("确认")
+                    Text(LocalizedStringKey("home_confirm"))
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -285,7 +285,7 @@ struct HomeView: View {
             .background(Color(.systemBackground).ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("取消") { showCustomDuration = false }
+                                        Button(LocalizedStringKey("home_cancel")) { showCustomDuration = false }
                 }
             }
         }
@@ -309,10 +309,10 @@ struct HomeView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(shieldManager.lockedAppCount > 0 ? "已选择 \(shieldManager.lockedAppCount) 个应用" : "选择要锁定的应用")
+                                        Text(shieldManager.lockedAppCount > 0 ? String(format: NSLocalizedString("home_apps_selected", comment: ""), shieldManager.lockedAppCount) : NSLocalizedString("home_select_apps_prompt", comment: ""))
                         .font(.system(size: 15, weight: .semibold, design: .rounded))
                         .foregroundColor(.primary)
-                    Text(shieldManager.lockedAppCount > 0 ? "点击更换" : "从系统列表中选择")
+                                        Text(shieldManager.lockedAppCount > 0 ? LocalizedStringKey("home_tap_to_change") : LocalizedStringKey("home_from_system_list"))
                         .font(.system(size: 12, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
                 }
@@ -347,7 +347,7 @@ struct HomeView: View {
             HStack(spacing: 10) {
                 Image(systemName: "lock.fill")
                     .font(.system(size: 14, weight: .semibold))
-                Text("锁定 \(selectedMinutes) 分钟")
+                                Text(String(format: NSLocalizedString("home_lock_button", comment: ""), selectedMinutes))
                     .font(.system(size: 16, weight: .bold, design: .rounded))
             }
             .foregroundColor(.white)
@@ -388,7 +388,7 @@ struct HomeView: View {
                         .fill(Color.lockerGreen.opacity(0.2))
                         .frame(width: 10, height: 10)
                 }
-                Text("锁定中")
+                Text(LocalizedStringKey("home_status_locking"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.lockerGreen)
                 Spacer()
@@ -402,11 +402,11 @@ struct HomeView: View {
                         .foregroundColor(.primary)
                         .monospacedDigit()
 
-                    Text("剩余 \(session.plannedMinutes) 分钟锁定")
+                                        Text(String(format: NSLocalizedString("home_remaining", comment: ""), session.plannedMinutes))
                         .font(.system(size: 13, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
 
-                    Text("\(session.appCount) 个应用已锁定")
+                                        Text(String(format: NSLocalizedString("home_apps_locked_count", comment: ""), session.appCount))
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(.lockerGreen)
                 }
@@ -425,7 +425,7 @@ struct HomeView: View {
                     HStack(spacing: 8) {
                         Image(systemName: "lock.open")
                             .font(.system(size: 14, weight: .semibold))
-                        Text("提前解锁")
+                                                Text(LocalizedStringKey("home_early_unlock"))
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                     }
                     .foregroundColor(.lockerOrange)
@@ -460,16 +460,16 @@ struct HomeView: View {
     private var todayStatsCard: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("今日概览")
+                                Text(LocalizedStringKey("home_today_overview"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
                 Spacer()
             }
 
             HStack(spacing: 0) {
-                statItem(value: "\(lockStore.todayTotalMinutes)", unit: "分钟", icon: "clock.fill", color: .lockerBlue, trend: .up)
+                                statItem(value: "\(lockStore.todayTotalMinutes)", unit: NSLocalizedString("home_unit_minutes", comment: ""), icon: "clock.fill", color: .lockerBlue, trend: .up)
                 Divider().frame(height: 40).background(Color.gray.opacity(0.3))
-                statItem(value: "\(lockStore.todaySessions.count)", unit: "次锁定", icon: "lock.fill", color: .lockerOrange, trend: .up)
+                statItem(value: "\(lockStore.todaySessions.count)", unit: NSLocalizedString("home_unit_sessions", comment: ""), icon: "lock.fill", color: .lockerOrange, trend: .up)
             }
         }
         .padding(20)
@@ -480,7 +480,7 @@ struct HomeView: View {
     private var weekStatsCard: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("本周成就")
+                                Text(LocalizedStringKey("home_week_achievement"))
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundColor(.primary)
                 Spacer()
@@ -489,18 +489,18 @@ struct HomeView: View {
                         .environmentObject(appState)
                         .environmentObject(lockStore)
                 } label: {
-                    Text("完整统计")
+                                        Text(LocalizedStringKey("home_full_stats"))
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(.lockerBlue)
                 }
             }
 
             HStack(spacing: 0) {
-                statItem(value: "\(lockStore.weekTotalMinutes)", unit: "分钟", icon: "flame.fill", color: .lockerOrange, trend: .up)
+                statItem(value: "\(lockStore.weekTotalMinutes)", unit: NSLocalizedString("home_unit_minutes", comment: ""), icon: "flame.fill", color: .lockerOrange, trend: .up)
                 Divider().frame(height: 40).background(Color.gray.opacity(0.3))
-                statItem(value: "\(lockStore.weekSessions.count)", unit: "次锁定", icon: "lock.fill", color: .lockerBlue, trend: .up)
+                statItem(value: "\(lockStore.weekSessions.count)", unit: NSLocalizedString("home_unit_session_count", comment: ""), icon: "lock.fill", color: .lockerBlue, trend: .up)
                 Divider().frame(height: 40).background(Color.gray.opacity(0.3))
-                statItem(value: "\(lockStore.currentStreak)", unit: "天连胜", icon: "bolt.fill", color: .lockerGreen, trend: lockStore.currentStreak > 0 ? .up : .neutral)
+                statItem(value: "\(lockStore.currentStreak)", unit: NSLocalizedString("home_unit_days_streak", comment: ""), icon: "bolt.fill", color: .lockerGreen, trend: lockStore.currentStreak > 0 ? .up : .neutral)
             }
         }
         .padding(20)

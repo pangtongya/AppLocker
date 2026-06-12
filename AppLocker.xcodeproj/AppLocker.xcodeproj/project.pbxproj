@@ -22,6 +22,7 @@
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
 		A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35ABD1B9465E56EDA666806 /* LockStore.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
+		B951E6DDF51AB59712F08995 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C376E0F0C047147E51FA5AF7 /* Info.plist */; };
 		C5CC7DD0292381B9E3A098A2 /* LockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDA76867CAA23E36352B06 /* LockSession.swift */; };
 		F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606CE173DFA60FE9CA319119 /* Localization.swift */; };
 		FA1231821148CB376E8C8BEE /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EAC91A58CFD1B293F1910C /* ActivityView.swift */; };
@@ -79,7 +80,8 @@
 			children = (
 				D682C253BCEB4B84679B4310 /* AppLockerTests.swift */,
 			);
-			path = AppLockerTests;
+			name = AppLockerTests;
+			path = ../AppLockerTests;
 			sourceTree = "<group>";
 		};
 		50DB17CB622920E3377A36A2 /* Localization */ = {
@@ -212,7 +214,8 @@
 				8B6DF3FDA9B1050AA3BD851A /* Utilities */,
 				AD7475D64AF286F17FB08738 /* Views */,
 			);
-			path = AppLocker;
+			name = AppLocker;
+			path = ../AppLocker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */,
+				B951E6DDF51AB59712F08995 /* Info.plist in Resources */,
 				1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,7 +391,7 @@
 				CODE_SIGN_ENTITLEMENTS = AppLocker/AppLocker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AppLocker/Info.plist;
+				INFOPLIST_FILE = ../AppLocker/Info.plist;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -428,7 +432,7 @@
 				CODE_SIGN_ENTITLEMENTS = AppLocker/AppLocker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AppLocker/Info.plist;
+				INFOPLIST_FILE = ../AppLocker/Info.plist;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
