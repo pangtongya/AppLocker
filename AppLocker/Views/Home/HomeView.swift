@@ -60,7 +60,12 @@ struct HomeView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(LocalizedStringKey("home_done")) { isPickerPresented = false }
+                        Button(LocalizedStringKey("home_done")) {
+                            // 更新计数：应用+类别+网站
+                            shieldManager.lockedAppCount = shieldManager.selection.applicationTokens.count + shieldManager.selection.categoryTokens.count + shieldManager.selection.webDomainTokens.count
+                            print("[HomeView] User finished selecting: \(shieldManager.lockedAppCount) items selected")
+                            isPickerPresented = false
+                        }
                     }
                 }
             }

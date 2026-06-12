@@ -20,7 +20,8 @@ class ShieldManager: ObservableObject {
     private let selectionKey = "BlockedAppsSelection"
 
     private init() {
-        loadSelection()
+        // 暂时不加载选择（FamilyActivitySelection 无法编码持久化）
+        // loadSelection()
         Task {
             await refreshAuthorization()
         }
@@ -110,11 +111,14 @@ class ShieldManager: ObservableObject {
             print("[ShieldManager] Not authorized to lock apps")
             return
         }
-        store.shield.applications = selection.applicationTokens
-        store.shield.webDomains = selection.webDomainTokens
-        lockedAppCount = selection.applicationTokens.count
-        saveSelection()
-        print("[ShieldManager] Locked \(lockedAppCount) apps")
+        // 屏蔽应用和网站（类别屏蔽需要单独处理）
+        store.shield.applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
+        store.shield.webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
+        
+        // 更新计数（包括应用+类别+网站）
+        lockedAppCount = selection.applicationTokens.count + selection.categoryTokens.count + selection.webDomainTokens.count
+        
+        print("[ShieldManager] Locked \(lockedAppCount) items (apps: \(selection.applicationTokens.count), categories: \(selection.categoryTokens.count))")
     }
 
     /// 解锁所有应用
@@ -125,26 +129,11 @@ class ShieldManager: ObservableObject {
         print("[ShieldManager] Unlocked all apps")
     }
 
-    // MARK: - 选择持久化
-
-    private func saveSelection() {
-        if let data = try? JSONEncoder().encode(selection) {
-            UserDefaults.standard.set(data, forKey: selectionKey)
-        }
-    }
-
-    private func loadSelection() {
-        if let data = UserDefaults.standard.data(forKey: selectionKey),
-           let saved = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) {
-            selection = saved
-            lockedAppCount = saved.applicationTokens.count
-        }
-    }
+    // MARK: - 选择管理（暂时不持久化，FamilyActivitySelection 无法编码）
 
     /// 清除已保存的选择
     func clearSelection() {
         selection = FamilyActivitySelection()
-        UserDefaults.standard.removeObject(forKey: selectionKey)
         lockedAppCount = 0
     }
 }
