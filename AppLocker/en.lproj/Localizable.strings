@@ -31,3 +31,29 @@
 "settings_faceid" = "Face ID";
 "settings_reset" = "Reset All";
 "settings_version" = "Version";
+
+// Stats
+"stats_title" = "Stats";
+"stats_total_time" = "Total Locked Time";
+"stats_total_hours" = "About %d hours";
+"stats_current_streak" = "Current Streak";
+"stats_longest_streak" = "Longest Streak";
+"stats_total_sessions" = "Total Sessions";
+"stats_daily_lock" = "Daily Lock";
+"stats_daily_goal" = "Goal: %.1f min/day";
+"stats_chart_needs_ios16" = "Chart requires iOS 16+";
+"stats_week_sessions" = "Week Sessions";
+"stats_week_total" = "Week Total";
+"stats_avg_per_session" = "Avg per Session";
+"stats_longest_session" = "Longest Session";
+"stats_avg_daily" = "Avg Daily";
+"stats_max_streak" = "Max Streak Days";
+"stats_total_count" = "Total Count";
+"stats_completion_rate" = "Completion Rate";
+"stats_export" = "Export Data";
+
+// Stats Period
+"stats_period_today" = "Today";
+"stats_period_week" = "This Week";
+"stats_period_month" = "This Month";
+"stats_period_all" = "All";

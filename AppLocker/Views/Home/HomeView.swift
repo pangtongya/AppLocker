@@ -1,269 +1,574 @@
+// HomeView.swift
+// 主屏：应用锁定启动器
+
 import SwiftUI
 import FamilyControls
+import UIKit
 
 struct HomeView: View {
-    @Environment(AppLockerModel.self) var model
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var lockStore: LockStore
+    @EnvironmentObject var shieldManager: ShieldManager
+    @EnvironmentObject var authManager: AuthManager
+
+    @State private var selectedMinutes: Int = 25
+    @State private var showCustomDuration = false
+    @State private var customMinutes: String = ""
     @State private var isPickerPresented = false
-    @State private var showUnlockConfirm = false
-    @State private var hasLocked = false
+    @State private var showUnlockAuth = false
+    @State private var unlockPassword = ""
+    @State private var showPasswordFail = false
 
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.systemGroupedBackground).ignoresSafeArea()
+                AppLockerBackground()
 
                 ScrollView {
-                    VStack(spacing: 28) {
-                        // 顶部大图标
-                        topSection
-
-                        // 状态文字
-                        statusSection
-
-                        // 主操作区
-                        if hasLocked {
-                            lockedSection
+                    VStack(spacing: 32) {
+                        if lockStore.isLocking {
+                            lockStatusCard
                         } else {
-                            unlockedSection
+                            heroSection
                         }
-
-                        Spacer(minLength: 80)
+                        statsSection
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 12)
+                    .padding(.top, 8)
+                    .padding(.bottom, 80)
                 }
             }
-            .navigationTitle("应用锁")
-            .navigationBarTitleDisplayMode(.large)
-            .sheet(isPresented: $isPickerPresented) {
-                NavigationStack {
-                    FamilyActivityPicker(selection: Binding(
-                        get: { model.selection },
-                        set: { model.selection = $0 }
-                    ))
-                    .navigationTitle("选择应用")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("完成") { isPickerPresented = false }
-                        }
-                    }
-                }
-                .presentationDetents([.large])
-            }
-            .alert("解锁确认", isPresented: $showUnlockConfirm) {
-                Button("取消", role: .cancel) { }
-                Button("解锁", role: .destructive) {
-                    model.unblockAllApps()
-                    hasLocked = false
-                }
-            } message: {
-                Text("解锁后，这些应用将可以正常打开。确定要继续吗？")
-            }
-            .onAppear {
-                // 启动时检查是否已有锁定
-                if !model.selection.applicationTokens.isEmpty {
-                    hasLocked = true
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("应用锁")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(.primary)
                 }
             }
         }
-    }
-
-    // MARK: - 顶部图标区
-    private var topSection: some View {
-        ZStack {
-            // 背景光晕
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            (hasLocked ? Color.lockerGreen : Color.lockerBlue).opacity(0.18),
-                            .clear
-                        ],
-                        center: .center,
-                        startRadius: 30,
-                        endRadius: 110
-                    )
-                )
-                .frame(width: 220, height: 220)
-                .blur(radius: 18)
-
-            // 主图标
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: hasLocked
-                                ? [Color.lockerGreen, Color.lockerGreen.opacity(0.75)]
-                                : [Color.lockerBlue, Color.lockerBlue.opacity(0.75)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 88, height: 88)
-                    .shadow(
-                        color: (hasLocked ? Color.lockerGreen : Color.lockerBlue).opacity(0.35),
-                        radius: 14, x: 0, y: 7
-                    )
-
-                Image(systemName: hasLocked ? "lock.fill" : "lock")
-                    .font(.system(size: 38, weight: .bold))
-                    .foregroundStyle(.white)
-            }
+        .sheet(isPresented: $showCustomDuration) {
+            customDurationSheet
         }
-        .frame(height: 180)
-    }
-
-    // MARK: - 状态文字
-    private var statusSection: some View {
-        VStack(spacing: 6) {
-            Text(hasLocked ? "应用已锁定" : "保护您的隐私")
-                .font(.system(size: 26, weight: .bold))
-                .foregroundStyle(.primary)
-
-            Text(hasLocked
-                  ? "\(model.selection.applicationTokens.count) 个应用已受保护"
-                  : "选择应用，一键锁定")
-                .font(.system(size: 15))
-                .foregroundStyle(.secondary)
-        }
-    }
-
-    // MARK: - 未锁定状态操作区
-    private var unlockedSection: some View {
-        VStack(spacing: 14) {
-            // 选择应用按钮（始终显示）
-            Button { isPickerPresented = true } label: {
-                HStack(spacing: 12) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.lockerBlue)
-                            .frame(width: 36, height: 36)
-                        Image(systemName: "app.badge.checkmark")
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundStyle(.white)
+        .sheet(isPresented: $isPickerPresented) {
+            NavigationStack {
+                FamilyActivityPicker(selection: Binding(
+                    get: { shieldManager.selection },
+                    set: { shieldManager.selection = $0 }
+                ))
+                .navigationTitle("选择应用")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("完成") { isPickerPresented = false }
                     }
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("选择应用")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.primary)
-                        Text("从系统列表中选择要锁定的应用")
-                            .font(.system(size: 12))
-                            .foregroundStyle(.secondary)
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(.secondary)
                 }
-                .padding(14)
-                .background(Color(.secondarySystemGroupedBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
-            .buttonStyle(ScaleButtonStyle())
-            .sensoryFeedback(.selection, trigger: isPickerPresented)
-
-            // 已选择应用 → 显示锁定按钮
-            if !model.selection.applicationTokens.isEmpty {
-                Button {
-                    model.blockApps()
-                    hasLocked = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "lock.fill")
-                            .font(.system(size: 15, weight: .semibold))
-                        Text("锁定 \(model.selection.applicationTokens.count) 个应用")
-                            .font(.system(size: 16, weight: .semibold))
+            .presentationDetents([.large])
+        }
+        .alert("提前解锁", isPresented: $showUnlockAuth) {
+            if authManager.isFaceIDEnabled {
+                Button("使用 Face ID") {
+                    Task { await performBiometricUnlock() }
+                }
+            }
+            if authManager.isPasswordSet {
+                SecureField("输入密码", text: $unlockPassword)
+                Button("确认") {
+                    if authManager.verifyPassword(unlockPassword) {
+                        lockStore.unlockManually()
+                        unlockPassword = ""
+                    } else {
+                        showPasswordFail = true
+                        unlockPassword = ""
                     }
-                    .foregroundStyle(.white)
+                }
+            }
+            Button("取消", role: .cancel) {
+                unlockPassword = ""
+            }
+        } message: {
+            Text(showPasswordFail ? "密码错误，请重试" : "锁定时间未到，验证身份后可以提前解锁")
+        }
+    }
+
+    // MARK: - 顶部状态区
+
+    private var heroSection: some View {
+        VStack(spacing: 24) {
+            // 图标 + 标题
+            VStack(spacing: 8) {
+                ZStack {
+                    Circle()
+                        .fill(Color.lockerBlue.opacity(0.1))
+                        .frame(width: 100, height: 100)
+                        .blur(radius: 16)
+
+                    Image(systemName: "lock.shield.fill")
+                        .font(.system(size: 36, weight: .light))
+                        .foregroundColor(.lockerBlue)
+                }
+
+                Text("锁定干扰 App")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text("设定时间，一键锁定，专注眼前事")
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
+
+            // 时长选择
+            durationPicker
+
+            // App 选择
+            appSelectionRow
+
+            // 开始锁定按钮
+            startLockButton
+        }
+    }
+
+    // MARK: - 时长选择
+
+    private var durationPicker: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Text("锁定时间")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
+                spacing: 10
+            ) {
+                ForEach([25, 45, 60, 90], id: \.self) { minutes in
+                    durationButton(minutes: minutes)
+                }
+
+                // 自定义按钮
+                Button(action: {
+                    customMinutes = selectedMinutes > 90 ? "\(selectedMinutes)" : ""
+                    showCustomDuration = true
+                }) {
+                    VStack(spacing: 4) {
+                        Image(systemName: selectedMinutes > 90 ? "checkmark.circle.fill" : "plus.circle.fill")
+                            .font(.system(size: 20))
+                        Text(selectedMinutes > 90 ? "\(selectedMinutes)分钟" : "自定义")
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                    }
+                    .foregroundColor(selectedMinutes > 90 ? .white : Color.lockerOrange)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 15)
+                    .padding(.vertical, 12)
                     .background(
-                        LinearGradient(
-                            colors: [Color.lockerBlue, Color.lockerBlue.opacity(0.85)],
-                            startPoint: .leading, endPoint: .trailing
-                        )
+                        selectedMinutes > 90
+                        ? Color.lockerBlue
+                        : Color(.systemGray6)
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .shadow(color: Color.lockerBlue.opacity(0.3), radius: 8, x: 0, y: 4)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+            }
+        }
+    }
+
+    private func durationButton(minutes: Int) -> some View {
+        let icons = [25: "🎯", 45: "⚡", 60: "🔥", 90: "💎"]
+        let isSelected = selectedMinutes == minutes
+
+        return Button(action: {
+            withAnimation(.spring(response: 0.3)) {
+                selectedMinutes = minutes
+            }
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }) {
+            VStack(spacing: 4) {
+                Text(icons[minutes] ?? "⏱")
+                    .font(.system(size: 20))
+                Text("\(minutes)分钟")
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+            }
+            .foregroundColor(isSelected ? .white : .primary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(
+                isSelected
+                ? Color.lockerBlue
+                : Color(.systemGray6)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .scaleEffect(isSelected ? 1.05 : 1.0)
+            .animation(.spring(response: 0.3), value: isSelected)
+        }
+    }
+
+    // MARK: - 自定义时长
+
+    private var customDurationSheet: some View {
+        let presetDurations = [25, 45, 60, 90, 120, 180, 240, 480]
+
+        return NavigationStack {
+            VStack(spacing: 24) {
+                Spacer()
+
+                VStack(spacing: 16) {
+                    Text("自定义锁定时间")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+
+                    Text("\(customMinutes.isEmpty ? "0" : customMinutes) 分钟")
+                        .font(.system(size: 48, weight: .thin, design: .monospaced))
+                        .foregroundColor(.primary)
+                        .animation(.spring(), value: customMinutes)
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(presetDurations, id: \.self) { duration in
+                                Button(action: { customMinutes = "\(duration)" }) {
+                                    Text("\(duration)分钟")
+                                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                                        .foregroundColor(Int(customMinutes) == duration ? .white : .primary)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            Int(customMinutes) == duration
+                                            ? Color.lockerBlue
+                                            : Color(.systemGray6)
+                                        )
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                    }
+
+                    Stepper(value: Binding(
+                        get: { Int(customMinutes) ?? 0 },
+                        set: { customMinutes = "\($0)" }
+                    ), in: 1...480, step: 5) {
+                        Text("每次增减 5 分钟")
+                            .font(.system(size: 14, weight: .regular, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.horizontal, 20)
+
+                    TextField("输入分钟数", text: $customMinutes)
+                        .font(.system(size: 17, weight: .regular, design: .rounded))
+                        .multilineTextAlignment(.center)
+                        .keyboardType(.numberPad)
+                        .padding(16)
+                        .background(Color(.systemGray6))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .padding(.horizontal, 40)
+                }
+
+                Spacer()
+
+                Button(action: {
+                    if let mins = Int(customMinutes), mins > 0, mins <= 480 {
+                        selectedMinutes = mins
+                        showCustomDuration = false
+                    }
+                }) {
+                    Text("确认")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(Color.lockerBlue)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+                .disabled(customMinutes.isEmpty || Int(customMinutes) == nil || Int(customMinutes)! <= 0 || Int(customMinutes)! > 480)
+            }
+            .background(Color(.systemBackground).ignoresSafeArea())
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("取消") { showCustomDuration = false }
+                }
+            }
+        }
+    }
+
+    // MARK: - App 选择行
+
+    private var appSelectionRow: some View {
+        Button(action: {
+            isPickerPresented = true
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }) {
+            HStack(spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color.lockerBlue)
+                        .frame(width: 36, height: 36)
+                    Image(systemName: "app.badge.checkmark")
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(shieldManager.lockedAppCount > 0 ? "已选择 \(shieldManager.lockedAppCount) 个应用" : "选择要锁定的应用")
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                        .foregroundColor(.primary)
+                    Text(shieldManager.lockedAppCount > 0 ? "点击更换" : "从系统列表中选择")
+                        .font(.system(size: 12, weight: .regular, design: .rounded))
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.secondary)
+            }
+            .padding(14)
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
+
+    // MARK: - 开始锁定按钮
+
+    private var startLockButton: some View {
+        Button(action: {
+            guard shieldManager.lockedAppCount > 0 else {
+                isPickerPresented = true
+                return
+            }
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            lockStore.startLock(
+                plannedMinutes: selectedMinutes,
+                appCount: shieldManager.lockedAppCount
+            )
+        }) {
+            HStack(spacing: 10) {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 14, weight: .semibold))
+                Text("锁定 \(selectedMinutes) 分钟")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                LinearGradient(
+                    colors: [Color.lockerBlue, Color.lockerBlue.opacity(0.8)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: Color.lockerBlue.opacity(0.25), radius: 12, x: 0, y: 6)
+        }
+        .padding(.top, 8)
+        .buttonStyle(ScaleButtonStyle())
+    }
+
+    // MARK: - 锁定状态卡
+
+    private var lockStatusCard: some View {
+        VStack(spacing: 20) {
+            // 顶部状态
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(Color.lockerGreen.opacity(0.3))
+                        .frame(width: 16, height: 16)
+                        .scaleEffect(1.5)
+                        .opacity(0.5)
+                        .animation(
+                            Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true),
+                            value: UUID()
+                        )
+
+                    Circle()
+                        .fill(Color.lockerGreen.opacity(0.2))
+                        .frame(width: 10, height: 10)
+                }
+                Text("锁定中")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.lockerGreen)
+                Spacer()
+            }
+
+            if let session = lockStore.currentSession {
+                // 倒计时
+                VStack(spacing: 8) {
+                    Text(session.formattedRemaining)
+                        .font(.system(size: 48, weight: .thin, design: .monospaced))
+                        .foregroundColor(.primary)
+                        .monospacedDigit()
+
+                    Text("剩余 \(session.plannedMinutes) 分钟锁定")
+                        .font(.system(size: 13, weight: .regular, design: .rounded))
+                        .foregroundColor(.secondary)
+
+                    Text("\(session.appCount) 个应用已锁定")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.lockerGreen)
+                }
+
+                // 提前解锁按钮
+                Button(action: {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    if authManager.isPasswordSet || authManager.isFaceIDEnabled {
+                        showPasswordFail = false
+                        showUnlockAuth = true
+                    } else {
+                        // 没有设密码，直接解锁
+                        lockStore.unlockManually()
+                    }
+                }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "lock.open")
+                            .font(.system(size: 14, weight: .semibold))
+                        Text("提前解锁")
+                            .font(.system(size: 15, weight: .medium, design: .rounded))
+                    }
+                    .foregroundColor(.lockerOrange)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.lockerOrange.opacity(0.3), lineWidth: 1)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 .buttonStyle(ScaleButtonStyle())
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-                .sensoryFeedback(.success, trigger: hasLocked)
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: model.selection.applicationTokens.count)
+        .padding(24)
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .onReceive(Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()) { _ in
+            // 每秒触发 UI 刷新（LockStore 的 objectWillChange 自动处理）
+        }
     }
 
-    // MARK: - 已锁定状态操作区
-    private var lockedSection: some View {
-        VStack(spacing: 14) {
-            // 已锁定卡片
-            GlassCard {
-                VStack(spacing: 14) {
-                    HStack {
-                        Text("已锁定")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text("\(model.selection.applicationTokens.count) 个应用")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundStyle(Color.lockerGreen)
-                    }
+    // MARK: - 统计卡片
 
-                    Divider()
+    private var statsSection: some View {
+        VStack(spacing: 16) {
+            todayStatsCard
+            weekStatsCard
+        }
+    }
 
-                    Button { isPickerPresented = true } label: {
-                        HStack {
-                            Label("更换应用", systemImage: "arrow.triangle.2.circlepath")
-                                .font(.system(size: 14, weight: .medium))
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 12))
-                                .foregroundStyle(.secondary)
-                        }
-                        .foregroundStyle(.primary)
-                    }
+    private var todayStatsCard: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Text("今日概览")
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+
+            HStack(spacing: 0) {
+                statItem(value: "\(lockStore.todayTotalMinutes)", unit: "分钟", icon: "clock.fill", color: .lockerBlue, trend: .up)
+                Divider().frame(height: 40).background(Color.gray.opacity(0.3))
+                statItem(value: "\(lockStore.todaySessions.count)", unit: "次锁定", icon: "lock.fill", color: .lockerOrange, trend: .up)
+            }
+        }
+        .padding(20)
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+
+    private var weekStatsCard: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Text("本周成就")
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundColor(.primary)
+                Spacer()
+                NavigationLink {
+                    StatsView()
+                        .environmentObject(appState)
+                        .environmentObject(lockStore)
+                } label: {
+                    Text("完整统计")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.lockerBlue)
                 }
             }
 
-            // 解锁按钮
-            Button { showUnlockConfirm = true } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "lock.open")
-                        .font(.system(size: 15, weight: .semibold))
-                    Text("解锁所有应用")
-                        .font(.system(size: 16, weight: .semibold))
-                }
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 15)
-                .background(
-                    LinearGradient(
-                        colors: [Color.lockerOrange, Color.lockerOrange.opacity(0.85)],
-                        startPoint: .leading, endPoint: .trailing
-                    )
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .shadow(color: Color.lockerOrange.opacity(0.3), radius: 8, x: 0, y: 4)
+            HStack(spacing: 0) {
+                statItem(value: "\(lockStore.weekTotalMinutes)", unit: "分钟", icon: "flame.fill", color: .lockerOrange, trend: .up)
+                Divider().frame(height: 40).background(Color.gray.opacity(0.3))
+                statItem(value: "\(lockStore.weekSessions.count)", unit: "次锁定", icon: "lock.fill", color: .lockerBlue, trend: .up)
+                Divider().frame(height: 40).background(Color.gray.opacity(0.3))
+                statItem(value: "\(lockStore.currentStreak)", unit: "天连胜", icon: "bolt.fill", color: .lockerGreen, trend: lockStore.currentStreak > 0 ? .up : .neutral)
             }
-            .buttonStyle(ScaleButtonStyle())
-            .sensoryFeedback(.warning, trigger: showUnlockConfirm)
+        }
+        .padding(20)
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+
+    // MARK: - 统计项
+
+    private func statItem(value: String, unit: String, icon: String, color: Color, trend: Trend = .neutral) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 13))
+                .foregroundColor(color)
+            Text(value)
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+            HStack(spacing: 2) {
+                if trend == .up {
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(.lockerGreen)
+                }
+                Text(unit)
+                    .font(.system(size: 11, weight: .regular, design: .rounded))
+                    .foregroundColor(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    enum Trend {
+        case up, down, neutral
+    }
+
+    // MARK: - Biometric Unlock
+
+    private func performBiometricUnlock() async {
+        let success = await authManager.verifyBiometric()
+        if success {
+            lockStore.unlockManually()
         }
     }
 }
 
-struct ScaleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: configuration.isPressed)
+// MARK: - Background
+
+private struct AppLockerBackground: View {
+    var body: some View {
+        ZStack {
+            Color(.systemBackground).ignoresSafeArea()
+
+            RadialGradient(
+                colors: [Color.lockerBlue.opacity(0.08), .clear],
+                center: .top,
+                startRadius: 100,
+                endRadius: 400
+            )
+            .ignoresSafeArea()
+        }
     }
 }
 
+// MARK: - Preview
 #Preview {
     HomeView()
+        .environmentObject(AppState.shared)
+        .environmentObject(LockStore.shared)
+        .environmentObject(ShieldManager.shared)
+        .environmentObject(AuthManager.shared)
 }

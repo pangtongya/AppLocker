@@ -31,3 +31,29 @@
 "settings_faceid" = "Face ID";
 "settings_reset" = "重置所有设置";
 "settings_version" = "版本";
+
+// 统计
+"stats_title" = "统计";
+"stats_total_time" = "总锁定时间";
+"stats_total_hours" = "约 %d 小时";
+"stats_current_streak" = "当前连胜";
+"stats_longest_streak" = "最长连胜";
+"stats_total_sessions" = "总次数";
+"stats_daily_lock" = "每日锁定";
+"stats_daily_goal" = "目标: %.1f分钟/天";
+"stats_chart_needs_ios16" = "图表需要 iOS 16+";
+"stats_week_sessions" = "本周锁定次数";
+"stats_week_total" = "本周总时长";
+"stats_avg_per_session" = "平均每次";
+"stats_longest_session" = "最长一次";
+"stats_avg_daily" = "平均每日";
+"stats_max_streak" = "最多连续天数";
+"stats_total_count" = "总锁定次数";
+"stats_completion_rate" = "完成率";
+"stats_export" = "导出数据";
+
+// 统计周期
+"stats_period_today" = "今日";
+"stats_period_week" = "本周";
+"stats_period_month" = "本月";
+"stats_period_all" = "全部";

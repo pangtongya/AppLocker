@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct GuideView: View {
-    @Environment(AppLockerModel.self) var model
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var shieldManager: ShieldManager
     @State private var currentPage = 0
     @State private var showAuthAlert = false
     @State private var authErrorMsg = ""
-    
+    @State private var isAuthorizing = false
+
     let pages: [GuidePage] = [
         GuidePage(icon: "lock.shield.fill", titleKey: "guide_welcome_title", subtitleKey: "guide_welcome_subtitle", color: .lockerBlue),
         GuidePage(icon: "checkmark.shield.fill", titleKey: "guide_auth_title", subtitleKey: "guide_auth_subtitle", color: .lockerGreen),
@@ -13,10 +15,9 @@ struct GuideView: View {
         GuidePage(icon: "lock.fill", titleKey: "guide_lock_title", subtitleKey: "guide_lock_subtitle", color: .lockerBlue),
         GuidePage(icon: "hand.wave.fill", titleKey: "guide_ready_title", subtitleKey: "guide_ready_subtitle", color: .lockerGreen)
     ]
-    
+
     var body: some View {
         ZStack {
-            // 背景渐变
             LinearGradient(
                 colors: [
                     pages[currentPage].color.opacity(0.08),
@@ -27,9 +28,8 @@ struct GuideView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
-            
+
             VStack(spacing: 0) {
-                // 页面内容
                 TabView(selection: $currentPage) {
                     ForEach(0..<pages.count, id: \.self) { index in
                         GuidePageView(page: pages[index], isActive: currentPage == index)
@@ -38,19 +38,22 @@ struct GuideView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut(duration: 0.4), value: currentPage)
-                
-                // 底部操作区
+
                 bottomSection
             }
         }
         .alert("需要授权", isPresented: $showAuthAlert) {
-            Button("重试") { requestAuth() }
-            Button("跳过", role: .cancel) { advancePage() }
+            Button("去设置") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text(authErrorMsg.isEmpty ? "请在系统弹窗中允许「应用锁」访问屏幕使用时间" : authErrorMsg)
+            Text(authErrorMsg)
         }
     }
-    
+
     // MARK: - 底部操作区
     private var bottomSection: some View {
         VStack(spacing: 16) {
@@ -64,12 +67,20 @@ struct GuideView: View {
                 }
             }
             .padding(.top, 16)
-            
-            // 主按钮
+
+            if isAuthorizing {
+                ProgressView()
+                    .padding(.vertical, 8)
+            }
+
             if currentPage < pages.count - 1 {
                 Button { handleNext() } label: {
                     HStack(spacing: 8) {
-                        Text(currentPage == pages.count - 2 ? "guide_start" : "guide_next")
+                        if isAuthorizing {
+                            ProgressView()
+                                .tint(.white)
+                        }
+                        Text(authButtonTitle)
                             .font(.system(size: 17, weight: .semibold))
                     }
                     .foregroundStyle(.white)
@@ -85,20 +96,25 @@ struct GuideView: View {
                     .shadow(color: pages[currentPage].color.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .buttonStyle(ScaleButtonStyle())
-                
-                // 跳过按钮（不在第一页显示）
-                if currentPage > 0 {
-                    Button { model.completeOnboarding() } label: {
-                        Text("guide_skip")
+                .disabled(isAuthorizing)
+
+                if currentPage > 1 {
+                    Button {
+                        appState.hasCompletedOnboarding = true
+                        appState.save()
+                    } label: {
+                        Text(LocalizedStringKey("guide_skip"))
                             .font(.system(size: 15))
                             .foregroundStyle(.secondary)
                     }
                 }
             } else {
-                // 最后一页：开始使用
-                Button { model.completeOnboarding() } label: {
+                Button {
+                    appState.hasCompletedOnboarding = true
+                    appState.save()
+                } label: {
                     HStack(spacing: 8) {
-                        Text("guide_start")
+                        Text(LocalizedStringKey("guide_start"))
                             .font(.system(size: 17, weight: .semibold))
                         Image(systemName: "arrow.right")
                             .font(.system(size: 15, weight: .semibold))
@@ -121,29 +137,53 @@ struct GuideView: View {
         .padding(.horizontal, 32)
         .padding(.bottom, 32)
     }
-    
+
     // MARK: - 处理下一步
+    private var authButtonTitle: String {
+        if currentPage == 1 {
+            switch shieldManager.authorizationStatus {
+            case .approved:
+                return "已授权，继续"
+            case .denied:
+                return "去设置中授权"
+            case .notDetermined:
+                return "授权屏幕使用时间"
+            }
+        }
+        return currentPage == pages.count - 2 ? "开始使用" : "下一步"
+    }
+
     private func handleNext() {
         if currentPage == 1 {
-            // 授权页面：触发系统授权
-            requestAuth()
+            switch shieldManager.authorizationStatus {
+            case .approved:
+                advancePage()
+            case .denied:
+                // 已被拒绝，引导用户去设置
+                authErrorMsg = "请在 iPhone「设置」>「屏幕使用时间」中允许「应用锁」使用屏幕使用时间权限，或先跳过稍后再设置。"
+                showAuthAlert = true
+            case .notDetermined:
+                requestAuth()
+            }
         } else {
             advancePage()
         }
     }
-    
+
     private func requestAuth() {
+        isAuthorizing = true
         Task {
-            await model.requestAuthorization()
-            if model.isAuthorized {
+            let authorized = await shieldManager.requestAuthorization()
+            isAuthorizing = false
+            if authorized {
                 advancePage()
             } else {
-                authErrorMsg = "授权失败，您可以稍后在系统设置中重新授权"
+                authErrorMsg = "授权失败。请确保在「设置」>「屏幕使用时间」中开启屏幕使用时间，并允许「应用锁」访问。"
                 showAuthAlert = true
             }
         }
     }
-    
+
     private func advancePage() {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
             currentPage += 1
@@ -155,28 +195,24 @@ struct GuideView: View {
 struct GuidePageView: View {
     let page: GuidePage
     let isActive: Bool
-    
+
     @State private var iconScale: CGFloat = 0.5
     @State private var textOpacity: Double = 0
-    
+
     var body: some View {
         VStack(spacing: 40) {
             Spacer()
-            
-            // 图标区
+
             ZStack {
-                // 外层光晕
                 Circle()
                     .fill(page.color.opacity(0.1))
                     .frame(width: 180, height: 180)
                     .blur(radius: 16)
-                
-                // 中层光圈
+
                 Circle()
                     .stroke(page.color.opacity(0.2), lineWidth: 1)
                     .frame(width: 150, height: 150)
-                
-                // 主图标容器
+
                 ZStack {
                     Circle()
                         .fill(
@@ -188,7 +224,7 @@ struct GuidePageView: View {
                             )
                         )
                         .frame(width: 110, height: 110)
-                    
+
                     Image(systemName: page.icon)
                         .font(.system(size: 48, weight: .semibold))
                         .foregroundStyle(
@@ -215,14 +251,13 @@ struct GuidePageView: View {
                     iconScale = 1.0
                 }
             }
-            
-            // 文字区
+
             VStack(spacing: 14) {
-                Text(page.titleKey)
+                Text(LocalizedStringKey(page.titleKey))
                     .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(.primary)
-                
-                Text(page.subtitleKey)
+
+                Text(LocalizedStringKey(page.subtitleKey))
                     .font(.system(size: 16, weight: .regular))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -244,7 +279,7 @@ struct GuidePageView: View {
                     textOpacity = 1.0
                 }
             }
-            
+
             Spacer()
             Spacer()
         }
