@@ -241,3 +241,7 @@
 "preset_duration_format" = "%d min";
 "preset_list_header" = "My Presets";
 "preset_list_footer" = "Swipe left to delete, tap to select";
+
+// Empty state (new)
+"stats_empty_title" = "No Focus Records Yet";
+"stats_empty_desc" = "Start your first focus session,\nstats will show your progress here";

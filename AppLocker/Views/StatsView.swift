@@ -28,27 +28,32 @@ struct StatsView: View {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
 
-                ScrollView {
-                    VStack(spacing: 24) {
-                        totalTimeCard
+                if lockStore.history.isEmpty {
+                    // 空状态
+                    emptyStateView
+                } else {
+                    ScrollView {
+                        VStack(spacing: 24) {
+                            totalTimeCard
 
-                        Picker("周期", selection: $selectedPeriod) {
-                            ForEach(Period.allCases, id: \.self) { period in
-                                Text(period.displayTitle).tag(period)
+                            Picker("周期", selection: $selectedPeriod) {
+                                ForEach(Period.allCases, id: \.self) { period in
+                                    Text(period.displayTitle).tag(period)
+                                }
                             }
+                            .pickerStyle(.segmented)
+                            .padding(.horizontal, 20)
+
+                            dailyChart
+
+                            detailStats
+
+                            exportButton
+
+                            Spacer(minLength: 100)
                         }
-                        .pickerStyle(.segmented)
-                        .padding(.horizontal, 20)
-
-                        dailyChart
-
-                        detailStats
-
-                        exportButton
-
-                        Spacer(minLength: 100)
+                        .padding(.top, 20)
                     }
-                    .padding(.top, 20)
                 }
             }
             .navigationTitle("stats_title")
@@ -58,6 +63,40 @@ struct StatsView: View {
                     ActivityView(activityItems: [url])
                 }
             }
+        }
+    }
+
+    // MARK: - 空状态
+
+    private var emptyStateView: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            ZStack {
+                Circle()
+                    .fill(Color.lockerBlue.opacity(0.08))
+                    .frame(width: 100, height: 100)
+                    .blur(radius: 12)
+
+                Image(systemName: "chart.bar.xaxis")
+                    .font(.system(size: 36))
+                    .foregroundColor(.lockerBlue.opacity(0.6))
+            }
+
+            VStack(spacing: 8) {
+                Text(LocalizedStringKey("stats_empty_title"))
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text(LocalizedStringKey("stats_empty_desc"))
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
+
+            Spacer()
+            Spacer()
         }
     }
 

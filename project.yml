@@ -14,7 +14,7 @@ settings:
     SWIFT_STRICT_CONCURRENCY: complete
     DEVELOPMENT_TEAM: "2ZNZRXNPWQ"
     CODE_SIGN_STYLE: Automatic
-    INFOPLIST_KEY_CFBundleDisplayName: "应用锁"
+    INFOPLIST_KEY_CFBundleDisplayName: "专注"
     INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.utilities"
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     ENABLE_PREVIEWS: YES

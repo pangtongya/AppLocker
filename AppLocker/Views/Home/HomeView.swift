@@ -56,38 +56,32 @@ struct HomeView: View {
         .sheet(isPresented: $showCustomDuration) {
             customDurationSheet
         }
-        .sheet(isPresented: $isPickerPresented) {
-            NavigationStack {
-                FamilyActivityPicker(selection: Binding(
-                    get: { shieldManager.selection },
-                    set: { shieldManager.selection = $0 }
-                ))
-                .navigationTitle(LocalizedStringKey("home_select_apps"))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button(LocalizedStringKey("home_done")) {
-                            // 更新计数：应用+类别+网站
-                            shieldManager.lockedAppCount = shieldManager.selection.applicationTokens.count + shieldManager.selection.categoryTokens.count + shieldManager.selection.webDomainTokens.count
-                            print("[HomeView] User finished selecting: \(shieldManager.lockedAppCount) items selected")
-                            isPickerPresented = false
-                            // 如果是从"开始专注"跳转过来的，自动开始专注
-                            if pendingAutoStart && shieldManager.lockedAppCount > 0 {
-                                pendingAutoStart = false
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-                                    lockStore.startLock(
-                                        plannedMinutes: selectedMinutes,
-                                        appCount: shieldManager.lockedAppCount
-                                    )
-                                }
-                            }
+        .sheet(isPresented: $showCustomDuration) {
+            customDurationSheet
+        }
+        .familyActivityPicker(
+            isPresented: $isPickerPresented,
+            selection: Binding(
+                get: { shieldManager.selection },
+                set: { newSelection in
+                    shieldManager.selection = newSelection
+                    // 更新计数
+                    shieldManager.lockedAppCount = newSelection.applicationTokens.count + newSelection.categoryTokens.count + newSelection.webDomainTokens.count
+                    print("[HomeView] User selected: \(shieldManager.lockedAppCount) items")
+                    // 如果是从"开始专注"跳转过来的，自动开始专注
+                    if pendingAutoStart && shieldManager.lockedAppCount > 0 {
+                        pendingAutoStart = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                            lockStore.startLock(
+                                plannedMinutes: selectedMinutes,
+                                appCount: shieldManager.lockedAppCount
+                            )
                         }
                     }
                 }
-            }
-            .presentationDetents([.large])
-        }
+            )
+        )
         .alert(LocalizedStringKey("home_unlock_alert_title"), isPresented: $showUnlockAuth) {
             if authManager.isFaceIDEnabled {
                 Button(LocalizedStringKey("home_use_faceid")) {

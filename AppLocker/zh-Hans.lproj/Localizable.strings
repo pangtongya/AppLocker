@@ -241,3 +241,7 @@
 "preset_duration_format" = "%d 分钟";
 "preset_list_header" = "我的预设";
 "preset_list_footer" = "左滑删除，点击选中";
+
+// 空状态（新增）
+"stats_empty_title" = "还没有专注记录";
+"stats_empty_desc" = "开始你的第一次专注，\n统计页面会展示你的进步";
