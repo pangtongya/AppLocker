@@ -12,6 +12,7 @@
 		1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0146624A729ABE90D8AED2C8 /* Localizable.strings */; };
 		210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB4F9606B42BF427801951 /* SettingsView.swift */; };
 		2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F1A899B0EC8955BF817D1B /* AppState.swift */; };
+		2D4DA819D5E1E8E2A50CC5D6 /* FocusIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A256605E3156181636017 /* FocusIntents.swift */; };
 		2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB11CA49DA848A00666B5F /* ColorExtensions.swift */; };
 		350C4E41C07708C9E5F20711 /* ShieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64976B98B3661B0792FC1E2F /* ShieldManager.swift */; };
 		377A75EE57CBD80A8CED1592 /* PresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C6F26049292B9B8F3841FA /* PresetStore.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		012A256605E3156181636017 /* FocusIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusIntents.swift; sourceTree = "<group>"; };
 		07CDA76867CAA23E36352B06 /* LockSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSession.swift; sourceTree = "<group>"; };
 		0DEF15C0BE2D9133BAAB1F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2553F69456D89C08A1536122 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,13 +92,6 @@
 				D682C253BCEB4B84679B4310 /* AppLockerTests.swift */,
 			);
 			path = AppLockerTests;
-			sourceTree = "<group>";
-		};
-		50DB17CB622920E3377A36A2 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		76668E2B56E823FABA6F7CE4 /* Components */ = {
@@ -168,6 +163,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B315DED027080CD13C6932F1 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				012A256605E3156181636017 /* FocusIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		BBCEE3F68F2DD50118890B3F /* Guide */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,8 +221,8 @@
 				90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */,
 				C376E0F0C047147E51FA5AF7 /* Info.plist */,
 				DF4108D2F74AF7980D2AC567 /* App */,
+				B315DED027080CD13C6932F1 /* Intents */,
 				0146624A729ABE90D8AED2C8 /* Localizable.strings */,
-				50DB17CB622920E3377A36A2 /* Localization */,
 				9F189ECB0B0F8C47F7C8B915 /* Managers */,
 				CD8BFDCAFEB57A9F7B611A5C /* Models */,
 				8C3A5AB94E522078C0270E61 /* Resources */,
@@ -334,6 +337,7 @@
 				EC0DC672578D65F4B112AD0F /* CelebrationView.swift in Sources */,
 				2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,
+				2D4DA819D5E1E8E2A50CC5D6 /* FocusIntents.swift in Sources */,
 				98BF68BABA8E5D3667230E91 /* FocusPreset.swift in Sources */,
 				08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */,
 				37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */,

@@ -340,7 +340,12 @@ class LockStore: ObservableObject {
 
     private func performSave() {
         do {
-            let data = try JSONEncoder().encode(history)
+            // 同时保存 history 和当前 session，防止 App 被杀后 currentSession 丢失
+            let saveData = LockStoreSaveData(
+                history: history,
+                currentSession: currentSession
+            )
+            let data = try JSONEncoder().encode(saveData)
             try data.write(to: Self.storeURL)
         } catch {
             print("[LockStore] Save error: \(error)")
@@ -350,9 +355,29 @@ class LockStore: ObservableObject {
     private func load() {
         do {
             let data = try Data(contentsOf: Self.storeURL)
-            history = try JSONDecoder().decode([LockSession].self, from: data)
+            let saveData = try JSONDecoder().decode(LockStoreSaveData.self, from: data)
+            history = saveData.history
+            currentSession = saveData.currentSession
+            // 如果恢复了进行中的 session，检查是否已过期
+            if let session = currentSession, session.isExpired {
+                // 已过期：直接完成，不进入锁定状态
+                completeLock()
+            } else if currentSession != nil {
+                // 未过期：恢复锁定状态
+                isLocking = true
+                startTimer()
+            }
         } catch {
             history = []
+            currentSession = nil
+            isLocking = false
         }
     }
+}
+
+// MARK: - 持久化数据结构
+
+private struct LockStoreSaveData: Codable {
+    let history: [LockSession]
+    let currentSession: LockSession?
 }

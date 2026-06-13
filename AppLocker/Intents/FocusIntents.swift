@@ -5,15 +5,15 @@ import AppIntents
 
 /// 开始专注的 Siri 快捷指令
 struct StartFocusIntent: AppIntent {
-    static var title: LocalizedStringResource = "Start Focus"
-    static var description: LocalizedStringResource = "Start a focus session with a specified duration"
-
     @Parameter(title: "Duration (minutes)", default: 25)
     var durationMinutes: Int
 
     static var parameterSummary: some ParameterSummary {
         Summary("Start a \(\.$durationMinutes) minute focus session")
     }
+
+    nonisolated static let title: LocalizedStringResource = "Start Focus"
+    nonisolated static let description: LocalizedStringResource = "Start a focus session with a specified duration"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -37,8 +37,8 @@ struct StartFocusIntent: AppIntent {
 // MARK: - 结束专注
 
 struct EndFocusIntent: AppIntent {
-    static var title: LocalizedStringResource = "End Focus"
-    static var description: LocalizedStringResource = "End the current focus session"
+    nonisolated static let title: LocalizedStringResource = "End Focus"
+    nonisolated static let description: LocalizedStringResource = "End the current focus session"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -56,8 +56,8 @@ struct EndFocusIntent: AppIntent {
 // MARK: - 查询专注状态
 
 struct FocusStatusIntent: AppIntent {
-    static var title: LocalizedStringResource = "Focus Status"
-    static var description: LocalizedStringResource = "Check current focus session status"
+    nonisolated static let title: LocalizedStringResource = "Focus Status"
+    nonisolated static let description: LocalizedStringResource = "Check current focus session status"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {

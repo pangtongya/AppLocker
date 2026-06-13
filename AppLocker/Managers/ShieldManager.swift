@@ -111,19 +111,25 @@ class ShieldManager: ObservableObject {
             print("[ShieldManager] Not authorized to lock apps")
             return
         }
-        // 屏蔽应用和网站（类别屏蔽需要单独处理）
+        // 屏蔽应用
         store.shield.applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
+        // 屏蔽应用类别（如"社交"类别）
+        store.shield.applicationCategories = selection.categoryTokens.isEmpty
+            ? nil
+            : ShieldSettings.ActivityCategoryPolicy.specific(selection.categoryTokens)
+        // 屏蔽网站
         store.shield.webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
-        
+
         // 更新计数（包括应用+类别+网站）
         lockedAppCount = selection.applicationTokens.count + selection.categoryTokens.count + selection.webDomainTokens.count
-        
+
         print("[ShieldManager] Locked \(lockedAppCount) items (apps: \(selection.applicationTokens.count), categories: \(selection.categoryTokens.count))")
     }
 
     /// 解锁所有应用
     func unlockAll() {
         store.shield.applications = nil
+        store.shield.applicationCategories = nil
         store.shield.webDomains = nil
         lockedAppCount = 0
         print("[ShieldManager] Unlocked all apps")
