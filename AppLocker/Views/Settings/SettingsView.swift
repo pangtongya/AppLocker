@@ -59,11 +59,16 @@ struct SettingsView: View {
             .alert(LocalizedStringKey("reset_confirm_title"), isPresented: $showResetConfirm) {
                 Button(LocalizedStringKey("password_cancel"), role: .cancel) { }
                 Button(LocalizedStringKey("reset_action"), role: .destructive) {
+                    // 清除当前锁定状态
+                    if lockStore.isLocking {
+                        lockStore.cancelLock()
+                    }
                     lockStore.history = []
                     lockStore.save()
                     authManager.clearPassword()
                     authManager.disableFaceID()
                     ShieldManager.shared.clearSelection()
+                    ShieldManager.shared.unlockAll()
                 }
             } message: {
                 Text(LocalizedStringKey("reset_confirm_message"))
