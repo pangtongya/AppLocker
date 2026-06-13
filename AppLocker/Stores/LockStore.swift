@@ -339,6 +339,10 @@ class LockStore: ObservableObject {
     }
 
     private func performSave() {
+        // 限制历史记录最大 500 条，防止 JSON 文件无限增长
+        if history.count > 500 {
+            history = Array(history.suffix(500))
+        }
         do {
             // 同时保存 history 和当前 session，防止 App 被杀后 currentSession 丢失
             let saveData = LockStoreSaveData(
