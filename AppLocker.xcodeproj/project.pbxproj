@@ -25,6 +25,7 @@
 		6BEA951D754D578BDBB269E1 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF160853D92792DE3D8F94B /* BackgroundTaskManager.swift */; };
 		6F3FF6BA7A36E7B4F94D601E /* AppLockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682C253BCEB4B84679B4310 /* AppLockerTests.swift */; };
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
+		7ACB5D63E20E80C87A1EF11F /* FocusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49810D9751DB91C70A597CCC /* FocusWidget.swift */; };
 		98BF68BABA8E5D3667230E91 /* FocusPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51758039414231EB452681 /* FocusPreset.swift */; };
 		A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35ABD1B9465E56EDA666806 /* LockStore.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
@@ -52,6 +53,7 @@
 		2553F69456D89C08A1536122 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		28EAC91A58CFD1B293F1910C /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		46C6F26049292B9B8F3841FA /* PresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetStore.swift; sourceTree = "<group>"; };
+		49810D9751DB91C70A597CCC /* FocusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusWidget.swift; sourceTree = "<group>"; };
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
 		606CE173DFA60FE9CA319119 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		8B1527088059B14CDA6FB1CE /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
 		8CF160853D92792DE3D8F94B /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLocker.entitlements; sourceTree = "<group>"; };
+		AE0FDD87B833E017E0A88074 /* AppLockerWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = AppLockerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		C376E0F0C047147E51FA5AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C810F83A3666EA1512CC0026 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 			children = (
 				E4F4F09F47F4A723EB4121D8 /* AppLocker */,
 				4AC503E20D4C821005116143 /* AppLockerTests */,
+				C8A8102256BC533F702C9A9C /* AppLockerWidget */,
 				CBEA73997D78AB8F6D3E9A93 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -182,11 +186,20 @@
 			path = Guide;
 			sourceTree = "<group>";
 		};
+		C8A8102256BC533F702C9A9C /* AppLockerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				49810D9751DB91C70A597CCC /* FocusWidget.swift */,
+			);
+			path = AppLockerWidget;
+			sourceTree = "<group>";
+		};
 		CBEA73997D78AB8F6D3E9A93 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				6C66F2C2D536D29202AB3B23 /* AppLocker.app */,
 				4C6381354673F2554D470563 /* AppLockerTests.xctest */,
+				AE0FDD87B833E017E0A88074 /* AppLockerWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,6 +252,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0FEF560A9D06789E9F0EE9E4 /* AppLockerWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1529569330C3ABBC750F7B6F /* Build configuration list for PBXNativeTarget "AppLockerWidget" */;
+			buildPhases = (
+				4AB16E0419B4B4524076501B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppLockerWidget;
+			packageProductDependencies = (
+			);
+			productName = AppLockerWidget;
+			productReference = AE0FDD87B833E017E0A88074 /* AppLockerWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		62F41D85C25AB7ABDFBBFB19 /* AppLockerTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25517BE38DF80A1321EBD897 /* Build configuration list for PBXNativeTarget "AppLockerTests" */;
@@ -284,6 +314,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					0FEF560A9D06789E9F0EE9E4 = {
+						DevelopmentTeam = 2ZNZRXNPWQ;
+						ProvisioningStyle = Automatic;
+					};
 					62F41D85C25AB7ABDFBBFB19 = {
 						DevelopmentTeam = 2ZNZRXNPWQ;
 						ProvisioningStyle = Automatic;
@@ -311,6 +345,7 @@
 			targets = (
 				838A50B8352CDA35BE9467DB /* AppLocker */,
 				62F41D85C25AB7ABDFBBFB19 /* AppLockerTests */,
+				0FEF560A9D06789E9F0EE9E4 /* AppLockerWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -328,6 +363,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4AB16E0419B4B4524076501B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ACB5D63E20E80C87A1EF11F /* FocusWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C51E605B5FB1088D2A76E79 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,6 +469,40 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker;
 				SDKROOT = iphoneos;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5B83DF9B363B4F69881BD286 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "专注";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.widget;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		6D3EFD1407F579FACC74C5E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "专注";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.widget;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -611,6 +688,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1529569330C3ABBC750F7B6F /* Build configuration list for PBXNativeTarget "AppLockerWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D3EFD1407F579FACC74C5E5 /* Debug */,
+				5B83DF9B363B4F69881BD286 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		25517BE38DF80A1321EBD897 /* Build configuration list for PBXNativeTarget "AppLockerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

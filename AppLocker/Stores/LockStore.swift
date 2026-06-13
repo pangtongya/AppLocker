@@ -4,6 +4,7 @@
 import Foundation
 import SwiftUI
 import UserNotifications
+import WidgetKit
 
 @MainActor
 class LockStore: ObservableObject {
@@ -230,6 +231,16 @@ class LockStore: ObservableObject {
 
         UserDefaults.standard.set(todayMinutes, forKey: "todayLockMinutes")
         UserDefaults.standard.set(isLocking, forKey: "isLocking")
+
+        // Widget 共享数据（App Group）
+        let shared = UserDefaults(suiteName: "group.com.pangtong.applocker")
+        shared?.set(todayMinutes, forKey: "todayLockMinutes")
+        shared?.set(isLocking, forKey: "isLocking")
+        shared?.set(currentSession?.startedAt, forKey: "lockStartTime")
+        shared?.set(currentSession?.plannedMinutes, forKey: "lockPlannedMinutes")
+
+        // 通知 Widget 刷新
+        WidgetCenter.shared.reloadTimelines(ofKind: "com.pangtong.applocker.focuswidget")
     }
 
     // MARK: - 统计查询

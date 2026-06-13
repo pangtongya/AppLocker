@@ -39,6 +39,19 @@ targets:
     entitlements:
       path: AppLocker/AppLocker.entitlements
 
+  AppLockerWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: AppLockerWidget
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.pangtong.applocker.widget
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_CFBundleDisplayName: "专注"
+        SWIFT_EMIT_LOC_STRINGS: NO
+
   AppLockerTests:
     type: bundle.unit-test
     platform: iOS
