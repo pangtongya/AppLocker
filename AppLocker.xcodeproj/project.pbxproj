@@ -10,6 +10,7 @@
 		08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1527088059B14CDA6FB1CE /* GlassCard.swift */; };
 		1731C60D420780F50DB40D90 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24172D617CC4B86D5A2C478 /* AuthManager.swift */; };
 		1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0146624A729ABE90D8AED2C8 /* Localizable.strings */; };
+		1E56BFA4A1C546470802AA0E /* PresetManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D803C973B4D0BD43C92E368F /* PresetManageView.swift */; };
 		210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB4F9606B42BF427801951 /* SettingsView.swift */; };
 		2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F1A899B0EC8955BF817D1B /* AppState.swift */; };
 		2D4DA819D5E1E8E2A50CC5D6 /* FocusIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A256605E3156181636017 /* FocusIntents.swift */; };
@@ -69,6 +70,7 @@
 		C810F83A3666EA1512CC0026 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D24172D617CC4B86D5A2C478 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		D682C253BCEB4B84679B4310 /* AppLockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerTests.swift; sourceTree = "<group>"; };
+		D803C973B4D0BD43C92E368F /* PresetManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetManageView.swift; sourceTree = "<group>"; };
 		D8F1A899B0EC8955BF817D1B /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D9CB4F9606B42BF427801951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DE9407F31A4EAF5F3DC064EB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				28EAC91A58CFD1B293F1910C /* ActivityView.swift */,
 				BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */,
 				8B1527088059B14CDA6FB1CE /* GlassCard.swift */,
+				D803C973B4D0BD43C92E368F /* PresetManageView.swift */,
 				66E5CBB2E34AA7022DDB65ED /* PresetSelectorView.swift */,
 				653B0D9B264E959A30E524B5 /* ScaleButtonStyle.swift */,
 			);
@@ -345,6 +348,7 @@
 				F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */,
 				C5CC7DD0292381B9E3A098A2 /* LockSession.swift in Sources */,
 				A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */,
+				1E56BFA4A1C546470802AA0E /* PresetManageView.swift in Sources */,
 				3A7D308BF88DFF11FAEC10A0 /* PresetSelectorView.swift in Sources */,
 				377A75EE57CBD80A8CED1592 /* PresetStore.swift in Sources */,
 				4B9C8049FDC5189A9C1F8B9E /* ScaleButtonStyle.swift in Sources */,

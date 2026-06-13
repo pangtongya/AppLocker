@@ -21,6 +21,7 @@ struct HomeView: View {
     @State private var showPasswordFail = false
     @State private var showCelebration = false
     @State private var showFocusStartAnim = false
+    @State private var pendingAutoStart = false
 
     var body: some View {
         NavigationStack {
@@ -70,6 +71,17 @@ struct HomeView: View {
                             shieldManager.lockedAppCount = shieldManager.selection.applicationTokens.count + shieldManager.selection.categoryTokens.count + shieldManager.selection.webDomainTokens.count
                             print("[HomeView] User finished selecting: \(shieldManager.lockedAppCount) items selected")
                             isPickerPresented = false
+                            // 如果是从"开始专注"跳转过来的，自动开始专注
+                            if pendingAutoStart && shieldManager.lockedAppCount > 0 {
+                                pendingAutoStart = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                                    lockStore.startLock(
+                                        plannedMinutes: selectedMinutes,
+                                        appCount: shieldManager.lockedAppCount
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -375,6 +387,7 @@ struct HomeView: View {
     private var startLockButton: some View {
         Button(action: {
             guard shieldManager.lockedAppCount > 0 else {
+                pendingAutoStart = true
                 isPickerPresented = true
                 return
             }
@@ -455,21 +468,7 @@ struct HomeView: View {
         VStack(spacing: 20) {
             // 顶部状态
             HStack {
-                ZStack {
-                    Circle()
-                        .fill(Color.lockerGreen.opacity(0.3))
-                        .frame(width: 16, height: 16)
-                        .scaleEffect(1.5)
-                        .opacity(0.5)
-                        .animation(
-                            Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true),
-                            value: UUID()
-                        )
-
-                    Circle()
-                        .fill(Color.lockerGreen.opacity(0.2))
-                        .frame(width: 10, height: 10)
-                }
+                PulseCircle()
                 Text(LocalizedStringKey("home_status_locking"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.lockerGreen)
@@ -484,14 +483,20 @@ struct HomeView: View {
                         .foregroundColor(.primary)
                         .monospacedDigit()
 
-                                        Text(String(format: NSLocalizedString("home_remaining", comment: ""), session.plannedMinutes))
+                    Text(String(format: NSLocalizedString("home_remaining", comment: ""), session.plannedMinutes))
                         .font(.system(size: 13, weight: .regular, design: .rounded))
                         .foregroundColor(.secondary)
 
-                                        Text(String(format: NSLocalizedString("home_apps_locked_count", comment: ""), session.appCount))
+                    Text(String(format: NSLocalizedString("home_apps_locked_count", comment: ""), session.appCount))
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(.lockerGreen)
                 }
+
+                // 进度条
+                ProgressView(value: session.completionRate, total: 1.0)
+                    .tint(.lockerBlue)
+                    .background(Color(.systemGray5))
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
 
                 // 提前解锁按钮
                 Button(action: {
@@ -625,6 +630,31 @@ struct HomeView: View {
         if success {
             lockStore.unlockManually()
         }
+    }
+}
+
+// MARK: - 脉冲动画圆圈
+
+private struct PulseCircle: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color.lockerGreen.opacity(0.3))
+                .frame(width: 16, height: 16)
+                .scaleEffect(isAnimating ? 1.5 : 1.0)
+                .opacity(isAnimating ? 0.3 : 0.8)
+                .animation(
+                    Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true),
+                    value: isAnimating
+                )
+
+            Circle()
+                .fill(Color.lockerGreen.opacity(0.2))
+                .frame(width: 10, height: 10)
+        }
+        .onAppear { isAnimating = true }
     }
 }
 

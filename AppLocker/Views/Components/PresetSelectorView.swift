@@ -20,6 +20,10 @@ struct PresetSelectorView: View {
                         .foregroundColor(.lockerBlue)
                 }
             }
+            .sheet(isPresented: $showManager) {
+                PresetManageView()
+                    .environmentObject(presetStore)
+            }
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {

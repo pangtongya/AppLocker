@@ -12,16 +12,19 @@ class ShieldManager: ObservableObject {
 
     @Published var isAuthorized: Bool = false
     @Published var authorizationStatus: AuthorizationStatus = .notDetermined
-    @Published var selection = FamilyActivitySelection()
+    @Published var selection = FamilyActivitySelection() {
+        didSet {
+            saveSelection()
+        }
+    }
     @Published var lockedAppCount: Int = 0
     @Published var needsSettingsAuthorization: Bool = false
 
     private let store = ManagedSettingsStore()
-    private let selectionKey = "BlockedAppsSelection"
+    private let selectionKey = "BlockedAppsSelection_v2"
 
     private init() {
-        // 暂时不加载选择（FamilyActivitySelection 无法编码持久化）
-        // loadSelection()
+        loadSelection()
         Task {
             await refreshAuthorization()
         }
@@ -135,11 +138,27 @@ class ShieldManager: ObservableObject {
         print("[ShieldManager] Unlocked all apps")
     }
 
-    // MARK: - 选择管理（暂时不持久化，FamilyActivitySelection 无法编码）
+    // MARK: - 选择持久化
+
+    /// 保存选择的应用（使用 NSKeyedArchiver，因为 Token 泛型不兼容 Swift 严格类型系统）
+    private func saveSelection() {
+        let data = NSKeyedArchiver.archivedData(withRootObject: selection)
+        UserDefaults.standard.set(data, forKey: selectionKey)
+    }
+
+    /// 加载已保存的选择
+    private func loadSelection() {
+        guard let data = UserDefaults.standard.data(forKey: selectionKey) else { return }
+        guard let loaded = NSKeyedUnarchiver.unarchiveObject(with: data) as? FamilyActivitySelection else { return }
+        selection = loaded
+        lockedAppCount = loaded.applicationTokens.count + loaded.categoryTokens.count + loaded.webDomainTokens.count
+        print("[ShieldManager] Loaded \(lockedAppCount) previously selected items")
+    }
 
     /// 清除已保存的选择
     func clearSelection() {
         selection = FamilyActivitySelection()
+        UserDefaults.standard.removeObject(forKey: selectionKey)
         lockedAppCount = 0
     }
 }

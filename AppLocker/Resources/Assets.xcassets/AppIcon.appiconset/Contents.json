@@ -1,58 +1,10 @@
 {
   "images" : [
     {
-      "idiom" : "iPhone",
-      "scale" : "2x",
-      "size" : "20x20",
-      "filename" : "AppIcon-40x40.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "3x",
-      "size" : "20x20",
-      "filename" : "AppIcon-60x60.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "2x",
-      "size" : "29x29",
-      "filename" : "AppIcon-58x58.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "3x",
-      "size" : "29x29",
-      "filename" : "AppIcon-87x87.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "2x",
-      "size" : "40x40",
-      "filename" : "AppIcon-80x80.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "3x",
-      "size" : "40x40",
-      "filename" : "AppIcon-120x120.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "2x",
-      "size" : "60x60",
-      "filename" : "AppIcon-120x120-2.png"
-    },
-    {
-      "idiom" : "iPhone",
-      "scale" : "3x",
-      "size" : "60x60",
-      "filename" : "AppIcon-180x180.png"
-    },
-    {
-      "idiom" : "iOS Marketing",
-      "scale" : "1x",
-      "size" : "1024x1024",
-      "filename" : "AppIcon-1024x1024.png"
+      "filename" : "AppIcon-1024x1024.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
     }
   ],
   "info" : {
@@ -60,6 +12,6 @@
     "version" : 1
   },
   "properties" : {
-    "pre-rendered" : false
+    "pre-rendered" : true
   }
 }

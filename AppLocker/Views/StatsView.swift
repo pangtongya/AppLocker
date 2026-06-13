@@ -342,9 +342,10 @@ struct StatsView: View {
         if daysAgo == 0 { return NSLocalizedString("date_today", comment: "") }
         if daysAgo == 1 { return NSLocalizedString("date_yesterday", comment: "") }
 
-        let weekday = calendar.component(.weekday, from: date)
-        let weekdays = ["日", "一", "二", "三", "四", "五", "六"]
-        return String(format: NSLocalizedString("date_weekday_format", comment: ""), weekdays[weekday - 1])
+        // 使用 DateFormatter 获取本地化的星期缩写
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE"
+        return formatter.string(from: date)
     }
 
     // MARK: - CSV 导出

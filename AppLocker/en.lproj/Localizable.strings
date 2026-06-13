@@ -235,3 +235,9 @@
 "siri_end_focus" = "Focus session ended. Great job!";
 "siri_status_locking" = "Currently focusing, %@ remaining";
 "siri_status_idle" = "%d minutes focused today";
+
+// Preset management (new)
+"preset_delete" = "Delete";
+"preset_duration_format" = "%d min";
+"preset_list_header" = "My Presets";
+"preset_list_footer" = "Swipe left to delete, tap to select";

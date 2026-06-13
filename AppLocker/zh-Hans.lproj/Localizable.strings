@@ -235,3 +235,9 @@
 "siri_end_focus" = "专注已结束，干得漂亮！";
 "siri_status_locking" = "正在专注中，剩余 %@";
 "siri_status_idle" = "今天已专注 %d 分钟";
+
+// 预设管理（新增）
+"preset_delete" = "删除";
+"preset_duration_format" = "%d 分钟";
+"preset_list_header" = "我的预设";
+"preset_list_footer" = "左滑删除，点击选中";
