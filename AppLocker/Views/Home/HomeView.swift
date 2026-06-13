@@ -10,6 +10,7 @@ struct HomeView: View {
     @EnvironmentObject var lockStore: LockStore
     @EnvironmentObject var shieldManager: ShieldManager
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var presetStore: PresetStore
 
     @State private var selectedMinutes: Int = 25
     @State private var showCustomDuration = false
@@ -18,6 +19,8 @@ struct HomeView: View {
     @State private var showUnlockAuth = false
     @State private var unlockPassword = ""
     @State private var showPasswordFail = false
+    @State private var showCelebration = false
+    @State private var showFocusStartAnim = false
 
     var body: some View {
         NavigationStack {
@@ -28,6 +31,8 @@ struct HomeView: View {
                     VStack(spacing: 32) {
                         if lockStore.isLocking {
                             lockStatusCard
+                        } else if !shieldManager.isAuthorized {
+                            authRequiredCard
                         } else {
                             heroSection
                         }
@@ -95,6 +100,26 @@ struct HomeView: View {
         } message: {
             Text(showPasswordFail ? LocalizedStringKey("home_password_wrong") : LocalizedStringKey("home_unlock_message"))
         }
+        // 专注完成庆祝
+        .overlay {
+            if showCelebration {
+                CelebrationView {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        showCelebration = false
+                    }
+                }
+                .transition(.opacity)
+                .ignoresSafeArea()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .init("LockStoreDidEndLock"))) { notif in
+            if let session = notif.object as? LockSession, session.wasCompleted {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                withAnimation(.easeIn(duration: 0.3)) {
+                    showCelebration = true
+                }
+            }
+        }
     }
 
     // MARK: - 顶部状态区
@@ -121,6 +146,16 @@ struct HomeView: View {
                 Text(LocalizedStringKey("home_hero_subtitle"))
                     .font(.system(size: 14, weight: .regular, design: .rounded))
                     .foregroundColor(.secondary)
+            }
+
+            // 专注预设
+            PresetSelectorView { preset in
+                selectedMinutes = preset.durationMinutes
+                if preset.appTokenNames.isEmpty {
+                    // 没有预设的应用选择，让用户自己选
+                } else {
+                    // 预设关联了应用选择（提示用户手动选择）
+                }
             }
 
             // 时长选择
@@ -370,6 +405,48 @@ struct HomeView: View {
         }
         .padding(.top, 8)
         .buttonStyle(ScaleButtonStyle())
+    }
+
+    // MARK: - 授权引导卡片
+
+    private var authRequiredCard: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "shield.slash.fill")
+                .font(.system(size: 40))
+                .foregroundColor(.lockerOrange)
+
+            Text(LocalizedStringKey("home_auth_required_title"))
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+
+            Text(LocalizedStringKey("home_auth_required_desc"))
+                .font(.system(size: 14, weight: .regular, design: .rounded))
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 20)
+
+            Button(action: {
+                Task { await shieldManager.requestAuthorization() }
+            }) {
+                Text(LocalizedStringKey("home_auth_request_btn"))
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(Color.lockerBlue)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+
+            if shieldManager.needsSettingsAuthorization {
+                Button(action: { shieldManager.openSettings() }) {
+                    Text(LocalizedStringKey("guide_auth_go_settings"))
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.lockerBlue)
+                }
+            }
+        }
+        .padding(24)
+        .background(Color(.systemGray6))
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
     // MARK: - 锁定状态卡

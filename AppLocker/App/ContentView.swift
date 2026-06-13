@@ -5,6 +5,7 @@ struct ContentView: View {
     @EnvironmentObject var lockStore: LockStore
     @EnvironmentObject var shieldManager: ShieldManager
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var presetStore: PresetStore
 
     @State private var selectedTab: Tab = .home
 
@@ -47,6 +48,7 @@ struct ContentView: View {
                     .environmentObject(lockStore)
                     .environmentObject(shieldManager)
                     .environmentObject(authManager)
+                    .environmentObject(presetStore)
                     .transition(.opacity)
                     .zIndex(1)
             } else {
@@ -57,6 +59,7 @@ struct ContentView: View {
                         .environmentObject(lockStore)
                         .environmentObject(shieldManager)
                         .environmentObject(authManager)
+                        .environmentObject(presetStore)
                         .tabItem {
                             Label(Tab.home.title, systemImage: selectedTab == .home ? Tab.home.filledIcon : Tab.home.icon)
                         }

@@ -53,6 +53,7 @@ class LockStore: ObservableObject {
         isLocking = true
         startTimer()
         scheduleExpiryNotification(minutes: plannedMinutes)
+        BackgroundTaskManager.shared.scheduleExpiryCheck(sessionStart: session.startedAt, plannedMinutes: plannedMinutes)
         save()
 
         // 通知 ShieldManager 执行屏蔽
@@ -74,6 +75,7 @@ class LockStore: ObservableObject {
         isLocking = false
         stopTimer()
         cancelExpiryNotification()
+        BackgroundTaskManager.shared.cancelExpiryCheck()
 
         ShieldManager.shared.unlockAll()
         updateTodayMinutes()
@@ -95,6 +97,7 @@ class LockStore: ObservableObject {
         isLocking = false
         stopTimer()
         cancelExpiryNotification()
+        BackgroundTaskManager.shared.cancelExpiryCheck()
 
         ShieldManager.shared.unlockAll()
         sendUnlockNotification()
@@ -113,6 +116,7 @@ class LockStore: ObservableObject {
         isLocking = false
         stopTimer()
         cancelExpiryNotification()
+        BackgroundTaskManager.shared.cancelExpiryCheck()
 
         ShieldManager.shared.unlockAll()
         save()
@@ -123,10 +127,34 @@ class LockStore: ObservableObject {
         )
     }
 
-    /// 检查并自动完成已过期的锁定
-    private func checkAndCompleteExpiredLock() {
+    /// 检查并自动完成已过期的锁定（外部调用）
+    func checkAndCompleteExpiredLock() {
         guard let session = currentSession, session.isExpired else { return }
         completeLock()
+    }
+
+    /// 后台版本（从 BGTaskScheduler 调用）
+    func checkAndCompleteExpiredLockInBackground() {
+        guard var session = currentSession, session.isExpired else { return }
+
+        session.endedAt = Date()
+        session.wasCompleted = true
+        history.append(session)
+        currentSession = nil
+        isLocking = false
+        stopTimer()
+        cancelExpiryNotification()
+
+        ShieldManager.shared.unlockAll()
+        updateTodayMinutes()
+
+        // Save synchronously for background context
+        save()
+
+        NotificationCenter.default.post(
+            name: .init("LockStoreDidEndLock"),
+            object: session
+        )
     }
 
     // MARK: - Timer

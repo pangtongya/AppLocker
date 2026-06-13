@@ -202,3 +202,36 @@
 "notif_lock_expired_body" = "Your %d-minute lock session has ended. Apps are now unlocked.";
 "notif_unlock_title" = "Apps Unlocked";
 "notif_unlock_body" = "Lock time is up. All apps are now available.";
+
+// Presets (new)
+"preset_work" = "Work";
+"preset_study" = "Study";
+"preset_relax" = "Relax";
+"preset_custom" = "Custom";
+"preset_title" = "Focus Presets";
+"preset_save" = "Save as Preset";
+"preset_manage" = "Manage Presets";
+"preset_delete_confirm" = "Delete this preset?";
+"preset_name_placeholder" = "Preset Name";
+"preset_icon_hint" = "Choose Icon";
+"preset_saved" = "Preset saved";
+
+// Celebration animation (new)
+"celebration_title" = "Great Job!";
+"celebration_subtitle" = "Focus session complete. Keep it up!";
+"celebration_dismiss" = "Awesome, Continue!";
+
+// Focus start animation (new)
+"focus_start_anim_title" = "Starting Focus";
+"focus_start_anim_pulse" = "Locking...";
+
+// Auth guidance (new)
+"home_auth_required_title" = "Authorization Required";
+"home_auth_required_desc" = "Please grant Screen Time permission to block distracting apps.";
+"home_auth_request_btn" = "Authorize Screen Time";
+
+// Siri Shortcuts (new)
+"siri_start_focus" = "Started %d minute focus session. Let's go!";
+"siri_end_focus" = "Focus session ended. Great job!";
+"siri_status_locking" = "Currently focusing, %@ remaining";
+"siri_status_idle" = "%d minutes focused today";

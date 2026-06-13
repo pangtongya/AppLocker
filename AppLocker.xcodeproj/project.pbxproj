@@ -14,15 +14,20 @@
 		2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F1A899B0EC8955BF817D1B /* AppState.swift */; };
 		2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB11CA49DA848A00666B5F /* ColorExtensions.swift */; };
 		350C4E41C07708C9E5F20711 /* ShieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64976B98B3661B0792FC1E2F /* ShieldManager.swift */; };
+		377A75EE57CBD80A8CED1592 /* PresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C6F26049292B9B8F3841FA /* PresetStore.swift */; };
 		37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */; };
+		3A7D308BF88DFF11FAEC10A0 /* PresetSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5CBB2E34AA7022DDB65ED /* PresetSelectorView.swift */; };
 		4B9C8049FDC5189A9C1F8B9E /* ScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653B0D9B264E959A30E524B5 /* ScaleButtonStyle.swift */; };
 		526DBD9B5B44DAC33886492D /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D101AA9F260D11C65BC04A /* StatsView.swift */; };
 		5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2C70B6985A5CD8DBADEAD4 /* Assets.xcassets */; };
+		6BEA951D754D578BDBB269E1 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF160853D92792DE3D8F94B /* BackgroundTaskManager.swift */; };
 		6F3FF6BA7A36E7B4F94D601E /* AppLockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D682C253BCEB4B84679B4310 /* AppLockerTests.swift */; };
 		77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2553F69456D89C08A1536122 /* ContentView.swift */; };
+		98BF68BABA8E5D3667230E91 /* FocusPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51758039414231EB452681 /* FocusPreset.swift */; };
 		A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35ABD1B9465E56EDA666806 /* LockStore.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
 		C5CC7DD0292381B9E3A098A2 /* LockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDA76867CAA23E36352B06 /* LockSession.swift */; };
+		EC0DC672578D65F4B112AD0F /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */; };
 		F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606CE173DFA60FE9CA319119 /* Localization.swift */; };
 		FA1231821148CB376E8C8BEE /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EAC91A58CFD1B293F1910C /* ActivityView.swift */; };
 		FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9407F31A4EAF5F3DC064EB /* HomeView.swift */; };
@@ -43,6 +48,7 @@
 		0DEF15C0BE2D9133BAAB1F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2553F69456D89C08A1536122 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		28EAC91A58CFD1B293F1910C /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		46C6F26049292B9B8F3841FA /* PresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetStore.swift; sourceTree = "<group>"; };
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
 		606CE173DFA60FE9CA319119 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -50,9 +56,13 @@
 		64976B98B3661B0792FC1E2F /* ShieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldManager.swift; sourceTree = "<group>"; };
 		64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		653B0D9B264E959A30E524B5 /* ScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleButtonStyle.swift; sourceTree = "<group>"; };
+		66E5CBB2E34AA7022DDB65ED /* PresetSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetSelectorView.swift; sourceTree = "<group>"; };
 		6C66F2C2D536D29202AB3B23 /* AppLocker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AppLocker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E51758039414231EB452681 /* FocusPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusPreset.swift; sourceTree = "<group>"; };
 		8B1527088059B14CDA6FB1CE /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		8CF160853D92792DE3D8F94B /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		90DE6E1C641C1FAF4FD240FE /* AppLocker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLocker.entitlements; sourceTree = "<group>"; };
+		BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		C376E0F0C047147E51FA5AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C810F83A3666EA1512CC0026 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D24172D617CC4B86D5A2C478 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -93,7 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				28EAC91A58CFD1B293F1910C /* ActivityView.swift */,
+				BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */,
 				8B1527088059B14CDA6FB1CE /* GlassCard.swift */,
+				66E5CBB2E34AA7022DDB65ED /* PresetSelectorView.swift */,
 				653B0D9B264E959A30E524B5 /* ScaleButtonStyle.swift */,
 			);
 			path = Components;
@@ -129,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				E35ABD1B9465E56EDA666806 /* LockStore.swift */,
+				46C6F26049292B9B8F3841FA /* PresetStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -137,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				D24172D617CC4B86D5A2C478 /* AuthManager.swift */,
+				8CF160853D92792DE3D8F94B /* BackgroundTaskManager.swift */,
 				64976B98B3661B0792FC1E2F /* ShieldManager.swift */,
 			);
 			path = Managers;
@@ -175,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				D8F1A899B0EC8955BF817D1B /* AppState.swift */,
+				7E51758039414231EB452681 /* FocusPreset.swift */,
 				07CDA76867CAA23E36352B06 /* LockSession.swift */,
 			);
 			path = Models;
@@ -315,14 +330,19 @@
 				B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */,
 				2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */,
 				1731C60D420780F50DB40D90 /* AuthManager.swift in Sources */,
+				6BEA951D754D578BDBB269E1 /* BackgroundTaskManager.swift in Sources */,
+				EC0DC672578D65F4B112AD0F /* CelebrationView.swift in Sources */,
 				2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,
+				98BF68BABA8E5D3667230E91 /* FocusPreset.swift in Sources */,
 				08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */,
 				37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */,
 				FE62551A8E9CF1435E5530D4 /* HomeView.swift in Sources */,
 				F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */,
 				C5CC7DD0292381B9E3A098A2 /* LockSession.swift in Sources */,
 				A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */,
+				3A7D308BF88DFF11FAEC10A0 /* PresetSelectorView.swift in Sources */,
+				377A75EE57CBD80A8CED1592 /* PresetStore.swift in Sources */,
 				4B9C8049FDC5189A9C1F8B9E /* ScaleButtonStyle.swift in Sources */,
 				210124F64A4D68A9C1C5DEDF /* SettingsView.swift in Sources */,
 				350C4E41C07708C9E5F20711 /* ShieldManager.swift in Sources */,
