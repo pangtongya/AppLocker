@@ -26,8 +26,13 @@ struct StartFocusIntent: AppIntent {
             throw IntentError.notAuthorized
         }
 
+        // 检查是否选择了要锁定的应用
+        guard appCount > 0 else {
+            throw IntentError.noAppsSelected
+        }
+
         // 开始专注
-        LockStore.shared.startLock(plannedMinutes: clampedMinutes, appCount: max(appCount, 1))
+        LockStore.shared.startLock(plannedMinutes: clampedMinutes, appCount: appCount)
 
         let dialog = IntentDialog(stringLiteral: String(format: NSLocalizedString("siri_start_focus", comment: ""), clampedMinutes))
         return .result(dialog: dialog)
@@ -78,6 +83,7 @@ struct FocusStatusIntent: AppIntent {
 enum IntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     case notAuthorized
     case notLocking
+    case noAppsSelected
 
     var localizedStringResource: LocalizedStringResource {
         switch self {
@@ -85,6 +91,8 @@ enum IntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
             return "Screen Time permission is required. Please open the app first."
         case .notLocking:
             return "No active focus session."
+        case .noAppsSelected:
+            return "No apps selected. Please select apps to block in the app first."
         }
     }
 }

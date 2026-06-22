@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01EC88976E568AEF49B09AEE /* CSVExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7054BC6C4BEAC9E117418 /* CSVExporter.swift */; };
 		08451E06A226EEE2D0096588 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1527088059B14CDA6FB1CE /* GlassCard.swift */; };
 		1731C60D420780F50DB40D90 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24172D617CC4B86D5A2C478 /* AuthManager.swift */; };
 		1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0146624A729ABE90D8AED2C8 /* Localizable.strings */; };
@@ -56,6 +57,7 @@
 		49810D9751DB91C70A597CCC /* FocusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusWidget.swift; sourceTree = "<group>"; };
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
+		52D7054BC6C4BEAC9E117418 /* CSVExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExporter.swift; sourceTree = "<group>"; };
 		606CE173DFA60FE9CA319119 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		63CB11CA49DA848A00666B5F /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		64976B98B3661B0792FC1E2F /* ShieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldManager.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				63CB11CA49DA848A00666B5F /* ColorExtensions.swift */,
+				52D7054BC6C4BEAC9E117418 /* CSVExporter.swift */,
 				606CE173DFA60FE9CA319119 /* Localization.swift */,
 			);
 			path = Utilities;
@@ -380,6 +383,7 @@
 				2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */,
 				1731C60D420780F50DB40D90 /* AuthManager.swift in Sources */,
 				6BEA951D754D578BDBB269E1 /* BackgroundTaskManager.swift in Sources */,
+				01EC88976E568AEF49B09AEE /* CSVExporter.swift in Sources */,
 				EC0DC672578D65F4B112AD0F /* CelebrationView.swift in Sources */,
 				2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */,
 				77E36E7E071BD6BAE48F247E /* ContentView.swift in Sources */,

@@ -417,30 +417,11 @@ struct SettingsView: View {
 
     private func exportCSV() {
         let sessions = lockStore.history.filter { $0.isCompleted }
-        var csvString = "日期,开始时间,结束时间,计划分钟,实际分钟,被锁应用数,是否到期解锁\n"
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-
-        for session in sessions.sorted(by: { $0.startedAt > $1.startedAt }) {
-            let startDate = dateFormatter.string(from: session.startedAt)
-            let endDateStr = session.endedAt != nil ? dateFormatter.string(from: session.endedAt!) : ""
-            let status = session.wasCompleted ? "是" : (session.wasEarlyUnlocked ? "提前解锁" : "")
-
-            let row = "\"\(startDate)\",\"\(endDateStr)\",\(session.plannedMinutes),\(session.actualMinutes),\(session.appCount),\"\(status)\"\n"
-            csvString += row
+        guard let csvURL = CSVExporter.writeCSVToTempFile(sessions: sessions, fileName: "应用锁_锁定记录") else {
+            return
         }
-
-        let tempDir = FileManager.default.temporaryDirectory
-        let csvFile = tempDir.appendingPathComponent("应用锁_锁定记录_\(Int(Date().timeIntervalSince1970)).csv")
-
-        do {
-            try csvString.write(to: csvFile, atomically: true, encoding: .utf8)
-            csvURL = csvFile
-            showExportSheet = true
-        } catch {
-            print("Failed to write CSV: \(error)")
-        }
+        self.csvURL = csvURL
+        showExportSheet = true
     }
 }
 
