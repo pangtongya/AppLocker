@@ -402,7 +402,7 @@ struct SettingsView: View {
                         .foregroundColor(.gray)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("保存") {
+                    Button(LocalizedStringKey("settings_save")) {
                         appState.weeklyGoalMinutes = max(30, min(1000, tempGoalMinutes))
                         appState.save()
                         showGoalEditor = false

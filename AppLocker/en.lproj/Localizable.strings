@@ -156,6 +156,7 @@
 "settings_weekly_goal_value" = "%d min/wk";
 "settings_weekly_goal_editor_title" = "Weekly Goal Duration";
 "settings_weekly_goal_desc" = "Set a weekly locking goal. Stats page will show progress.";
+"settings_save" = "Save";
 "settings_custom_label" = "Custom:";
 "settings_custom_unit" = "min/wk";
 

@@ -140,19 +140,29 @@ class ShieldManager: ObservableObject {
 
     // MARK: - 选择持久化
 
-    /// 保存选择的应用（使用 NSKeyedArchiver，因为 Token 泛型不兼容 Swift 严格类型系统）
+    /// 保存选择的应用
     private func saveSelection() {
-        let data = NSKeyedArchiver.archivedData(withRootObject: selection)
-        UserDefaults.standard.set(data, forKey: selectionKey)
+        do {
+            let data = try PropertyListEncoder().encode(selection)
+            UserDefaults.standard.set(data, forKey: selectionKey)
+        } catch {
+            print("[ShieldManager] Failed to save selection: \(error)")
+        }
     }
 
     /// 加载已保存的选择
     private func loadSelection() {
         guard let data = UserDefaults.standard.data(forKey: selectionKey) else { return }
-        guard let loaded = NSKeyedUnarchiver.unarchiveObject(with: data) as? FamilyActivitySelection else { return }
-        selection = loaded
-        lockedAppCount = loaded.applicationTokens.count + loaded.categoryTokens.count + loaded.webDomainTokens.count
-        print("[ShieldManager] Loaded \(lockedAppCount) previously selected items")
+        do {
+            let loaded = try PropertyListDecoder().decode(FamilyActivitySelection.self, from: data)
+            selection = loaded
+            lockedAppCount = loaded.applicationTokens.count + loaded.categoryTokens.count + loaded.webDomainTokens.count
+            print("[ShieldManager] Loaded \(lockedAppCount) previously selected items")
+        } catch {
+            print("[ShieldManager] Failed to load selection: \(error)")
+            // 如果加载失败，清除损坏的数据
+            UserDefaults.standard.removeObject(forKey: selectionKey)
+        }
     }
 
     /// 清除已保存的选择

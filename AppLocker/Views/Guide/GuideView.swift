@@ -296,4 +296,6 @@ struct GuidePage {
 
 #Preview {
     GuideView()
+        .environmentObject(AppState.shared)
+        .environmentObject(ShieldManager.shared)
 }

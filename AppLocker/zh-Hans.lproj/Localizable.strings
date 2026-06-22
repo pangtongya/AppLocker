@@ -156,6 +156,7 @@
 "settings_weekly_goal_value" = "%d 分钟/周";
 "settings_weekly_goal_editor_title" = "每周目标时长";
 "settings_weekly_goal_desc" = "设置每周锁定目标，统计页面将显示进度";
+"settings_save" = "保存";
 "settings_custom_label" = "自定义：";
 "settings_custom_unit" = "分钟/周";
 

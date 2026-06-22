@@ -56,9 +56,6 @@ struct HomeView: View {
         .sheet(isPresented: $showCustomDuration) {
             customDurationSheet
         }
-        .sheet(isPresented: $showCustomDuration) {
-            customDurationSheet
-        }
         .familyActivityPicker(
             isPresented: $isPickerPresented,
             selection: Binding(
@@ -220,7 +217,7 @@ struct HomeView: View {
     }
 
     private func durationButton(minutes: Int) -> some View {
-        let icons = [25: "🎯", 45: "⚡", 60: "🔥", 90: "💎"]
+        let icons: [Int: String] = [25: "target", 45: "bolt.fill", 60: "flame.fill", 90: "diamond.fill"]
         let isSelected = selectedMinutes == minutes
 
         return Button(action: {
@@ -230,7 +227,7 @@ struct HomeView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }) {
             VStack(spacing: 4) {
-                Text(icons[minutes] ?? "⏱")
+                Image(systemName: icons[minutes] ?? "clock.fill")
                     .font(.system(size: 20))
                 Text(String(format: NSLocalizedString("home_minutes_format", comment: ""), minutes))
                     .font(.system(size: 14, weight: .medium, design: .rounded))
@@ -524,9 +521,6 @@ struct HomeView: View {
         .padding(24)
         .background(Color(.systemGray6))
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .onReceive(Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()) { _ in
-            // 每秒触发 UI 刷新（LockStore 的 objectWillChange 自动处理）
-        }
     }
 
     // MARK: - 统计卡片

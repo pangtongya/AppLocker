@@ -10,7 +10,8 @@ class AuthManager: ObservableObject {
     static let shared = AuthManager()
 
     @Published var isPasswordSet: Bool = false
-    @Published var isFaceIDEnabled: Bool = false
+    /// Face ID 是否启用（同时检查系统层面是否真正可用）
+    @Published private(set) var isFaceIDEnabled: Bool = false
 
     private let passwordHashKey = "AppLockerPasswordHash"
     private let passwordSaltKey = "AppLockerPasswordSalt"
@@ -70,6 +71,12 @@ class AuthManager: ObservableObject {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
+    /// Face ID 是否真正启用（同时检查系统层面是否真正可用）
+    func checkFaceIDEnabled() -> Bool {
+        guard UserDefaults.standard.bool(forKey: faceIDKey) else { return false }
+        return isFaceIDAvailable
+    }
+
     /// 启用 Face ID（需要先验证）
     func enableFaceID() async -> Bool {
         let context = LAContext()
@@ -109,7 +116,7 @@ class AuthManager: ObservableObject {
 
     /// 验证密码或 Face ID（按优先级）
     func verifyAny() async -> Bool {
-        if isFaceIDEnabled {
+        if checkFaceIDEnabled() {
             if await verifyBiometric() {
                 return true
             }
@@ -122,6 +129,6 @@ class AuthManager: ObservableObject {
 
     private func load() {
         isPasswordSet = UserDefaults.standard.string(forKey: passwordHashKey) != nil
-        isFaceIDEnabled = UserDefaults.standard.bool(forKey: faceIDKey)
+        isFaceIDEnabled = checkFaceIDEnabled()
     }
 }
