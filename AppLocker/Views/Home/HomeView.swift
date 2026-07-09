@@ -89,7 +89,10 @@ struct HomeView: View {
             if authManager.isPasswordSet {
                 SecureField(LocalizedStringKey("home_enter_password"), text: $unlockPassword)
                 Button(LocalizedStringKey("home_confirm_btn")) {
-                    if authManager.verifyPassword(unlockPassword) {
+                    if authManager.isLockedOut() {
+                        showPasswordFail = false
+                        unlockPassword = ""
+                    } else if authManager.verifyPassword(unlockPassword) {
                         lockStore.unlockManually()
                         unlockPassword = ""
                     } else {
@@ -102,7 +105,15 @@ struct HomeView: View {
                 unlockPassword = ""
             }
         } message: {
-            Text(showPasswordFail ? LocalizedStringKey("home_password_wrong") : (showBiometricFail ? LocalizedStringKey("home_biometric_failed") : LocalizedStringKey("home_unlock_message")))
+            if authManager.isLockedOut() {
+                Text(String(format: NSLocalizedString("auth_locked_out", comment: ""), authManager.lockoutRemainingSeconds))
+            } else if showPasswordFail {
+                Text(LocalizedStringKey("home_password_wrong"))
+            } else if showBiometricFail {
+                Text(LocalizedStringKey("home_biometric_failed"))
+            } else {
+                Text(LocalizedStringKey("home_unlock_message"))
+            }
         }
         // 专注完成庆祝
         .overlay {
@@ -116,7 +127,7 @@ struct HomeView: View {
                 .ignoresSafeArea()
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .init("LockStoreDidEndLock"))) { notif in
+        .onReceive(NotificationCenter.default.publisher(for: LockStore.didEndLockNotification)) { notif in
             if let session = notif.object as? LockSession, session.wasCompleted {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 withAnimation(.easeIn(duration: 0.3)) {

@@ -328,7 +328,7 @@ struct SettingsView: View {
                             Text(LocalizedStringKey("settings_version_label"))
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .foregroundColor(.primary)
-                            Text("1.0")
+                            Text(appVersion)
                                 .font(.system(size: 12))
                                 .foregroundColor(.secondary)
                         }
@@ -417,11 +417,17 @@ struct SettingsView: View {
 
     private func exportCSV() {
         let sessions = lockStore.history.filter { $0.isCompleted }
-        guard let csvURL = CSVExporter.writeCSVToTempFile(sessions: sessions, fileName: "应用锁_锁定记录") else {
+        guard let csvURL = CSVExporter.writeCSVToTempFile(sessions: sessions, fileName: NSLocalizedString("csv_file_name", comment: "")) else {
             return
         }
         self.csvURL = csvURL
         showExportSheet = true
+    }
+
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "\(version) (\(build))"
     }
 }
 

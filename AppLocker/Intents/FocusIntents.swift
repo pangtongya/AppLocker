@@ -5,15 +5,15 @@ import AppIntents
 
 /// 开始专注的 Siri 快捷指令
 struct StartFocusIntent: AppIntent {
-    @Parameter(title: "Duration (minutes)", default: 25)
+    @Parameter(title: "siri_param_duration", default: 25)
     var durationMinutes: Int
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Start a \(\.$durationMinutes) minute focus session")
+        Summary("siri_param_summary_start")
     }
 
-    nonisolated static let title: LocalizedStringResource = "Start Focus"
-    nonisolated static let description: LocalizedStringResource = "Start a focus session with a specified duration"
+    nonisolated static let title: LocalizedStringResource = "siri_intent_start_title"
+    nonisolated static let description: LocalizedStringResource = "siri_intent_start_desc"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -42,8 +42,8 @@ struct StartFocusIntent: AppIntent {
 // MARK: - 结束专注
 
 struct EndFocusIntent: AppIntent {
-    nonisolated static let title: LocalizedStringResource = "End Focus"
-    nonisolated static let description: LocalizedStringResource = "End the current focus session"
+    nonisolated static let title: LocalizedStringResource = "siri_intent_end_title"
+    nonisolated static let description: LocalizedStringResource = "siri_intent_end_desc"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -61,8 +61,8 @@ struct EndFocusIntent: AppIntent {
 // MARK: - 查询专注状态
 
 struct FocusStatusIntent: AppIntent {
-    nonisolated static let title: LocalizedStringResource = "Focus Status"
-    nonisolated static let description: LocalizedStringResource = "Check current focus session status"
+    nonisolated static let title: LocalizedStringResource = "siri_intent_status_title"
+    nonisolated static let description: LocalizedStringResource = "siri_intent_status_desc"
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -88,11 +88,11 @@ enum IntentError: Swift.Error, CustomLocalizedStringResourceConvertible {
     var localizedStringResource: LocalizedStringResource {
         switch self {
         case .notAuthorized:
-            return "Screen Time permission is required. Please open the app first."
+            return "siri_error_not_authorized"
         case .notLocking:
-            return "No active focus session."
+            return "siri_error_not_locking"
         case .noAppsSelected:
-            return "No apps selected. Please select apps to block in the app first."
+            return "siri_error_no_apps"
         }
     }
 }

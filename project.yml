@@ -44,14 +44,14 @@ targets:
     platform: iOS
     sources:
       - path: AppLockerWidget
+      - path: AppLocker/en.lproj/Localizable.strings
+      - path: AppLocker/zh-Hans.lproj/Localizable.strings
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.pangtong.applocker.widget
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_CFBundleDisplayName: "专注"
-        SWIFT_EMIT_LOC_STRINGS: NO
-        CODE_SIGN_ENTITLEMENTS: ""
     entitlements:
       path: AppLockerWidget/AppLockerWidget.entitlements
 

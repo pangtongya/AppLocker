@@ -392,7 +392,7 @@ struct StatsView: View {
 
     private func exportCSV() {
         let sessions = lockStore.history.filter { $0.isCompleted }
-        guard let csvURL = CSVExporter.writeCSVToTempFile(sessions: sessions, fileName: "应用锁_锁定记录") else {
+        guard let csvURL = CSVExporter.writeCSVToTempFile(sessions: sessions, fileName: NSLocalizedString("csv_file_name", comment: "")) else {
             return
         }
         self.csvURL = csvURL

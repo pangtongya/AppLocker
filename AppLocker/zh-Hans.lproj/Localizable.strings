@@ -270,7 +270,6 @@
 "home_biometric_failed" = "Face ID 验证失败，请重试或使用密码。";
 
 // CSV 导出
-"csv_header_date" = "日期";
 "csv_header_start" = "开始时间";
 "csv_header_end" = "结束时间";
 "csv_header_planned" = "计划分钟";
@@ -279,3 +278,29 @@
 "csv_header_status" = "状态";
 "csv_status_completed" = "到期解锁";
 "csv_status_early_unlock" = "提前解锁";
+"csv_file_name" = "应用锁_锁定记录";
+
+// Widget 配置
+"widget_config_name" = "专注";
+"widget_config_desc" = "查看专注状态和每日进度";
+
+// Siri 快捷指令
+"siri_param_duration" = "时长（分钟）";
+"siri_param_summary_start" = "开始一次专注会话";
+"siri_intent_start_title" = "开始专注";
+"siri_intent_start_desc" = "开始指定时长的专注会话";
+"siri_intent_end_title" = "结束专注";
+"siri_intent_end_desc" = "结束当前专注会话";
+"siri_intent_status_title" = "专注状态";
+"siri_intent_status_desc" = "查看当前专注会话状态";
+"siri_error_not_authorized" = "需要屏幕使用时间权限，请先打开应用。";
+"siri_error_not_locking" = "当前没有进行中的专注会话。";
+"siri_error_no_apps" = "未选择应用，请先在应用中选择要屏蔽的应用。";
+
+// 认证相关
+"auth_faceid_enable_reason" = "启用 Face ID 保护";
+"auth_faceid_verify_reason" = "验证身份以解锁";
+"auth_status_not_determined" = "未确定";
+"auth_status_approved" = "已授权";
+"auth_status_denied" = "已拒绝";
+"auth_locked_out" = "尝试次数过多，请等待 %d 秒。";

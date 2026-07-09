@@ -45,10 +45,21 @@ class ShieldManager: ObservableObject {
 
     // MARK: - 授权
 
-    enum AuthorizationStatus: String {
-        case notDetermined = "未确定"
-        case approved = "已授权"
-        case denied = "已拒绝"
+    enum AuthorizationStatus {
+        case notDetermined
+        case approved
+        case denied
+
+        var displayName: String {
+            switch self {
+            case .notDetermined:
+                return NSLocalizedString("auth_status_not_determined", comment: "")
+            case .approved:
+                return NSLocalizedString("auth_status_approved", comment: "")
+            case .denied:
+                return NSLocalizedString("auth_status_denied", comment: "")
+            }
+        }
     }
 
     /// 检查当前授权状态（不弹窗）

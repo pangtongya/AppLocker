@@ -16,6 +16,7 @@
 		2628DDEBC8C52C96EABBD224 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F1A899B0EC8955BF817D1B /* AppState.swift */; };
 		2D4DA819D5E1E8E2A50CC5D6 /* FocusIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A256605E3156181636017 /* FocusIntents.swift */; };
 		2FB6260A6F3ADAAEE5FBEA19 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB11CA49DA848A00666B5F /* ColorExtensions.swift */; };
+		335CF7329CBA313AF002AD05 /* zh-Hans in Resources */ = {isa = PBXBuildFile; fileRef = C810F83A3666EA1512CC0026 /* zh-Hans */; };
 		350C4E41C07708C9E5F20711 /* ShieldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64976B98B3661B0792FC1E2F /* ShieldManager.swift */; };
 		377A75EE57CBD80A8CED1592 /* PresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C6F26049292B9B8F3841FA /* PresetStore.swift */; };
 		37BB3CF51D7D3E223B8BE23B /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CB8B25CDF1DC6C338CF0F5 /* GuideView.swift */; };
@@ -30,6 +31,7 @@
 		98BF68BABA8E5D3667230E91 /* FocusPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51758039414231EB452681 /* FocusPreset.swift */; };
 		A473D212EAC6BE777B244DDF /* LockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35ABD1B9465E56EDA666806 /* LockStore.swift */; };
 		B53FE3D5972AC7393201B9FF /* AppLockerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */; };
+		B7B61A7DF3BA13CF5EF83BE2 /* en in Resources */ = {isa = PBXBuildFile; fileRef = 0DEF15C0BE2D9133BAAB1F81 /* en */; };
 		C5CC7DD0292381B9E3A098A2 /* LockSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDA76867CAA23E36352B06 /* LockSession.swift */; };
 		EC0DC672578D65F4B112AD0F /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC617CA8D09A92D4EFED53C /* CelebrationView.swift */; };
 		F30BB624E3F3BFD4522B20A6 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606CE173DFA60FE9CA319119 /* Localization.swift */; };
@@ -139,6 +141,8 @@
 				E4F4F09F47F4A723EB4121D8 /* AppLocker */,
 				4AC503E20D4C821005116143 /* AppLockerTests */,
 				C8A8102256BC533F702C9A9C /* AppLockerWidget */,
+				FC22A467F4312131166D0045 /* en.lproj */,
+				DF617C98E040557B44EB80F6 /* zh-Hans.lproj */,
 				CBEA73997D78AB8F6D3E9A93 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -236,6 +240,15 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		DF617C98E040557B44EB80F6 /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				C810F83A3666EA1512CC0026 /* zh-Hans */,
+			);
+			name = "zh-Hans.lproj";
+			path = "AppLocker/zh-Hans.lproj";
+			sourceTree = "<group>";
+		};
 		E4F4F09F47F4A723EB4121D8 /* AppLocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +267,15 @@
 			path = AppLocker;
 			sourceTree = "<group>";
 		};
+		FC22A467F4312131166D0045 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				0DEF15C0BE2D9133BAAB1F81 /* en */,
+			);
+			name = en.lproj;
+			path = AppLocker/en.lproj;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -262,6 +284,7 @@
 			buildConfigurationList = 1529569330C3ABBC750F7B6F /* Build configuration list for PBXNativeTarget "AppLockerWidget" */;
 			buildPhases = (
 				4AB16E0419B4B4524076501B /* Sources */,
+				FC8F53DFD67385A1405059B2 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -362,6 +385,15 @@
 			files = (
 				5CBCD0C4F5D854C02C8943F2 /* Assets.xcassets in Resources */,
 				1CBC943D072753FE4D6F8190 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC8F53DFD67385A1405059B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B61A7DF3BA13CF5EF83BE2 /* en in Resources */,
+				335CF7329CBA313AF002AD05 /* zh-Hans in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,7 +524,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.widget;
 				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -510,7 +541,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pangtong.applocker.widget;
 				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;

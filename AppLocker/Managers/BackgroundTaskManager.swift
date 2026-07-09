@@ -33,8 +33,8 @@ class BackgroundTaskManager {
         currentPlannedMinutes = plannedMinutes
 
         let request = BGProcessingTaskRequest(identifier: Self.taskIdentifier)
-        // 在预计解锁时间前 10 秒调度
-        let scheduledDate = sessionStart.addingTimeInterval(TimeInterval(plannedMinutes * 60 - 10))
+        // 在预计解锁时间点调度（BGTaskScheduler 可能延迟，不会提前）
+        let scheduledDate = sessionStart.addingTimeInterval(TimeInterval(plannedMinutes * 60))
         request.earliestBeginDate = scheduledDate
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false

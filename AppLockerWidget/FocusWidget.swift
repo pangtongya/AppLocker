@@ -154,8 +154,8 @@ struct FocusWidget: Widget {
         StaticConfiguration(kind: kind, provider: FocusWidgetProvider()) { entry in
             FocusWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Focus")
-        .description("Check your focus status and daily progress.")
+        .configurationDisplayName(NSLocalizedString("widget_config_name", comment: ""))
+        .description(NSLocalizedString("widget_config_desc", comment: ""))
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

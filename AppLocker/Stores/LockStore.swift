@@ -10,6 +10,11 @@ import WidgetKit
 class LockStore: ObservableObject {
     static let shared = LockStore()
 
+    // MARK: - Notification Names
+    static let didStartLockNotification = Notification.Name("LockStoreDidStartLock")
+    static let didEndLockNotification = Notification.Name("LockStoreDidEndLock")
+    static let didCancelLockNotification = Notification.Name("LockStoreDidCancelLock")
+
     @Published var currentSession: LockSession?
     @Published var history: [LockSession] = []
     @Published var isLocking: Bool = false
@@ -61,7 +66,7 @@ class LockStore: ObservableObject {
         ShieldManager.shared.lockApps()
 
         NotificationCenter.default.post(
-            name: .init("LockStoreDidStartLock"),
+            name: LockStore.didStartLockNotification,
             object: session
         )
     }
@@ -83,7 +88,7 @@ class LockStore: ObservableObject {
         save()
 
         NotificationCenter.default.post(
-            name: .init("LockStoreDidEndLock"),
+            name: LockStore.didEndLockNotification,
             object: session
         )
     }
@@ -106,7 +111,7 @@ class LockStore: ObservableObject {
         save()
 
         NotificationCenter.default.post(
-            name: .init("LockStoreDidEndLock"),
+            name: LockStore.didEndLockNotification,
             object: session
         )
     }
@@ -123,7 +128,7 @@ class LockStore: ObservableObject {
         save()
 
         NotificationCenter.default.post(
-            name: .init("LockStoreDidCancelLock"),
+            name: LockStore.didCancelLockNotification,
             object: nil
         )
     }
@@ -147,13 +152,14 @@ class LockStore: ObservableObject {
         cancelExpiryNotification()
 
         ShieldManager.shared.unlockAll()
+        sendUnlockNotification()
         updateTodayMinutes()
 
         // Save synchronously for background context
         save()
 
         NotificationCenter.default.post(
-            name: .init("LockStoreDidEndLock"),
+            name: LockStore.didEndLockNotification,
             object: session
         )
     }

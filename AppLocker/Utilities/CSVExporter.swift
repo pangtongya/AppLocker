@@ -5,7 +5,6 @@ struct CSVExporter {
     /// 生成锁定记录的 CSV 字符串
     static func exportSessionsToCSV(sessions: [LockSession]) -> String {
         let header = [
-            NSLocalizedString("csv_header_date", comment: ""),
             NSLocalizedString("csv_header_start", comment: ""),
             NSLocalizedString("csv_header_end", comment: ""),
             NSLocalizedString("csv_header_planned", comment: ""),
@@ -39,7 +38,7 @@ struct CSVExporter {
     }
 
     /// 将 CSV 写入临时文件并返回 URL
-    static func writeCSVToTempFile(sessions: [LockSession], fileName: String = "锁定记录") -> URL? {
+    static func writeCSVToTempFile(sessions: [LockSession], fileName: String = "AppLocker") -> URL? {
         let csvString = exportSessionsToCSV(sessions: sessions)
         let tempDir = FileManager.default.temporaryDirectory
         let csvFile = tempDir.appendingPathComponent("\(fileName)_\(Int(Date().timeIntervalSince1970)).csv")

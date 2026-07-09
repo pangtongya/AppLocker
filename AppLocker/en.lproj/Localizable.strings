@@ -270,7 +270,6 @@
 "home_biometric_failed" = "Face ID verification failed. Please try again or use password.";
 
 // CSV export
-"csv_header_date" = "Date";
 "csv_header_start" = "Start Time";
 "csv_header_end" = "End Time";
 "csv_header_planned" = "Planned (min)";
@@ -279,3 +278,29 @@
 "csv_header_status" = "Status";
 "csv_status_completed" = "Completed";
 "csv_status_early_unlock" = "Early Unlock";
+"csv_file_name" = "AppLocker_Records";
+
+// Widget configuration
+"widget_config_name" = "Focus";
+"widget_config_desc" = "Check your focus status and daily progress.";
+
+// Siri Intent
+"siri_param_duration" = "Duration (minutes)";
+"siri_param_summary_start" = "Start a focus session";
+"siri_intent_start_title" = "Start Focus";
+"siri_intent_start_desc" = "Start a focus session with a specified duration";
+"siri_intent_end_title" = "End Focus";
+"siri_intent_end_desc" = "End the current focus session";
+"siri_intent_status_title" = "Focus Status";
+"siri_intent_status_desc" = "Check current focus session status";
+"siri_error_not_authorized" = "Screen Time permission is required. Please open the app first.";
+"siri_error_not_locking" = "No active focus session.";
+"siri_error_no_apps" = "No apps selected. Please select apps to block in the app first.";
+
+// Auth strings
+"auth_faceid_enable_reason" = "Enable Face ID protection";
+"auth_faceid_verify_reason" = "Verify identity to unlock";
+"auth_status_not_determined" = "Not Determined";
+"auth_status_approved" = "Authorized";
+"auth_status_denied" = "Denied";
+"auth_locked_out" = "Too many failed attempts. Please wait %d seconds.";
