@@ -4,7 +4,17 @@ import Foundation
 struct CSVExporter {
     /// 生成锁定记录的 CSV 字符串
     static func exportSessionsToCSV(sessions: [LockSession]) -> String {
-        var csvString = "日期,开始时间,结束时间,计划分钟,实际分钟,被锁应用数,是否到期解锁\n"
+        let header = [
+            NSLocalizedString("csv_header_date", comment: ""),
+            NSLocalizedString("csv_header_start", comment: ""),
+            NSLocalizedString("csv_header_end", comment: ""),
+            NSLocalizedString("csv_header_planned", comment: ""),
+            NSLocalizedString("csv_header_actual", comment: ""),
+            NSLocalizedString("csv_header_appcount", comment: ""),
+            NSLocalizedString("csv_header_status", comment: "")
+        ].joined(separator: ",")
+
+        var csvString = header + "\n"
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -12,7 +22,14 @@ struct CSVExporter {
         for session in sessions.sorted(by: { $0.startedAt > $1.startedAt }) {
             let startDate = dateFormatter.string(from: session.startedAt)
             let endDateStr = session.endedAt != nil ? dateFormatter.string(from: session.endedAt!) : ""
-            let status = session.wasCompleted ? "是" : (session.wasEarlyUnlocked ? "提前解锁" : "")
+            let status: String
+            if session.wasCompleted {
+                status = NSLocalizedString("csv_status_completed", comment: "")
+            } else if session.wasEarlyUnlocked {
+                status = NSLocalizedString("csv_status_early_unlock", comment: "")
+            } else {
+                status = ""
+            }
 
             let row = "\"\(startDate)\",\"\(endDateStr)\",\(session.plannedMinutes),\(session.actualMinutes),\(session.appCount),\"\(status)\"\n"
             csvString += row

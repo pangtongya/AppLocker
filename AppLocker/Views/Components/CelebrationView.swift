@@ -4,7 +4,6 @@ import SwiftUI
 struct CelebrationView: View {
     let onDismiss: () -> Void
 
-    @State private var showParticles = false
     @State private var showCheckmark = false
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 0
@@ -71,9 +70,6 @@ struct CelebrationView: View {
             }
             withAnimation(.spring(response: 0.6, dampingFraction: 0.6).delay(0.2)) {
                 showCheckmark = true
-            }
-            withAnimation(.easeOut(duration: 2.0).delay(0.1)) {
-                showParticles = true
             }
         }
     }

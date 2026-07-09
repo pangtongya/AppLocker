@@ -86,15 +86,15 @@ struct FocusWidgetEntryView: View {
                     .font(.system(size: 22, weight: .bold, design: .monospaced))
                     .foregroundColor(.primary)
 
-                Text("\(entry.todayMinutes) min today")
+                Text(String(format: NSLocalizedString("widget_min_today", comment: ""), entry.todayMinutes))
                     .font(.system(size: 11, weight: .regular))
                     .foregroundColor(.secondary)
             } else {
-                Text("Focus")
+                Text("widget_focus")
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
 
-                Text("\(entry.todayMinutes) min today")
+                Text(String(format: NSLocalizedString("widget_min_today", comment: ""), entry.todayMinutes))
                     .font(.system(size: 11, weight: .regular))
                     .foregroundColor(.secondary)
             }
@@ -110,7 +110,7 @@ struct FocusWidgetEntryView: View {
                     .font(.system(size: 28))
                     .foregroundColor(entry.isLocking ? .green : .blue)
 
-                Text(entry.isLocking ? "Focusing" : "Idle")
+                Text(entry.isLocking ? NSLocalizedString("widget_focusing", comment: "") : NSLocalizedString("widget_idle", comment: ""))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
             }
@@ -124,7 +124,7 @@ struct FocusWidgetEntryView: View {
                         .font(.system(size: 28, weight: .bold, design: .monospaced))
                         .foregroundColor(.primary)
 
-                    Text("\(entry.plannedMinutes) min session")
+                    Text(String(format: NSLocalizedString("widget_min_session", comment: ""), entry.plannedMinutes))
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
                 }
@@ -132,7 +132,7 @@ struct FocusWidgetEntryView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "clock.fill")
                         .font(.system(size: 10))
-                    Text("\(entry.todayMinutes) min today")
+                    Text(String(format: NSLocalizedString("widget_min_today", comment: ""), entry.todayMinutes))
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                 }
                 .foregroundColor(.secondary)

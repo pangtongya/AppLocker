@@ -36,7 +36,7 @@ struct StatsView: View {
                         VStack(spacing: 24) {
                             totalTimeCard
 
-                            Picker("周期", selection: $selectedPeriod) {
+                            Picker(LocalizedStringKey("stats_period"), selection: $selectedPeriod) {
                                 ForEach(Period.allCases, id: \.self) { period in
                                     Text(period.displayTitle).tag(period)
                                 }
@@ -109,7 +109,7 @@ struct StatsView: View {
                     Text("stats_total_time")
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
-                    Text("\(lockStore.allTimeTotalMinutes) 分钟")
+                    Text(String(format: NSLocalizedString("stats_unit_minutes", comment: ""), lockStore.allTimeTotalMinutes))
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(.primary)
                     Text(String(format: NSLocalizedString("stats_total_hours", comment: ""), lockStore.allTimeTotalMinutes / 60))
@@ -192,15 +192,15 @@ struct StatsView: View {
                 Chart {
                     ForEach(dailyData) { item in
                         BarMark(
-                            x: .value("日期", item.date, unit: .day),
-                            y: .value("分钟", item.minutes)
+                            x: .value(NSLocalizedString("chart_axis_date", comment: ""), item.date, unit: .day),
+                            y: .value(NSLocalizedString("chart_axis_minutes", comment: ""), item.minutes)
                         )
                         .foregroundStyle(Color.lockerBlue.gradient)
                         .cornerRadius(4)
                     }
 
                     // 目标线
-                    RuleMark(y: .value("目标", Double(appState.weeklyGoalMinutes) / 7.0))
+                    RuleMark(y: .value(NSLocalizedString("chart_axis_goal", comment: ""), Double(appState.weeklyGoalMinutes) / 7.0))
                         .foregroundStyle(Color.lockerGreen.opacity(0.6))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 3]))
                         .annotation(position: .trailing) {
@@ -246,14 +246,14 @@ struct StatsView: View {
 
     private var detailStats: some View {
         VStack(spacing: 16) {
-            statRow(title: "stats_week_sessions", value: "\(weekSessionsCount) 次")
-            statRow(title: "stats_week_total", value: "\(weekTotalMinutes) 分钟")
-            statRow(title: "stats_avg_per_session", value: averageMinutesText)
-            statRow(title: "stats_longest_session", value: longestSessionText)
-            statRow(title: "stats_avg_daily", value: averageDailyMinutesText)
-            statRow(title: "stats_max_streak", value: "\(lockStore.longestStreak) 天")
-            statRow(title: "stats_total_count", value: "\(lockStore.allTimeTotalSessions) 次")
-            statRow(title: "stats_completion_rate", value: completionRateText)
+            statRow(titleKey: "stats_week_sessions", value: String(format: NSLocalizedString("stats_unit_sessions", comment: ""), weekSessionsCount))
+            statRow(titleKey: "stats_week_total", value: String(format: NSLocalizedString("stats_unit_minutes", comment: ""), weekTotalMinutes))
+            statRow(titleKey: "stats_avg_per_session", value: averageMinutesText)
+            statRow(titleKey: "stats_longest_session", value: longestSessionText)
+            statRow(titleKey: "stats_avg_daily", value: averageDailyMinutesText)
+            statRow(titleKey: "stats_max_streak", value: String(format: NSLocalizedString("stats_unit_days", comment: ""), lockStore.longestStreak))
+            statRow(titleKey: "stats_total_count", value: String(format: NSLocalizedString("stats_unit_sessions", comment: ""), lockStore.allTimeTotalSessions))
+            statRow(titleKey: "stats_completion_rate", value: completionRateText)
         }
         .padding(20)
         .background(Color(.systemGray6).opacity(0.5))
@@ -261,9 +261,9 @@ struct StatsView: View {
         .padding(.horizontal, 20)
     }
 
-    private func statRow(title: String, value: String) -> some View {
+    private func statRow(titleKey: LocalizedStringKey, value: String) -> some View {
         HStack {
-            Text(title)
+            Text(titleKey)
                 .font(.system(size: 14, weight: .regular, design: .rounded))
                 .foregroundColor(.secondary)
             Spacer()

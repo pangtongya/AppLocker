@@ -246,3 +246,36 @@
 // 空状态（新增）
 "stats_empty_title" = "还没有专注记录";
 "stats_empty_desc" = "开始你的第一次专注，\n统计页面会展示你的进步";
+
+// 图表轴标签
+"chart_axis_date" = "日期";
+"chart_axis_minutes" = "分钟";
+"chart_axis_goal" = "目标";
+
+// 统计周期选择器
+"stats_period" = "周期";
+
+// 设置 - 目标选择器
+"settings_goal_picker_title" = "目标时长";
+"settings_goal_minutes_per_week" = "%d 分钟/周";
+
+// Widget 字符串
+"widget_focus" = "专注";
+"widget_focusing" = "专注中";
+"widget_idle" = "空闲";
+"widget_min_today" = "今日 %d 分钟";
+"widget_min_session" = "%d 分钟会话";
+
+// Face ID 验证失败
+"home_biometric_failed" = "Face ID 验证失败，请重试或使用密码。";
+
+// CSV 导出
+"csv_header_date" = "日期";
+"csv_header_start" = "开始时间";
+"csv_header_end" = "结束时间";
+"csv_header_planned" = "计划分钟";
+"csv_header_actual" = "实际分钟";
+"csv_header_appcount" = "被锁应用数";
+"csv_header_status" = "状态";
+"csv_status_completed" = "到期解锁";
+"csv_status_early_unlock" = "提前解锁";

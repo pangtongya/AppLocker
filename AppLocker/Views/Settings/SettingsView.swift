@@ -369,14 +369,14 @@ struct SettingsView: View {
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
 
-                    Picker("目标时长", selection: $tempGoalMinutes) {
-                        Text("60 分钟/周").tag(60)
-                        Text("120 分钟/周").tag(120)
-                        Text("150 分钟/周").tag(150)
-                        Text("200 分钟/周").tag(200)
-                        Text("300 分钟/周").tag(300)
-                        Text("420 分钟/周").tag(420)
-                        Text("600 分钟/周").tag(600)
+                    Picker(LocalizedStringKey("settings_goal_picker_title"), selection: $tempGoalMinutes) {
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 60)).tag(60)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 120)).tag(120)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 150)).tag(150)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 200)).tag(200)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 300)).tag(300)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 420)).tag(420)
+                        Text(String(format: NSLocalizedString("settings_goal_minutes_per_week", comment: ""), 600)).tag(600)
                     }
                     .pickerStyle(.wheel)
                     .frame(height: 120)
@@ -477,6 +477,16 @@ struct PasswordSetupSheet: View {
                                     .background(Color(.secondarySystemGroupedBackground))
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
+                        }
+
+                        if showMismatch {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text(LocalizedStringKey("password_mismatch"))
+                            }
+                            .font(.system(size: 13))
+                            .foregroundStyle(.red)
+                            .transition(.opacity)
                         }
 
                         Button(role: .destructive) {

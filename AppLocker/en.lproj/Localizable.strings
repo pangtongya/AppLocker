@@ -246,3 +246,36 @@
 // Empty state (new)
 "stats_empty_title" = "No Focus Records Yet";
 "stats_empty_desc" = "Start your first focus session,\nstats will show your progress here";
+
+// Chart axis labels
+"chart_axis_date" = "Date";
+"chart_axis_minutes" = "Minutes";
+"chart_axis_goal" = "Goal";
+
+// Stats period picker
+"stats_period" = "Period";
+
+// Settings - Goal picker
+"settings_goal_picker_title" = "Target Duration";
+"settings_goal_minutes_per_week" = "%d min/week";
+
+// Widget strings
+"widget_focus" = "Focus";
+"widget_focusing" = "Focusing";
+"widget_idle" = "Idle";
+"widget_min_today" = "%d min today";
+"widget_min_session" = "%d min session";
+
+// Biometric failure
+"home_biometric_failed" = "Face ID verification failed. Please try again or use password.";
+
+// CSV export
+"csv_header_date" = "Date";
+"csv_header_start" = "Start Time";
+"csv_header_end" = "End Time";
+"csv_header_planned" = "Planned (min)";
+"csv_header_actual" = "Actual (min)";
+"csv_header_appcount" = "Apps Blocked";
+"csv_header_status" = "Status";
+"csv_status_completed" = "Completed";
+"csv_status_early_unlock" = "Early Unlock";

@@ -12,11 +12,8 @@ class ShieldManager: ObservableObject {
 
     @Published var isAuthorized: Bool = false
     @Published var authorizationStatus: AuthorizationStatus = .notDetermined
-    @Published var selection = FamilyActivitySelection() {
-        didSet {
-            saveSelection()
-        }
-    }
+    @Published var selection = FamilyActivitySelection()
+
     @Published var lockedAppCount: Int = 0
     @Published var needsSettingsAuthorization: Bool = false
 
@@ -38,6 +35,12 @@ class ShieldManager: ObservableObject {
                 await self?.refreshAuthorization()
             }
         }
+    }
+
+    /// 用户更新选择时调用（区别于 loadSelection 的内部赋值）
+    func updateSelection(_ newSelection: FamilyActivitySelection) {
+        selection = newSelection
+        saveSelection()
     }
 
     // MARK: - 授权

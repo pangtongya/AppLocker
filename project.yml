@@ -51,6 +51,9 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_CFBundleDisplayName: "专注"
         SWIFT_EMIT_LOC_STRINGS: NO
+        CODE_SIGN_ENTITLEMENTS: ""
+    entitlements:
+      path: AppLockerWidget/AppLockerWidget.entitlements
 
   AppLockerTests:
     type: bundle.unit-test

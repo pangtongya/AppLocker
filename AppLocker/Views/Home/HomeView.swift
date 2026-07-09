@@ -19,6 +19,7 @@ struct HomeView: View {
     @State private var showUnlockAuth = false
     @State private var unlockPassword = ""
     @State private var showPasswordFail = false
+    @State private var showBiometricFail = false
     @State private var showCelebration = false
     @State private var showFocusStartAnim = false
     @State private var pendingAutoStart = false
@@ -61,7 +62,7 @@ struct HomeView: View {
             selection: Binding(
                 get: { shieldManager.selection },
                 set: { newSelection in
-                    shieldManager.selection = newSelection
+                    shieldManager.updateSelection(newSelection)
                     // 更新计数
                     shieldManager.lockedAppCount = newSelection.applicationTokens.count + newSelection.categoryTokens.count + newSelection.webDomainTokens.count
                     print("[HomeView] User selected: \(shieldManager.lockedAppCount) items")
@@ -101,7 +102,7 @@ struct HomeView: View {
                 unlockPassword = ""
             }
         } message: {
-            Text(showPasswordFail ? LocalizedStringKey("home_password_wrong") : LocalizedStringKey("home_unlock_message"))
+            Text(showPasswordFail ? LocalizedStringKey("home_password_wrong") : (showBiometricFail ? LocalizedStringKey("home_biometric_failed") : LocalizedStringKey("home_unlock_message")))
         }
         // 专注完成庆祝
         .overlay {
@@ -617,6 +618,8 @@ struct HomeView: View {
         let success = await authManager.verifyBiometric()
         if success {
             lockStore.unlockManually()
+        } else {
+            showBiometricFail = true
         }
     }
 }
@@ -671,4 +674,5 @@ private struct AppLockerBackground: View {
         .environmentObject(LockStore.shared)
         .environmentObject(ShieldManager.shared)
         .environmentObject(AuthManager.shared)
+        .environmentObject(PresetStore.shared)
 }

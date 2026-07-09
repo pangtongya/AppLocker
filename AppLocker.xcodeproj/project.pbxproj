@@ -58,6 +58,7 @@
 		4C6381354673F2554D470563 /* AppLockerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AppLockerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BE33F7DE94E17A2C3DE30 /* AppLockerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockerApp.swift; sourceTree = "<group>"; };
 		52D7054BC6C4BEAC9E117418 /* CSVExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExporter.swift; sourceTree = "<group>"; };
+		57A7CC280802C2EBC7AE3D03 /* AppLockerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppLockerWidget.entitlements; sourceTree = "<group>"; };
 		606CE173DFA60FE9CA319119 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		63CB11CA49DA848A00666B5F /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		64976B98B3661B0792FC1E2F /* ShieldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldManager.swift; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 		C8A8102256BC533F702C9A9C /* AppLockerWidget */ = {
 			isa = PBXGroup;
 			children = (
+				57A7CC280802C2EBC7AE3D03 /* AppLockerWidget.entitlements */,
 				49810D9751DB91C70A597CCC /* FocusWidget.swift */,
 			);
 			path = AppLockerWidget;
@@ -480,6 +482,7 @@
 		5B83DF9B363B4F69881BD286 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AppLockerWidget/AppLockerWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "专注";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -497,6 +500,7 @@
 		6D3EFD1407F579FACC74C5E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AppLockerWidget/AppLockerWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "专注";
 				LD_RUNPATH_SEARCH_PATHS = (
