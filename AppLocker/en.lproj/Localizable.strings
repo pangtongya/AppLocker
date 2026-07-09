@@ -304,3 +304,6 @@
 "auth_status_approved" = "Authorized";
 "auth_status_denied" = "Denied";
 "auth_locked_out" = "Too many failed attempts. Please wait %d seconds.";
+
+// Accessibility
+"home_a11y_remaining" = "Remaining time %@";

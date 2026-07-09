@@ -304,3 +304,6 @@
 "auth_status_approved" = "已授权";
 "auth_status_denied" = "已拒绝";
 "auth_locked_out" = "尝试次数过多，请等待 %d 秒。";
+
+// 无障碍
+"home_a11y_remaining" = "剩余时间 %@";

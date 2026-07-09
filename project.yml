@@ -36,6 +36,7 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait"
         INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleDefault
+        INFOPLIST_KEY_NSFaceIDUsageDescription: "用于解锁专注会话，保护您的专注状态"
     entitlements:
       path: AppLocker/AppLocker.entitlements
 

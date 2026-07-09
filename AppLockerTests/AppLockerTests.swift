@@ -264,4 +264,118 @@ final class AppLockerTests: XCTestCase {
             _ = lockStore.longestStreak
         }
     }
+
+    // MARK: - cancelLock Widget Sync Tests
+
+    func testCancelLockUpdatesWidgetIsLocking() {
+        let shared = UserDefaults(suiteName: "group.com.pangtong.applocker")
+        // Pre-condition: Widget thinks we're locking
+        shared?.set(true, forKey: "isLocking")
+
+        lockStore.history = []
+        lockStore.startLock(plannedMinutes: 25, appCount: 2)
+        lockStore.cancelLock()
+        XCTAssertFalse(lockStore.isLocking)
+
+        // Widget data should reflect isLocking = false
+        let widgetIsLocking = shared?.bool(forKey: "isLocking") ?? true
+        XCTAssertFalse(widgetIsLocking, "Widget isLocking should be false after cancelLock")
+    }
+
+    // MARK: - PBKDF2 Password Hash Tests
+
+    func testPBKDF2PasswordSetAndVerify() {
+        authManager.clearPassword()
+        authManager.setPassword("test1234")
+        XCTAssertTrue(authManager.verifyPassword("test1234"))
+        XCTAssertFalse(authManager.verifyPassword("wrong"))
+    }
+
+    func testPBKDF2DifferentPasswordsProduceDifferentHashes() {
+        authManager.clearPassword()
+        authManager.setPassword("password1")
+        let hash1 = UserDefaults.standard.string(forKey: "AppLockerPasswordHash")
+        let salt1 = UserDefaults.standard.string(forKey: "AppLockerPasswordSalt")
+
+        authManager.setPassword("password2")
+        let hash2 = UserDefaults.standard.string(forKey: "AppLockerPasswordHash")
+        let salt2 = UserDefaults.standard.string(forKey: "AppLockerPasswordSalt")
+
+        XCTAssertNotEqual(hash1, hash2, "Different passwords should produce different hashes")
+        XCTAssertNotEqual(salt1, salt2, "Each password should get a different salt")
+    }
+
+    // MARK: - Brute Force Protection Tests
+
+    func testBruteForceLockoutAfterMaxAttempts() {
+        authManager.clearPassword()
+        authManager.setPassword("correct")
+
+        // Fail 5 times
+        for _ in 0..<5 {
+            _ = authManager.verifyPassword("wrong")
+        }
+
+        // Should be locked out
+        XCTAssertTrue(authManager.isLockedOut(), "Should be locked out after 5 failed attempts")
+
+        // Even correct password should fail while locked out
+        XCTAssertFalse(authManager.verifyPassword("correct"), "Correct password should fail during lockout")
+    }
+
+    func testBruteForceResetOnCorrectPassword() {
+        authManager.clearPassword()
+        authManager.setPassword("correct")
+
+        // Fail 3 times (below threshold)
+        for _ in 0..<3 {
+            _ = authManager.verifyPassword("wrong")
+        }
+
+        // Not locked out yet
+        XCTAssertFalse(authManager.isLockedOut())
+
+        // Correct password resets counter
+        XCTAssertTrue(authManager.verifyPassword("correct"))
+        XCTAssertEqual(authManager.failedAttempts, 0, "Failed attempts should reset on correct password")
+    }
+
+    // MARK: - CSV Exporter Tests
+
+    func testCSVExporterHeaderMatchesDataRowColumns() {
+        let sessions = [
+            LockSession(
+                startedAt: Date(),
+                endedAt: Date().addingTimeInterval(1800),
+                plannedMinutes: 30,
+                appCount: 5
+            )
+        ]
+        let csv = CSVExporter.exportSessionsToCSV(sessions: sessions)
+        let lines = csv.split(separator: "\n", omittingEmptySubsequences: false)
+
+        let headerColumns = lines[0].split(separator: ",").count
+        let dataColumns = lines[1].split(separator: ",").count
+
+        XCTAssertEqual(headerColumns, dataColumns, "Header and data row must have same column count")
+    }
+
+    func testCSVExporterContainsSessionData() {
+        let session = LockSession(
+            startedAt: Date(timeIntervalSince1970: 1700000000),
+            endedAt: Date(timeIntervalSince1970: 1700001800),
+            plannedMinutes: 30,
+            appCount: 5
+        )
+        let csv = CSVExporter.exportSessionsToCSV(sessions: [session])
+
+        XCTAssertTrue(csv.contains("5"), "CSV should contain app count")
+        XCTAssertTrue(csv.contains("30"), "CSV should contain planned minutes")
+    }
+
+    func testCSVExporterEmptySessions() {
+        let csv = CSVExporter.exportSessionsToCSV(sessions: [])
+        let lines = csv.split(separator: "\n", omittingEmptySubsequences: true)
+        XCTAssertEqual(lines.count, 1, "Empty sessions should produce only header line")
+    }
 }

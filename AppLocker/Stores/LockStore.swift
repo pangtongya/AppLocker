@@ -60,6 +60,7 @@ class LockStore: ObservableObject {
         startTimer()
         scheduleExpiryNotification(minutes: plannedMinutes)
         BackgroundTaskManager.shared.scheduleExpiryCheck(sessionStart: session.startedAt, plannedMinutes: plannedMinutes)
+        updateTodayMinutes()
         save()
 
         // 通知 ShieldManager 执行屏蔽
@@ -125,6 +126,7 @@ class LockStore: ObservableObject {
         BackgroundTaskManager.shared.cancelExpiryCheck()
 
         ShieldManager.shared.unlockAll()
+        updateTodayMinutes()
         save()
 
         NotificationCenter.default.post(

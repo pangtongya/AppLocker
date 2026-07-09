@@ -80,6 +80,12 @@ struct HomeView: View {
                 }
             )
         )
+        .onChange(of: isPickerPresented) { _, isPresented in
+            // 用户关闭 picker 时重置 pendingAutoStart（防止下次打开误触发）
+            if !isPresented {
+                pendingAutoStart = false
+            }
+        }
         .alert(LocalizedStringKey("home_unlock_alert_title"), isPresented: $showUnlockAuth) {
             if authManager.isFaceIDEnabled {
                 Button(LocalizedStringKey("home_use_faceid")) {
@@ -472,6 +478,7 @@ struct HomeView: View {
             // 顶部状态
             HStack {
                 PulseCircle()
+                    .accessibilityHidden(true)
                 Text(LocalizedStringKey("home_status_locking"))
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundColor(.lockerGreen)
@@ -485,6 +492,7 @@ struct HomeView: View {
                         .font(.system(size: 48, weight: .thin, design: .monospaced))
                         .foregroundColor(.primary)
                         .monospacedDigit()
+                        .accessibilityLabel(String(format: NSLocalizedString("home_a11y_remaining", comment: ""), session.formattedRemaining))
 
                     Text(String(format: NSLocalizedString("home_remaining", comment: ""), session.plannedMinutes))
                         .font(.system(size: 13, weight: .regular, design: .rounded))
