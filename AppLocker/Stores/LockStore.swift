@@ -158,7 +158,7 @@ class LockStore: ObservableObject {
         updateTodayMinutes()
 
         // Save synchronously for background context
-        save()
+        saveSynchronously()
 
         NotificationCenter.default.post(
             name: LockStore.didEndLockNotification,
@@ -170,7 +170,7 @@ class LockStore: ObservableObject {
 
     private func startTimer() {
         stopTimer()
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.checkLockStatus()
             }
@@ -182,7 +182,7 @@ class LockStore: ObservableObject {
         timer = nil
     }
 
-    /// 每秒检查锁定状态，到期自动解锁
+    /// 每秒检查锁定状态，到期自动解锁，触发 UI 刷新倒计时
     private func checkLockStatus() {
         guard let session = currentSession else {
             stopTimer()
@@ -200,7 +200,15 @@ class LockStore: ObservableObject {
     /// 调度到期提醒通知
     private func scheduleExpiryNotification(minutes: Int) {
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        // 仅首次请求权限
+        if !UserDefaults.standard.bool(forKey: "NotificationAuthRequested") {
+            center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
+                UserDefaults.standard.set(true, forKey: "NotificationAuthRequested")
+                if granted {
+                    UserDefaults.standard.set(true, forKey: "NotificationAuthGranted")
+                }
+            }
+        }
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("notif_lock_expired_title", comment: "")
         content.body = String(format: NSLocalizedString("notif_lock_expired_body", comment: ""), minutes)
@@ -355,6 +363,12 @@ class LockStore: ObservableObject {
         }
         saveWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
+    }
+
+    /// 同步保存（后台任务调用，确保数据在进程被杀前写入）
+    func saveSynchronously() {
+        saveWorkItem?.cancel()
+        performSave()
     }
 
     private func performSave() {
